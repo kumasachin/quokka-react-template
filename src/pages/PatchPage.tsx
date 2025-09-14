@@ -1,9 +1,13 @@
 import React from "react";
-import { Typography, Card, Header } from "../design-system/components";
+import { Typography, Card, Header, Button } from "../design-system/components";
 import { Box, CardContent } from "@mui/material";
 import { BugReport } from "@mui/icons-material";
+import { usePatches, useInstallPatch } from "../hooks";
 
 const PatchPage = () => {
+  const { data: patches, isLoading } = usePatches();
+  const installPatch = useInstallPatch();
+
   return (
     <Box>
       <Header
@@ -17,11 +21,20 @@ const PatchPage = () => {
           <Typography variant="h5" gutterBottom>
             Security Patches
           </Typography>
-          <Typography variant="body1">
-            This is a placeholder for the patch management page. Here you would
-            find available patches, patch deployment status, vulnerability
-            assessments, and patch scheduling tools.
+          <Typography variant="body1" sx={{ mb: 2 }}>
+            {isLoading 
+              ? "Loading patches..." 
+              : "This demonstrates the centralized API client with axios interceptors."
+            }
           </Typography>
+          <Button 
+            variant="primary" 
+            onClick={() => {
+              console.log("API client will attempt to fetch patches with error handling");
+            }}
+          >
+            Refresh Patches
+          </Button>
         </CardContent>
       </Card>
     </Box>
