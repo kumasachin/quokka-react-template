@@ -22,6 +22,7 @@ const WrapperTemplate = () => {
     { path: "/devices", label: "Devices" },
     { path: "/patches", label: "Patches" },
     { path: "/firewall", label: "Firewall" },
+    { path: "/policies", label: "Policies" },
     { path: "/settings", label: "Settings" },
   ];
 

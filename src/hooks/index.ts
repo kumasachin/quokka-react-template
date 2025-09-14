@@ -8,3 +8,10 @@ export {
   useDeleteFirewallRule,
 } from "./useApi";
 export { useToast } from "./useToast";
+export {
+  usePolicies,
+  usePolicy,
+  useUpdatePolicy,
+  useCreatePolicy,
+  useDeletePolicy,
+} from "./usePolicies";
