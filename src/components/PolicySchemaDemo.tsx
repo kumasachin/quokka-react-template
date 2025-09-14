@@ -11,8 +11,11 @@ import {
   MenuItem,
   Switch,
   FormControlLabel,
+  CircularProgress,
 } from "@mui/material";
 import { policyFormSchema, PolicyFormData } from "../forms/schemas/policy";
+import { useUpdatePolicy } from "../hooks/usePolicies";
+import { useToast } from "../hooks/useToast";
 
 const PolicySchemaDemo = () => {
   const [formData, setFormData] = useState<Partial<PolicyFormData>>({
@@ -34,6 +37,10 @@ const PolicySchemaDemo = () => {
 
   const [errors, setErrors] = useState<Record<string, string>>({});
   const [isValid, setIsValid] = useState(false);
+  const [policyId] = useState("demo-policy-123");
+
+  const updatePolicyMutation = useUpdatePolicy();
+  const toast = useToast();
 
   const validateForm = () => {
     try {
@@ -52,17 +59,34 @@ const PolicySchemaDemo = () => {
     }
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (validateForm()) {
-      console.log("Valid policy data:", formData);
+
+    if (!validateForm()) {
+      toast.error("Please fix validation errors before submitting");
+      return;
+    }
+
+    try {
+      await updatePolicyMutation.mutateAsync({
+        id: policyId,
+        updates: formData as Partial<PolicyFormData>,
+      });
+      toast.success("Policy updated successfully!");
+    } catch (error) {
+      toast.error("Failed to update policy. Changes have been reverted.");
     }
   };
 
   return (
     <Box component="form" onSubmit={handleSubmit} sx={{ p: 3, maxWidth: 600 }}>
       <Typography variant="h6" gutterBottom>
-        Policy Schema Validation Demo
+        Policy Update Form with Optimistic Updates
+      </Typography>
+
+      <Typography variant="body2" color="text.secondary" sx={{ mb: 3 }}>
+        This form demonstrates optimistic updates with automatic rollback on
+        error. Changes appear immediately and are reverted if the update fails.
       </Typography>
 
       <TextField
@@ -147,13 +171,34 @@ const PolicySchemaDemo = () => {
       <Button
         type="submit"
         variant="contained"
+        disabled={updatePolicyMutation.isPending}
+        startIcon={
+          updatePolicyMutation.isPending ? (
+            <CircularProgress size={16} />
+          ) : undefined
+        }
+        sx={{ mr: 2 }}
+      >
+        {updatePolicyMutation.isPending ? "Updating..." : "Update Policy"}
+      </Button>
+
+      <Button
+        variant="outlined"
         onClick={validateForm}
+        disabled={updatePolicyMutation.isPending}
         sx={{ mr: 2 }}
       >
         Validate Schema
       </Button>
 
-      {isValid && (
+      {updatePolicyMutation.isPending && (
+        <Alert severity="info" sx={{ mt: 2 }}>
+          Updating policy... Changes will be visible immediately and rolled back
+          if there's an error.
+        </Alert>
+      )}
+
+      {isValid && !updatePolicyMutation.isPending && (
         <Alert severity="success" sx={{ mt: 2 }}>
           Schema validation passed! All fields are valid.
         </Alert>
