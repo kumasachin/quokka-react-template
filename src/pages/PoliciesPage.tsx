@@ -130,111 +130,197 @@ const PoliciesPage = () => {
   const policies = policiesData?.data || [];
 
   return (
-    <Box>
+    <Box
+      sx={{ px: { xs: 2, sm: 3, md: 4 }, py: 3, maxWidth: 1400, mx: "auto" }}
+    >
       <Header
         title="Policies Management"
         subtitle="Configure and monitor security policies"
         prefix={<Policy sx={{ color: "info.main" }} />}
       />
 
+      {/* Controls Section */}
       <Box
         sx={{
           display: "flex",
           alignItems: "center",
-          mb: 3,
-          gap: 3,
-          flexWrap: "nowrap",
+          justifyContent: "space-between",
+          mb: 4,
+          p: 3,
+          backgroundColor: "background.paper",
+          borderRadius: 2,
+          boxShadow: "0 2px 8px rgba(0,0,0,0.08)",
+          border: "1px solid",
+          borderColor: "divider",
         }}
       >
-        <Select
-          fieldLabel="Filter by Type"
-          value={selectedType}
-          onChange={(e) => setSelectedType(e.target.value as string)}
-          options={[
-            { value: "", label: "All Types" },
-            ...policyTypes.map((type) => ({
-              value: type,
-              label: type.charAt(0).toUpperCase() + type.slice(1),
-            })),
-          ]}
-          sx={{ minWidth: 180, flexShrink: 0 }}
-        />
+        <Box sx={{ display: "flex", alignItems: "center", gap: 3 }}>
+          <Select
+            fieldLabel="Filter by Type"
+            value={selectedType}
+            onChange={(e) => setSelectedType(e.target.value as string)}
+            options={[
+              { value: "", label: "All Types" },
+              ...policyTypes.map((type) => ({
+                value: type,
+                label: type.charAt(0).toUpperCase() + type.slice(1),
+              })),
+            ]}
+            sx={{ minWidth: 200, flexShrink: 0 }}
+          />
+
+          <Typography
+            variant="body2"
+            color="text.secondary"
+            sx={{ fontWeight: 500 }}
+          >
+            {policies.length} {selectedType ? `${selectedType} ` : ""}
+            {policies.length === 1 ? "policy" : "policies"} found
+          </Typography>
+        </Box>
 
         <Button variant="primary" onClick={handleCreatePolicy}>
-          Create&nbsp;Policy
+          + Create Policy
         </Button>
       </Box>
 
-      <Typography variant="body1" sx={{ mb: 2 }}>
-        Showing {policies.length} {selectedType ? `${selectedType} ` : ""}
-        policies
-      </Typography>
-
+      {/* Policies Grid */}
       <Box
         sx={{
           display: "grid",
           gridTemplateColumns: {
             xs: "1fr",
-            md: "repeat(2, 1fr)",
-            lg: "repeat(3, 1fr)",
+            sm: "repeat(auto-fit, minmax(360px, 1fr))",
+            lg: "repeat(auto-fit, minmax(380px, 1fr))",
           },
-          gap: 3,
+          gap: { xs: 2, sm: 3, md: 4 },
+          mb: 4,
         }}
       >
         {policies.map((policy) => (
           <Card
             key={policy.id}
-            sx={{ height: "100%", display: "flex", flexDirection: "column" }}
+            sx={{
+              height: "100%",
+              display: "flex",
+              flexDirection: "column",
+              transition: "all 0.2s ease-in-out",
+              "&:hover": {
+                transform: "translateY(-2px)",
+                boxShadow: "0 8px 24px rgba(0,0,0,0.12)",
+              },
+              border: "1px solid",
+              borderColor: "divider",
+              borderRadius: 3,
+            }}
           >
-            <CardContent sx={{ flexGrow: 1 }}>
+            <CardContent sx={{ flexGrow: 1, p: 3 }}>
+              {/* Header Section */}
               <Box
                 sx={{
                   display: "flex",
                   justifyContent: "space-between",
                   alignItems: "flex-start",
-                  mb: 2,
+                  mb: 3,
                 }}
               >
-                <Typography variant="h6" component="h3">
+                <Typography
+                  variant="h6"
+                  component="h3"
+                  sx={{
+                    fontWeight: 600,
+                    lineHeight: 1.3,
+                    color: "text.primary",
+                    flex: 1,
+                    mr: 2,
+                  }}
+                >
                   {policy.name}
                 </Typography>
-                <Chip label={policy.type} size="small" variant="outlined" />
+                <Chip
+                  label={policy.type}
+                  size="small"
+                  variant="outlined"
+                  sx={{
+                    fontWeight: 500,
+                    textTransform: "capitalize",
+                    borderRadius: 2,
+                  }}
+                />
               </Box>
 
-              <Typography variant="body2" color="text.secondary" sx={{ mb: 2 }}>
+              {/* Description */}
+              <Typography
+                variant="body2"
+                color="text.secondary"
+                sx={{
+                  mb: 3,
+                  lineHeight: 1.5,
+                  minHeight: "3em",
+                  display: "-webkit-box",
+                  WebkitLineClamp: 2,
+                  WebkitBoxOrient: "vertical",
+                  overflow: "hidden",
+                }}
+              >
                 {policy.description}
               </Typography>
 
-              <Box sx={{ display: "flex", gap: 1, mb: 2, flexWrap: "wrap" }}>
+              {/* Status and Priority Chips */}
+              <Box sx={{ display: "flex", gap: 1.5, mb: 3, flexWrap: "wrap" }}>
                 <Chip
                   label={policy.status}
                   color={statusColors[policy.status]}
                   size="small"
+                  sx={{ fontWeight: 500, borderRadius: 2 }}
                 />
                 <Chip
                   label={policy.priority}
                   color={priorityColors[policy.priority]}
                   size="small"
+                  sx={{ fontWeight: 500, borderRadius: 2 }}
                 />
               </Box>
 
-              <Typography
-                variant="caption"
-                color="text.secondary"
-                sx={{ display: "block", mb: 1 }}
-              >
-                Rules: {policy.rules.length}
-              </Typography>
+              {/* Metadata */}
+              <Box sx={{ mb: 3, space: 1 }}>
+                <Typography
+                  variant="caption"
+                  color="text.secondary"
+                  sx={{
+                    display: "block",
+                    mb: 0.5,
+                    fontWeight: 500,
+                    textTransform: "uppercase",
+                    letterSpacing: 0.5,
+                  }}
+                >
+                  {policy.rules.length} Rules Configured
+                </Typography>
+                <Typography
+                  variant="caption"
+                  color="text.secondary"
+                  sx={{
+                    display: "block",
+                    fontWeight: 400,
+                  }}
+                >
+                  Last updated {new Date(policy.updatedAt).toLocaleDateString()}
+                </Typography>
+              </Box>
 
-              <Typography
-                variant="caption"
-                color="text.secondary"
-                sx={{ display: "block", mb: 2 }}
+              {/* Action Buttons */}
+              <Box
+                sx={{
+                  display: "flex",
+                  gap: 1,
+                  alignItems: "center",
+                  pt: 2,
+                  borderTop: "1px solid",
+                  borderColor: "divider",
+                  mt: "auto",
+                }}
               >
-                Updated: {new Date(policy.updatedAt).toLocaleDateString()}
-              </Typography>
-
-              <Box sx={{ display: "flex", gap: 1, mb: 2 }}>
                 <Button
                   variant="secondary"
                   size="sm"
@@ -247,7 +333,10 @@ const PoliciesPage = () => {
                 <IconButton
                   size="small"
                   onClick={() => handleEditPolicy(policy)}
-                  sx={{ ml: 1 }}
+                  sx={{
+                    "&:hover": { backgroundColor: "action.hover" },
+                    borderRadius: 1.5,
+                  }}
                 >
                   <Edit fontSize="small" />
                 </IconButton>
@@ -256,6 +345,13 @@ const PoliciesPage = () => {
                   size="small"
                   onClick={() => handleDeletePolicy(policy.id)}
                   color="error"
+                  sx={{
+                    "&:hover": {
+                      backgroundColor: "error.main",
+                      color: "white",
+                    },
+                    borderRadius: 1.5,
+                  }}
                 >
                   <Delete fontSize="small" />
                 </IconButton>
@@ -265,16 +361,40 @@ const PoliciesPage = () => {
         ))}
       </Box>
 
+      {/* Empty State */}
       {policies.length === 0 && (
-        <Box sx={{ textAlign: "center", py: 4 }}>
-          <Typography variant="h6" color="text.secondary">
+        <Box
+          sx={{
+            textAlign: "center",
+            py: 8,
+            px: 4,
+            backgroundColor: "background.paper",
+            borderRadius: 3,
+            border: "1px solid",
+            borderColor: "divider",
+            boxShadow: "0 2px 8px rgba(0,0,0,0.04)",
+          }}
+        >
+          <Policy sx={{ fontSize: 48, color: "text.disabled", mb: 2 }} />
+          <Typography
+            variant="h5"
+            color="text.secondary"
+            sx={{ mb: 1, fontWeight: 500 }}
+          >
             No policies found
           </Typography>
-          <Typography variant="body2" color="text.secondary">
+          <Typography
+            variant="body1"
+            color="text.secondary"
+            sx={{ mb: 3, maxWidth: 400, mx: "auto" }}
+          >
             {selectedType
-              ? `No ${selectedType} policies available`
-              : "No policies have been created yet"}
+              ? `No ${selectedType} policies are currently configured. Try selecting a different filter or create a new ${selectedType} policy.`
+              : "Get started by creating your first security policy to manage access and compliance across your organization."}
           </Typography>
+          <Button variant="primary" onClick={handleCreatePolicy}>
+            + Create Your First Policy
+          </Button>
         </Box>
       )}
 
