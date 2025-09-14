@@ -9,8 +9,12 @@ import {
 } from "@mui/material";
 import { Typography } from "../design-system/components";
 import { Settings } from "@mui/icons-material";
+import { useFeatureFlagsStore } from "../state";
+import { useToast } from "../hooks";
 
 const SettingsPage = () => {
+  const { flags, setFlag } = useFeatureFlagsStore();
+  const toast = useToast();
   return (
     <Box>
       <Header
@@ -23,18 +27,43 @@ const SettingsPage = () => {
         <Card>
           <CardContent>
             <Typography variant="h6" gutterBottom>
-              Security Preferences
+              Feature Flags
             </Typography>
             <Box sx={{ display: "flex", flexDirection: "column", gap: 2 }}>
               <FormControlLabel
-                control={<Switch defaultChecked />}
-                label="Real-time threat monitoring"
+                control={
+                  <Switch
+                    checked={flags.enableNotifications}
+                    onChange={(e) => {
+                      setFlag("enableNotifications", e.target.checked);
+                      toast.success("Notifications setting updated");
+                    }}
+                  />
+                }
+                label="Enable notifications"
               />
               <FormControlLabel
-                control={<Switch defaultChecked />}
-                label="Automatic security updates"
+                control={
+                  <Switch
+                    checked={flags.enableAdvancedReports}
+                    onChange={(e) =>
+                      setFlag("enableAdvancedReports", e.target.checked)
+                    }
+                  />
+                }
+                label="Advanced reports"
               />
-              <FormControlLabel control={<Switch />} label="Email alerts" />
+              <FormControlLabel
+                control={
+                  <Switch
+                    checked={flags.enableBetaFeatures}
+                    onChange={(e) =>
+                      setFlag("enableBetaFeatures", e.target.checked)
+                    }
+                  />
+                }
+                label="Beta features"
+              />
             </Box>
           </CardContent>
         </Card>

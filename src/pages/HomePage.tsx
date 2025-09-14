@@ -2,10 +2,13 @@ import React from "react";
 import { Box, Typography, Grid, CardContent, Skeleton } from "@mui/material";
 import { Button, Card, Header } from "../design-system/components";
 import { Home } from "@mui/icons-material";
-import { useSystemStats } from "../hooks";
+import { useSystemStats, useToast } from "../hooks";
+import { useFeatureFlagsStore } from "../state";
 
 const HomePage = () => {
   const { data: stats, isLoading: statsLoading } = useSystemStats();
+  const toast = useToast();
+  const { isEnabled } = useFeatureFlagsStore();
 
   const features = [
     {
@@ -114,6 +117,16 @@ const HomePage = () => {
           </Grid>
         ))}
       </Grid>
+
+      {isEnabled("enableNotifications") && (
+        <Box
+          sx={{ mt: 3, p: 2, backgroundColor: "info.light", borderRadius: 1 }}
+        >
+          <Typography variant="body2" color="info.contrastText">
+            ℹ️ Notifications are enabled via feature flags
+          </Typography>
+        </Box>
+      )}
     </Box>
   );
 };

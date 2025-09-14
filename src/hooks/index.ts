@@ -7,3 +7,4 @@ export {
   useUpdateFirewallRule,
   useDeleteFirewallRule,
 } from "./useApi";
+export { useToast } from "./useToast";

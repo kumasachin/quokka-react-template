@@ -7,7 +7,7 @@ import {
   useTheme,
   useMediaQuery,
 } from "@mui/material";
-import { Typography } from "../../design-system/components";
+import { Typography, ToastPanel } from "../../design-system/components";
 import { useNavigate, useLocation, Outlet } from "react-router-dom";
 import { Security } from "@mui/icons-material";
 
@@ -147,6 +147,7 @@ const WrapperTemplate = () => {
           </Typography>
         </Container>
       </Box>
+      <ToastPanel />
     </Box>
   );
 };
