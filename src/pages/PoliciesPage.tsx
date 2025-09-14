@@ -16,8 +16,9 @@ import {
   Alert,
 } from "@mui/material";
 import { Policy, Error } from "@mui/icons-material";
-import { usePolicies, useUpdatePolicy } from "../hooks";
+import { usePolicies, useUpdatePolicy } from "../queries/policies";
 import { useToast } from "../hooks";
+import OptimisticUpdateDemo from "../components/OptimisticUpdateDemo";
 
 const statusColors = {
   active: "success" as const,
@@ -34,11 +35,18 @@ const priorityColors = {
 
 const PoliciesPage = () => {
   const [selectedType, setSelectedType] = useState<string>("");
-  const { data: policiesData, isLoading, error } = usePolicies(selectedType || undefined);
+  const {
+    data: policiesData,
+    isLoading,
+    error,
+  } = usePolicies(selectedType || undefined);
   const updatePolicyMutation = useUpdatePolicy();
   const toast = useToast();
 
-  const handleStatusToggle = async (policyId: string, currentStatus: string) => {
+  const handleStatusToggle = async (
+    policyId: string,
+    currentStatus: string
+  ) => {
     const newStatus = currentStatus === "active" ? "inactive" : "active";
 
     try {
@@ -46,13 +54,21 @@ const PoliciesPage = () => {
         id: policyId,
         updates: { status: newStatus },
       });
-      toast.success(`Policy ${newStatus === "active" ? "activated" : "deactivated"} successfully`);
+      toast.success(
+        `Policy ${
+          newStatus === "active" ? "activated" : "deactivated"
+        } successfully`
+      );
     } catch (error) {
       toast.error("Failed to update policy status");
     }
   };
 
-  const policyTypes = ["security", "firewall", "access", "backup", "compliance"];
+  const policyTypes = [
+    "security",
+    "firewall",
+    "access",
+    "backup",
     "compliance",
   ];
 
@@ -111,6 +127,8 @@ const PoliciesPage = () => {
           </Select>
         </FormControl>
       </Box>
+
+      <OptimisticUpdateDemo />
 
       <Typography variant="body1" sx={{ mb: 2 }}>
         Showing {policies.length} {selectedType ? `${selectedType} ` : ""}

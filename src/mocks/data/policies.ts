@@ -62,8 +62,6 @@ export const mockPolicies: Policy[] = [
     ],
   },
 
-  },
-
   {
     id: "fw-001",
     name: "Web Traffic Filter",
