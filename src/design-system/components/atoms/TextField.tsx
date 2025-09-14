@@ -4,7 +4,9 @@ import {
   TextFieldProps as MuiTextFieldProps,
 } from "@mui/material";
 
-export interface TextFieldProps extends MuiTextFieldProps {}
+export interface TextFieldProps extends Omit<MuiTextFieldProps, "variant"> {
+  variant?: "outlined" | "filled" | "standard";
+}
 
 export const TextField = React.forwardRef<HTMLInputElement, TextFieldProps>(
   ({ variant = "outlined", fullWidth = true, ...props }, ref) => {

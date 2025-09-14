@@ -16,7 +16,7 @@ export interface HeaderProps {
 
 const getVariant = (level: number): TypographyProps["variant"] => {
   const variants = { 1: "h1", 2: "h2", 3: "h3", 4: "h4", 5: "h5", 6: "h6" };
-  return variants[level] || "h3";
+  return (variants as any)[level] || "h3";
 };
 
 const getAlignment = (align: string) => {

@@ -1,5 +1,5 @@
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
-import { patchApi, firewallApi, type Patch, type FirewallRule } from "../api";
+import { patchApi, firewallApi, type FirewallRule } from "../api";
 
 export const usePatches = () => {
   return useQuery({

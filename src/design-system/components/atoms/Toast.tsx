@@ -1,7 +1,6 @@
-import React from "react";
-import { Alert, AlertTitle, IconButton, styled } from "@mui/material";
+import { Alert, IconButton, styled } from "@mui/material";
 import { Close, CheckCircle, Error, Warning, Info } from "@mui/icons-material";
-import { Toast as ToastType } from "../../state";
+import { Toast as ToastType } from "../../../state";
 
 const StyledAlert = styled(Alert)(({ theme }) => ({
   width: "100%",
@@ -23,7 +22,7 @@ const iconMap = {
 };
 
 export const Toast = ({ toast, onClose }: ToastProps) => {
-  const IconComponent = iconMap[toast.type];
+  const IconComponent = iconMap[toast.type as keyof typeof iconMap];
 
   return (
     <StyledAlert

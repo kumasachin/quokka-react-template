@@ -1,4 +1,3 @@
-import React from "react";
 import { Box, Portal, styled } from "@mui/material";
 import { Toast } from "../atoms/Toast";
 import { useToastStore } from "../../../state";

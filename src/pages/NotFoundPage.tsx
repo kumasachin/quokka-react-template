@@ -1,4 +1,3 @@
-import React from "react";
 import { Typography, Card, Button } from "../design-system/components";
 import { Box, CardContent, CardActions } from "@mui/material";
 import { useNavigate } from "react-router-dom";

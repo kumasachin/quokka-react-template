@@ -1,4 +1,3 @@
-import React from "react";
 import { Header } from "../design-system/components";
 import {
   Box,

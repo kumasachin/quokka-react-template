@@ -1,4 +1,3 @@
-import React from "react";
 import {
   Box,
   Container,
@@ -32,7 +31,7 @@ const WrapperTemplate = () => {
       (tab.path !== "/" && location.pathname.startsWith(tab.path))
   );
 
-  const handleTabChange = (_, newValue) => {
+  const handleTabChange = (_: React.SyntheticEvent, newValue: number) => {
     navigate(tabs[newValue].path);
   };
 
@@ -105,7 +104,7 @@ const WrapperTemplate = () => {
               },
             }}
           >
-            {tabs.map((tab, index) => (
+            {tabs.map((tab) => (
               <Tab key={tab.path} label={tab.label} />
             ))}
           </Tabs>

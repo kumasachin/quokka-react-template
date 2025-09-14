@@ -1,4 +1,3 @@
-import React from "react";
 import { Box, Button, Typography, Paper } from "@mui/material";
 import { usePolicies, useUpdatePolicy } from "../queries/policies";
 

@@ -43,7 +43,7 @@ export const useUpdatePolicy = () => {
 
       return { previousPolicies };
     },
-    onError: (err, payload, context) => {
+    onError: (_err, _payload, context) => {
       if (context?.previousPolicies) {
         context.previousPolicies.forEach(([queryKey, data]) => {
           queryClient.setQueryData(queryKey, data);

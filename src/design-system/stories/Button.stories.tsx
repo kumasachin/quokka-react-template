@@ -41,17 +41,17 @@ export const Secondary: Story = {
 
 export const Small: Story = {
   args: {
+    children: "Small Button",
     variant: "primary",
-    size: "small",
-    children: "Small",
+    size: "sm",
   },
 };
 
 export const Large: Story = {
   args: {
+    children: "Large Button",
     variant: "primary",
-    size: "large",
-    children: "Large",
+    size: "lg",
   },
 };
 

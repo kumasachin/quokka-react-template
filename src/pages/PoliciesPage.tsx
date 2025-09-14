@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import { Header } from "../design-system/components";
 import {
   Box,
@@ -11,7 +11,6 @@ import {
   MenuItem,
   FormControl,
   InputLabel,
-  Grid,
   CircularProgress,
   Alert,
 } from "@mui/material";
@@ -138,79 +137,84 @@ const PoliciesPage = () => {
         policies
       </Typography>
 
-      <Grid container spacing={3}>
+      <Box
+        sx={{
+          display: "grid",
+          gridTemplateColumns: {
+            xs: "1fr",
+            md: "repeat(2, 1fr)",
+            lg: "repeat(3, 1fr)",
+          },
+          gap: 3,
+        }}
+      >
         {policies.map((policy) => (
-          <Grid item xs={12} md={6} lg={4} key={policy.id}>
-            <Card
-              sx={{ height: "100%", display: "flex", flexDirection: "column" }}
-            >
-              <CardContent sx={{ flexGrow: 1 }}>
-                <Box
-                  sx={{
-                    display: "flex",
-                    justifyContent: "space-between",
-                    alignItems: "flex-start",
-                    mb: 2,
-                  }}
-                >
-                  <Typography variant="h6" component="h3">
-                    {policy.name}
-                  </Typography>
-                  <Chip label={policy.type} size="small" variant="outlined" />
-                </Box>
-
-                <Typography
-                  variant="body2"
-                  color="text.secondary"
-                  sx={{ mb: 2 }}
-                >
-                  {policy.description}
+          <Card
+            key={policy.id}
+            sx={{ height: "100%", display: "flex", flexDirection: "column" }}
+          >
+            <CardContent sx={{ flexGrow: 1 }}>
+              <Box
+                sx={{
+                  display: "flex",
+                  justifyContent: "space-between",
+                  alignItems: "flex-start",
+                  mb: 2,
+                }}
+              >
+                <Typography variant="h6" component="h3">
+                  {policy.name}
                 </Typography>
+                <Chip label={policy.type} size="small" variant="outlined" />
+              </Box>
 
-                <Box sx={{ display: "flex", gap: 1, mb: 2, flexWrap: "wrap" }}>
-                  <Chip
-                    label={policy.status}
-                    color={statusColors[policy.status]}
-                    size="small"
-                  />
-                  <Chip
-                    label={policy.priority}
-                    color={priorityColors[policy.priority]}
-                    size="small"
-                  />
-                </Box>
+              <Typography variant="body2" color="text.secondary" sx={{ mb: 2 }}>
+                {policy.description}
+              </Typography>
 
-                <Typography
-                  variant="caption"
-                  color="text.secondary"
-                  sx={{ display: "block", mb: 1 }}
-                >
-                  Rules: {policy.rules.length}
-                </Typography>
-
-                <Typography
-                  variant="caption"
-                  color="text.secondary"
-                  sx={{ display: "block", mb: 2 }}
-                >
-                  Updated: {new Date(policy.updatedAt).toLocaleDateString()}
-                </Typography>
-
-                <Button
-                  variant="outlined"
+              <Box sx={{ display: "flex", gap: 1, mb: 2, flexWrap: "wrap" }}>
+                <Chip
+                  label={policy.status}
+                  color={statusColors[policy.status]}
                   size="small"
-                  onClick={() => handleStatusToggle(policy.id, policy.status)}
-                  disabled={updatePolicyMutation.isPending}
-                  color={policy.status === "active" ? "error" : "success"}
-                  fullWidth
-                >
-                  {policy.status === "active" ? "Deactivate" : "Activate"}
-                </Button>
-              </CardContent>
-            </Card>
-          </Grid>
+                />
+                <Chip
+                  label={policy.priority}
+                  color={priorityColors[policy.priority]}
+                  size="small"
+                />
+              </Box>
+
+              <Typography
+                variant="caption"
+                color="text.secondary"
+                sx={{ display: "block", mb: 1 }}
+              >
+                Rules: {policy.rules.length}
+              </Typography>
+
+              <Typography
+                variant="caption"
+                color="text.secondary"
+                sx={{ display: "block", mb: 2 }}
+              >
+                Updated: {new Date(policy.updatedAt).toLocaleDateString()}
+              </Typography>
+
+              <Button
+                variant="outlined"
+                size="small"
+                onClick={() => handleStatusToggle(policy.id, policy.status)}
+                disabled={updatePolicyMutation.isPending}
+                color={policy.status === "active" ? "error" : "success"}
+                fullWidth
+              >
+                {policy.status === "active" ? "Deactivate" : "Activate"}
+              </Button>
+            </CardContent>
+          </Card>
         ))}
-      </Grid>
+      </Box>
 
       {policies.length === 0 && (
         <Box sx={{ textAlign: "center", py: 4 }}>

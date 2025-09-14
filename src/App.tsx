@@ -1,4 +1,3 @@
-import React from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import { QueryProvider } from "./providers";
 import WrapperTemplate from "./components/layout/WrapperTemplate";

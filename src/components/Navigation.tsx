@@ -1,4 +1,3 @@
-import React from "react";
 import { AppBar, Toolbar, Box } from "@mui/material";
 import { Typography, Button } from "../design-system/components";
 import { useNavigate, useLocation } from "react-router-dom";
@@ -24,9 +23,10 @@ const Navigation = () => {
           {navItems.map((item) => (
             <Button
               key={item.path}
-              variant={location.pathname === item.path ? "contained" : "text"}
+              variant={
+                location.pathname === item.path ? "primary" : "secondary"
+              }
               onClick={() => navigate(item.path)}
-              sx={{ color: "white" }}
             >
               {item.label}
             </Button>

@@ -1,13 +1,13 @@
-import React from "react";
-import { Box, Typography, Grid, CardContent, Skeleton } from "@mui/material";
+import { Box, Typography, CardContent, Skeleton } from "@mui/material";
 import { Button, Card, Header } from "../design-system/components";
 import { Home } from "@mui/icons-material";
-import { useSystemStats, useToast } from "../hooks";
+import { useSystemStats } from "../hooks";
 import { useFeatureFlagsStore } from "../state";
+import { useNavigate } from "react-router-dom";
 
 const HomePage = () => {
+  const navigate = useNavigate();
   const { data: stats, isLoading: statsLoading } = useSystemStats();
-  const toast = useToast();
   const { isEnabled } = useFeatureFlagsStore();
 
   const features = [
@@ -41,82 +41,90 @@ const HomePage = () => {
         sx={{ mb: 4 }}
       />
 
-      <Grid container spacing={3} sx={{ mb: 4 }}>
-        <Grid item xs={12} sm={6} md={3}>
-          <Card>
-            <CardContent>
-              <Typography variant="h6" color="primary" gutterBottom>
-                Active Devices
-              </Typography>
-              <Typography variant="h3">
-                {statsLoading ? <Skeleton width={60} /> : stats?.devices}
-              </Typography>
-            </CardContent>
-          </Card>
-        </Grid>
-        <Grid item xs={12} sm={6} md={3}>
-          <Card>
-            <CardContent>
-              <Typography variant="h6" color="warning.main" gutterBottom>
-                Pending Patches
-              </Typography>
-              <Typography variant="h3">
-                {statsLoading ? <Skeleton width={40} /> : stats?.patches}
-              </Typography>
-            </CardContent>
-          </Card>
-        </Grid>
-        <Grid item xs={12} sm={6} md={3}>
-          <Card>
-            <CardContent>
-              <Typography variant="h6" color="error.main" gutterBottom>
-                Threats Detected
-              </Typography>
-              <Typography variant="h3">
-                {statsLoading ? <Skeleton width={30} /> : stats?.threats}
-              </Typography>
-            </CardContent>
-          </Card>
-        </Grid>
-        <Grid item xs={12} sm={6} md={3}>
-          <Card>
-            <CardContent>
-              <Typography variant="h6" color="success.main" gutterBottom>
-                System Uptime
-              </Typography>
-              <Typography variant="h3">
-                {statsLoading ? <Skeleton width={80} /> : stats?.uptime}
-              </Typography>
-            </CardContent>
-          </Card>
-        </Grid>
-      </Grid>
+      <Box
+        sx={{
+          display: "grid",
+          gridTemplateColumns: {
+            xs: "1fr",
+            sm: "repeat(2, 1fr)",
+            md: "repeat(4, 1fr)",
+          },
+          gap: 3,
+          mb: 4,
+        }}
+      >
+        <Card>
+          <CardContent>
+            <Typography variant="h6" color="primary" gutterBottom>
+              Active Devices
+            </Typography>
+            <Typography variant="h3">
+              {statsLoading ? <Skeleton width={60} /> : stats?.devices}
+            </Typography>
+          </CardContent>
+        </Card>
+        <Card>
+          <CardContent>
+            <Typography variant="h6" color="warning.main" gutterBottom>
+              Pending Patches
+            </Typography>
+            <Typography variant="h3">
+              {statsLoading ? <Skeleton width={40} /> : stats?.patches}
+            </Typography>
+          </CardContent>
+        </Card>
+        <Card>
+          <CardContent>
+            <Typography variant="h6" color="error.main" gutterBottom>
+              Threats Detected
+            </Typography>
+            <Typography variant="h3">
+              {statsLoading ? <Skeleton width={30} /> : stats?.threats}
+            </Typography>
+          </CardContent>
+        </Card>
+        <Card>
+          <CardContent>
+            <Typography variant="h6" color="success.main" gutterBottom>
+              System Uptime
+            </Typography>
+            <Typography variant="h3">
+              {statsLoading ? <Skeleton width={80} /> : stats?.uptime}
+            </Typography>
+          </CardContent>
+        </Card>
+      </Box>
 
-      <Grid container spacing={3}>
+      <Box
+        sx={{
+          display: "grid",
+          gridTemplateColumns: {
+            xs: "1fr",
+            md: "repeat(2, 1fr)",
+            lg: "repeat(3, 1fr)",
+          },
+          gap: 3,
+        }}
+      >
         {features.map((feature) => (
-          <Grid item xs={12} md={4} key={feature.title}>
-            <Card
-              sx={{ height: "100%", display: "flex", flexDirection: "column" }}
-            >
-              <CardContent sx={{ flexGrow: 1 }}>
-                <Typography variant="h5" gutterBottom>
-                  {feature.title}
-                </Typography>
-                <Typography
-                  variant="body1"
-                  color="text.secondary"
-                  sx={{ mb: 2 }}
-                >
-                  {feature.description}
-                </Typography>
-                <Button variant="primary" href={feature.path} component="a">
-                  Get Started
-                </Button>
-              </CardContent>
-            </Card>
-          </Grid>
+          <Card
+            key={feature.title}
+            sx={{ height: "100%", display: "flex", flexDirection: "column" }}
+          >
+            <CardContent sx={{ flexGrow: 1 }}>
+              <Typography variant="h5" gutterBottom>
+                {feature.title}
+              </Typography>
+              <Typography variant="body1" color="text.secondary" sx={{ mb: 2 }}>
+                {feature.description}
+              </Typography>
+              <Button variant="primary" onClick={() => navigate(feature.path)}>
+                Get Started
+              </Button>
+            </CardContent>
+          </Card>
         ))}
-      </Grid>
+      </Box>
 
       {isEnabled("enableNotifications") && (
         <Box
