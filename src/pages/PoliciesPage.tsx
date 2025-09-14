@@ -167,9 +167,11 @@ const PoliciesPage = () => {
             sx={{ minWidth: 200, flexShrink: 0 }}
           />
 
-                    <Typography variant="h6" color="text.secondary">
+          <Typography variant="h6" color="text.secondary">
             {t(
-              policies.length === 1 ? "policies.policyFound" : "policies.policiesFound",
+              policies.length === 1
+                ? "policies.policyFound"
+                : "policies.policiesFound",
               { count: policies.length }
             )}
           </Typography>
@@ -291,7 +293,9 @@ const PoliciesPage = () => {
                     letterSpacing: 0.5,
                   }}
                 >
-                  {t("policies.metadata.rulesConfigured", { count: policy.rules.length })}
+                  {t("policies.metadata.rulesConfigured", {
+                    count: policy.rules.length,
+                  })}
                 </Typography>
                 <Typography
                   variant="caption"
@@ -301,8 +305,8 @@ const PoliciesPage = () => {
                     fontWeight: 400,
                   }}
                 >
-                  {t("policies.metadata.lastUpdated", { 
-                    date: new Date(policy.updatedAt).toLocaleDateString() 
+                  {t("policies.metadata.lastUpdated", {
+                    date: new Date(policy.updatedAt).toLocaleDateString(),
                   })}
                 </Typography>
               </Box>
@@ -325,7 +329,11 @@ const PoliciesPage = () => {
                   onClick={() => handleStatusToggle(policy.id, policy.status)}
                   disabled={updatePolicyMutation.isPending}
                 >
-                  {t(`policies.actions.${policy.status === "active" ? "deactivate" : "activate"}`)}
+                  {t(
+                    `policies.actions.${
+                      policy.status === "active" ? "deactivate" : "activate"
+                    }`
+                  )}
                 </Button>
 
                 <IconButton
@@ -387,7 +395,9 @@ const PoliciesPage = () => {
             sx={{ mb: 3, maxWidth: 400, mx: "auto" }}
           >
             {selectedType
-              ? t("policies.noPolicyFiltered", { type: t(`policies.type.${selectedType}`) })
+              ? t("policies.noPolicyFiltered", {
+                  type: t(`policies.type.${selectedType}`),
+                })
               : t("policies.noPolicyDescription")}
           </Typography>
           <Button variant="primary" onClick={handleCreatePolicy}>
