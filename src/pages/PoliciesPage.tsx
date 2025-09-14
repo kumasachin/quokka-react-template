@@ -19,6 +19,7 @@ import { Policy, Error } from "@mui/icons-material";
 import { usePolicies, useUpdatePolicy } from "../queries/policies";
 import { useToast } from "../hooks";
 import OptimisticUpdateDemo from "../components/OptimisticUpdateDemo";
+import PolicySchemaDemo from "../components/PolicySchemaDemo";
 
 const statusColors = {
   active: "success" as const,
@@ -129,6 +130,8 @@ const PoliciesPage = () => {
       </Box>
 
       <OptimisticUpdateDemo />
+
+      <PolicySchemaDemo />
 
       <Typography variant="body1" sx={{ mb: 2 }}>
         Showing {policies.length} {selectedType ? `${selectedType} ` : ""}
