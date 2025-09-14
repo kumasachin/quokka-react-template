@@ -10,14 +10,7 @@ import {
   Alert,
   IconButton,
 } from "@mui/material";
-import {
-  Policy,
-  Error,
-  Add,
-  MoreVert,
-  Edit,
-  Delete,
-} from "@mui/icons-material";
+import { Policy, Error, Edit, Delete } from "@mui/icons-material";
 import { usePolicies, useUpdatePolicy } from "../hooks/usePolicies";
 import { useDeletePolicy } from "../hooks/usePolicies";
 import { useToast } from "../hooks";
@@ -147,9 +140,10 @@ const PoliciesPage = () => {
       <Box
         sx={{
           display: "flex",
-          justifyContent: "space-between",
           alignItems: "center",
           mb: 3,
+          gap: 3,
+          flexWrap: "nowrap",
         }}
       >
         <Select
@@ -163,11 +157,11 @@ const PoliciesPage = () => {
               label: type.charAt(0).toUpperCase() + type.slice(1),
             })),
           ]}
-          sx={{ minWidth: 110 }}
+          sx={{ minWidth: 180, flexShrink: 0 }}
         />
 
         <Button variant="primary" onClick={handleCreatePolicy}>
-          Create Policy
+          Create&nbsp;Policy
         </Button>
       </Box>
 
