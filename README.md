@@ -2,6 +2,17 @@
 
 A modern, scalable React-based cybersecurity management dashboard built with enterprise-grade architecture and best practices.
 
+## Interview Project Notice
+
+This is a take-home interview project demonstrating technical skills in React, TypeScript, and modern web development practices. The focus was on showcasing:
+
+- **Clean code architecture** and scalable patterns
+- **Technical implementation** over pixel-perfect design
+- **Best practices** in testing, state management, and component design
+- **Professional development workflow** with proper documentation
+
+**Design Limitations**: Visual design is functional but not polished - the emphasis was on technical excellence rather than UI/UX perfection. In a real project, I would collaborate with designers for proper visual design and user experience.
+
 ## Run 'pnpm run dev:full or npm run dev:full'
 
 ## 🎯 What I've Built
