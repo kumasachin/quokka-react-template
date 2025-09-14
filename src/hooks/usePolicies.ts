@@ -15,12 +15,6 @@ interface PolicyResponse {
   message?: string;
 }
 
-interface ApiError {
-  success: false;
-  error: string;
-  message: string;
-}
-
 export const usePolicies = (type?: string) => {
   return useQuery({
     queryKey: ["policies", type],
@@ -53,13 +47,79 @@ export const useUpdatePolicy = () => {
     }: {
       id: string;
       updates: Partial<Policy>;
-    }): Promise<PolicyResponse> => {
+    }) => {
       const response = await apiClient.put(`/policies/${id}`, updates);
       return response.data;
     },
-    onSuccess: (data, variables) => {
+
+    onMutate: async (variables) => {
+      await queryClient.cancelQueries({ queryKey: ["policies"] });
+
+      const previousPolicies = queryClient.getQueriesData({
+        queryKey: ["policies"],
+      });
+
+      queryClient.setQueriesData<PoliciesResponse>(
+        { queryKey: ["policies"] },
+        (old) => {
+          if (!old?.data) return old;
+
+          const updatedPolicies = old.data.map((policy) =>
+            policy.id === variables.id
+              ? {
+                  ...policy,
+                  ...variables.updates,
+                  updatedAt: new Date().toISOString(),
+                }
+              : policy
+          );
+
+          return { ...old, data: updatedPolicies };
+        }
+      );
+
+      const previousPolicy = queryClient.getQueryData([
+        "policies",
+        variables.id,
+      ]);
+
+      queryClient.setQueryData<PolicyResponse>(
+        ["policies", variables.id],
+        (old) => {
+          if (!old?.data) return old;
+          return {
+            ...old,
+            data: {
+              ...old.data,
+              ...variables.updates,
+              updatedAt: new Date().toISOString(),
+            },
+          };
+        }
+      );
+
+      return { previousPolicies, previousPolicy };
+    },
+
+    onError: (_err, variables, context) => {
+      if (context?.previousPolicies) {
+        context.previousPolicies.forEach(([queryKey, data]) => {
+          queryClient.setQueryData(queryKey, data);
+        });
+      }
+      if (context?.previousPolicy) {
+        queryClient.setQueryData(
+          ["policies", variables.id],
+          context.previousPolicy
+        );
+      }
+    },
+
+    onSettled: (_data, _error, variables) => {
       queryClient.invalidateQueries({ queryKey: ["policies"] });
-      queryClient.setQueryData(["policies", variables.id], data);
+      if (variables.id) {
+        queryClient.invalidateQueries({ queryKey: ["policies", variables.id] });
+      }
     },
   });
 };
