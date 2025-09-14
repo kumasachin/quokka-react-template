@@ -17,14 +17,12 @@ const StyledButton = styled.button<ButtonProps>`
   transition: all 0.2s ease-in-out;
   opacity: ${(props) => (props.disabled ? 0.6 : 1)};
 
-  /* Variant styles */
   background-color: ${(props) =>
     props.variant === "secondary"
       ? props.theme.palette.secondary.main
       : props.theme.palette.primary.main};
   color: ${(props) => props.theme.palette.common.white};
 
-  /* Size styles */
   padding: ${(props) => {
     switch (props.size) {
       case "sm":

@@ -1,4 +1,3 @@
-// Atoms - Basic building blocks
 export { Button } from "./Button";
 export { Typography } from "./Typography";
 export { TextField } from "./TextField";

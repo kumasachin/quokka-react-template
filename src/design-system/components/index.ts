@@ -1,8 +1,5 @@
-// Export all atoms
-export * from "./atoms";
+export { Button, Typography, TextField, Card } from "./atoms";
 
-// Export all molecules
-export * from "./molecules";
+export { Header } from "./molecules";
 
-// Export all organisms
-export * from "./organisms";
+export {} from "./organisms";

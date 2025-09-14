@@ -1,9 +1,12 @@
 import React from "react";
-import { Box, Typography, Grid, CardContent } from "@mui/material";
+import { Box, Typography, Grid, CardContent, Skeleton } from "@mui/material";
 import { Button, Card, Header } from "../design-system/components";
 import { Home } from "@mui/icons-material";
+import { useSystemStats } from "../hooks";
 
 const HomePage = () => {
+  const { data: stats, isLoading: statsLoading } = useSystemStats();
+
   const features = [
     {
       title: "Device Management",
@@ -34,6 +37,57 @@ const HomePage = () => {
         align="center"
         sx={{ mb: 4 }}
       />
+
+      <Grid container spacing={3} sx={{ mb: 4 }}>
+        <Grid item xs={12} sm={6} md={3}>
+          <Card>
+            <CardContent>
+              <Typography variant="h6" color="primary" gutterBottom>
+                Active Devices
+              </Typography>
+              <Typography variant="h3">
+                {statsLoading ? <Skeleton width={60} /> : stats?.devices}
+              </Typography>
+            </CardContent>
+          </Card>
+        </Grid>
+        <Grid item xs={12} sm={6} md={3}>
+          <Card>
+            <CardContent>
+              <Typography variant="h6" color="warning.main" gutterBottom>
+                Pending Patches
+              </Typography>
+              <Typography variant="h3">
+                {statsLoading ? <Skeleton width={40} /> : stats?.patches}
+              </Typography>
+            </CardContent>
+          </Card>
+        </Grid>
+        <Grid item xs={12} sm={6} md={3}>
+          <Card>
+            <CardContent>
+              <Typography variant="h6" color="error.main" gutterBottom>
+                Threats Detected
+              </Typography>
+              <Typography variant="h3">
+                {statsLoading ? <Skeleton width={30} /> : stats?.threats}
+              </Typography>
+            </CardContent>
+          </Card>
+        </Grid>
+        <Grid item xs={12} sm={6} md={3}>
+          <Card>
+            <CardContent>
+              <Typography variant="h6" color="success.main" gutterBottom>
+                System Uptime
+              </Typography>
+              <Typography variant="h3">
+                {statsLoading ? <Skeleton width={80} /> : stats?.uptime}
+              </Typography>
+            </CardContent>
+          </Card>
+        </Grid>
+      </Grid>
 
       <Grid container spacing={3}>
         {features.map((feature) => (

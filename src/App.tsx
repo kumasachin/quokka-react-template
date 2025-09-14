@@ -1,5 +1,6 @@
 import React from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import { QueryProvider } from "./providers";
 import WrapperTemplate from "./components/layout/WrapperTemplate";
 import HomePage from "./pages/HomePage";
 import DevicePage from "./pages/DevicePage";
@@ -11,18 +12,20 @@ import "./App.css";
 
 function App() {
   return (
-    <Router>
-      <Routes>
-        <Route path="/" element={<WrapperTemplate />}>
-          <Route index element={<HomePage />} />
-          <Route path="devices" element={<DevicePage />} />
-          <Route path="patches" element={<PatchPage />} />
-          <Route path="firewall" element={<FirewallPage />} />
-          <Route path="settings" element={<SettingsPage />} />
-          <Route path="*" element={<NotFoundPage />} />
-        </Route>
-      </Routes>
-    </Router>
+    <QueryProvider>
+      <Router>
+        <Routes>
+          <Route path="/" element={<WrapperTemplate />}>
+            <Route index element={<HomePage />} />
+            <Route path="devices" element={<DevicePage />} />
+            <Route path="patches" element={<PatchPage />} />
+            <Route path="firewall" element={<FirewallPage />} />
+            <Route path="settings" element={<SettingsPage />} />
+            <Route path="*" element={<NotFoundPage />} />
+          </Route>
+        </Routes>
+      </Router>
+    </QueryProvider>
   );
 }
 
