@@ -16,7 +16,7 @@
     "build:vite": "tsc && vite build",
     "lint:eslint": "eslint . --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
     "typecheck:tsc": "tsc --noEmit",
-    "test:vitest": "echo \"No tests specified\" && exit 0",
+    "test:vitest": "vitest run",
     "preview:vite": "vite preview"
   },
   "dependencies": {
@@ -42,6 +42,7 @@
     "@storybook/react-vite": "^9.1.6",
     "@testing-library/jest-dom": "^6.8.0",
     "@testing-library/react": "^16.3.0",
+    "@testing-library/user-event": "^14.6.1",
     "@types/node": "^24.4.0",
     "@types/react": "^18.2.66",
     "@types/react-dom": "^18.2.22",
@@ -51,6 +52,7 @@
     "eslint": "^8.57.0",
     "eslint-plugin-react-hooks": "^4.6.0",
     "eslint-plugin-react-refresh": "^0.4.6",
+    "jsdom": "^27.0.0",
     "msw": "^2.11.2",
     "storybook": "^9.1.6",
     "turbo": "^1.13.4",

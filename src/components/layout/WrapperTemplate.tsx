@@ -38,6 +38,7 @@ const WrapperTemplate = () => {
 
   return (
     <Box
+      data-testid="wrapper-template"
       sx={{
         minHeight: "100vh",
         width: "100%",
@@ -46,8 +47,33 @@ const WrapperTemplate = () => {
         flexDirection: "column",
       }}
     >
+      {/* Skip to main content link for keyboard navigation */}
+      <Box
+        component="a"
+        href="#main-content"
+        data-testid="skip-link"
+        sx={{
+          position: "absolute",
+          top: -40,
+          left: 6,
+          background: "primary.main",
+          color: "primary.contrastText",
+          padding: "8px 16px",
+          borderRadius: 1,
+          textDecoration: "none",
+          zIndex: 9999,
+          "&:focus": {
+            top: 6,
+          },
+        }}
+      >
+        Skip to main content
+      </Box>
+
       <Box
         component="header"
+        role="banner"
+        data-testid="app-header"
         sx={{
           backgroundColor: "primary.main",
           color: "primary.contrastText",
@@ -63,10 +89,11 @@ const WrapperTemplate = () => {
               gap: 2,
             }}
           >
-            <Security sx={{ fontSize: 32 }} />
+            <Security sx={{ fontSize: 32 }} aria-hidden="true" />
             <Typography
               variant="h5"
               component="h1"
+              data-testid="app-title"
               sx={{
                 fontWeight: 600,
                 color: "inherit",
@@ -81,6 +108,9 @@ const WrapperTemplate = () => {
 
       <Box
         component="nav"
+        role="navigation"
+        aria-label="Main navigation"
+        data-testid="main-navigation"
         sx={{
           backgroundColor: "background.paper",
           borderBottom: 1,
@@ -96,6 +126,7 @@ const WrapperTemplate = () => {
             onChange={handleTabChange}
             variant={isMobile ? "scrollable" : "standard"}
             scrollButtons={isMobile}
+            aria-label="Navigation tabs"
             sx={{
               minHeight: 48,
               "& .MuiTab-root": {
@@ -105,8 +136,13 @@ const WrapperTemplate = () => {
               },
             }}
           >
-            {tabs.map((tab) => (
-              <Tab key={tab.path} label={tab.label} />
+            {tabs.map((tab, index) => (
+              <Tab
+                key={tab.path}
+                label={tab.label}
+                id={`nav-tab-${index}`}
+                aria-controls={`nav-tabpanel-${index}`}
+              />
             ))}
           </Tabs>
         </Container>
@@ -114,10 +150,15 @@ const WrapperTemplate = () => {
 
       <Box
         component="main"
+        role="main"
+        id="main-content"
+        tabIndex={-1}
+        data-testid="main-content"
         sx={{
           flexGrow: 1,
           width: "100%",
           backgroundColor: "background.default",
+          outline: "none",
         }}
       >
         <Container

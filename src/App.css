@@ -7,6 +7,35 @@
   flex-direction: column;
 }
 
+/* Accessibility: Focus indicators for keyboard navigation */
+*:focus-visible {
+  outline: 2px solid #1976d2;
+  outline-offset: 2px;
+  border-radius: 4px;
+}
+
+/* Enhanced focus for interactive elements */
+button:focus-visible,
+[role="button"]:focus-visible,
+input:focus-visible,
+select:focus-visible,
+textarea:focus-visible,
+[role="tab"]:focus-visible {
+  outline: 3px solid #1976d2;
+  outline-offset: 2px;
+}
+
+/* Focus for MUI components */
+.MuiTab-root:focus-visible {
+  outline: 3px solid #1976d2;
+  outline-offset: 2px;
+}
+
+.MuiButton-root:focus-visible {
+  outline: 3px solid #1976d2;
+  outline-offset: 2px;
+}
+
 .app-header {
   text-align: center;
   margin-bottom: 3rem;
@@ -265,7 +294,7 @@
 }
 
 .achievement-message {
-  background: linear-gradient(135deg, #f59e0b20, #d97706f20);
+  background: linear-gradient(135deg, #f59e0b20, #d97706ff);
   padding: 1.5rem;
   border-radius: 12px;
   border-left: 4px solid #f59e0b;
