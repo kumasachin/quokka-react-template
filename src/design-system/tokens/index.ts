@@ -50,9 +50,7 @@ export const spacing = {
 };
 
 export const typography = {
-  fontFamily: {
-    sans: ["Inter", "system-ui", "sans-serif"],
-  },
+  fontFamily: "Inter, system-ui , sans-serif",
   fontSize: {
     xs: "12px",
     sm: "14px",

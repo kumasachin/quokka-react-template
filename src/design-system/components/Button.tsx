@@ -10,52 +10,43 @@ interface ButtonProps {
   onClick?: () => void;
 }
 
-const StyledButton = styled.button<
-  Pick<ButtonProps, "variant" | "size" | "disabled">
->`
+const StyledButton = styled.button<ButtonProps>`
   border: none;
-  border-radius: ${theme.borderDepth.md};
-  font-family: ${theme.typography.fontFamily.sans.join(", ")};
+  border-radius: 6px;
+  font-family: ${theme.typography.fontFamily};
   cursor: pointer;
   transition: all 0.2s ease-in-out;
   opacity: ${(props) => (props.disabled ? 0.6 : 1)};
 
-  ${(props) => {
-    switch (props.variant) {
-      case "secondary":
-        return `
-          background-color: ${theme.colors.gray.base};
-          color: ${theme.colors.white};
-        `;
-      case "primary":
-      default:
-        return `
-          background-color: ${theme.colors.primary.base};
-          color: ${theme.colors.white};
-        `;
-    }
-  }}
+  /* Variant styles */
+  background-color: ${(props) =>
+    props.variant === "secondary"
+      ? theme.palette.secondary.main
+      : theme.palette.primary.main};
+  color: ${theme.palette.common.white};
 
-  ${(props) => {
+  /* Size styles */
+  padding: ${(props) => {
     switch (props.size) {
       case "sm":
-        return `
-          padding: ${theme.spacing.xs} ${theme.spacing.sm};
-          font-size: ${theme.typography.fontSize.sm};
-        `;
+        return `${theme.spacing.xs} ${theme.spacing.sm}`;
       case "lg":
-        return `
-          padding: ${theme.spacing.sm} ${theme.spacing.lg};
-          font-size: ${theme.typography.fontSize.lg};
-        `;
-      case "md":
+        return `${theme.spacing.sm} ${theme.spacing.lg}`;
       default:
-        return `
-          padding: ${theme.spacing.sm} ${theme.spacing.md};
-          font-size: ${theme.typography.fontSize.base};
-        `;
+        return `${theme.spacing.sm} ${theme.spacing.md}`;
     }
-  }}
+  }};
+
+  font-size: ${(props) => {
+    switch (props.size) {
+      case "sm":
+        return theme.typography.fontSize.sm;
+      case "lg":
+        return theme.typography.fontSize.lg;
+      default:
+        return theme.typography.fontSize.base;
+    }
+  }};
 
   &:hover:not(:disabled) {
     transform: translateY(-1px);
