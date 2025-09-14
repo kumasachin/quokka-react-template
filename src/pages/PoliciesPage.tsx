@@ -16,6 +16,7 @@ import { useDeletePolicy } from "../hooks/usePolicies";
 import { useToast } from "../hooks";
 import PolicyFormModal from "../components/PolicyFormModal";
 import { Policy as PolicyType } from "../api/policies";
+import { useTranslation } from "react-i18next";
 
 const statusColors = {
   active: "success" as const,
@@ -31,6 +32,7 @@ const priorityColors = {
 };
 
 const PoliciesPage = () => {
+  const { t } = useTranslation();
   const [selectedType, setSelectedType] = useState<string>("");
   const [formModalOpen, setFormModalOpen] = useState(false);
   const [editingPolicy, setEditingPolicy] = useState<PolicyType | null>(null);
@@ -55,13 +57,9 @@ const PoliciesPage = () => {
         id: policyId,
         updates: { status: newStatus },
       });
-      toast.success(
-        `Policy ${
-          newStatus === "active" ? "activated" : "deactivated"
-        } successfully`
-      );
+      toast.success(t(`policies.messages.${newStatus}`));
     } catch (error) {
-      toast.error("Failed to update policy status");
+      toast.error(t("policies.messages.statusUpdateError"));
     }
   };
 
@@ -76,12 +74,12 @@ const PoliciesPage = () => {
   };
 
   const handleDeletePolicy = async (policyId: string) => {
-    if (confirm("Are you sure you want to delete this policy?")) {
+    if (confirm(t("policies.messages.deleteConfirm"))) {
       try {
         await deletePolicy.mutateAsync(policyId);
-        toast.success("Policy deleted successfully");
+        toast.success(t("policies.messages.deleted"));
       } catch (error) {
-        toast.error("Failed to delete policy");
+        toast.error(t("policies.messages.deleteError"));
       }
     }
   };
@@ -116,12 +114,12 @@ const PoliciesPage = () => {
     return (
       <Box>
         <Header
-          title="Policies Management"
-          subtitle="Configure and monitor security policies"
+          title={t("policies.title")}
+          subtitle={t("policies.subtitle")}
           prefix={<Error sx={{ color: "error.main" }} />}
         />
         <Alert severity="error" sx={{ mt: 2 }}>
-          Failed to load policies. Please try again later.
+          {t("policies.loadError")}
         </Alert>
       </Box>
     );
@@ -134,8 +132,8 @@ const PoliciesPage = () => {
       sx={{ px: { xs: 2, sm: 3, md: 4 }, py: 3, maxWidth: 1400, mx: "auto" }}
     >
       <Header
-        title="Policies Management"
-        subtitle="Configure and monitor security policies"
+        title={t("policies.title")}
+        subtitle={t("policies.subtitle")}
         prefix={<Policy sx={{ color: "info.main" }} />}
       />
 
@@ -156,31 +154,29 @@ const PoliciesPage = () => {
       >
         <Box sx={{ display: "flex", alignItems: "center", gap: 3 }}>
           <Select
-            fieldLabel="Filter by Type"
+            fieldLabel={t("policies.filterByType")}
             value={selectedType}
             onChange={(e) => setSelectedType(e.target.value as string)}
             options={[
-              { value: "", label: "All Types" },
+              { value: "", label: t("policies.allTypes") },
               ...policyTypes.map((type) => ({
                 value: type,
-                label: type.charAt(0).toUpperCase() + type.slice(1),
+                label: t(`policies.type.${type}`),
               })),
             ]}
             sx={{ minWidth: 200, flexShrink: 0 }}
           />
 
-          <Typography
-            variant="body2"
-            color="text.secondary"
-            sx={{ fontWeight: 500 }}
-          >
-            {policies.length} {selectedType ? `${selectedType} ` : ""}
-            {policies.length === 1 ? "policy" : "policies"} found
+                    <Typography variant="h6" color="text.secondary">
+            {t(
+              policies.length === 1 ? "policies.policyFound" : "policies.policiesFound",
+              { count: policies.length }
+            )}
           </Typography>
         </Box>
 
         <Button variant="primary" onClick={handleCreatePolicy}>
-          + Create Policy
+          + {t("policies.createPolicy")}
         </Button>
       </Box>
 
@@ -269,13 +265,13 @@ const PoliciesPage = () => {
               {/* Status and Priority Chips */}
               <Box sx={{ display: "flex", gap: 1.5, mb: 3, flexWrap: "wrap" }}>
                 <Chip
-                  label={policy.status}
+                  label={t(`policies.status.${policy.status}`)}
                   color={statusColors[policy.status]}
                   size="small"
                   sx={{ fontWeight: 500, borderRadius: 2 }}
                 />
                 <Chip
-                  label={policy.priority}
+                  label={t(`policies.priority.${policy.priority}`)}
                   color={priorityColors[policy.priority]}
                   size="small"
                   sx={{ fontWeight: 500, borderRadius: 2 }}
@@ -295,7 +291,7 @@ const PoliciesPage = () => {
                     letterSpacing: 0.5,
                   }}
                 >
-                  {policy.rules.length} Rules Configured
+                  {t("policies.metadata.rulesConfigured", { count: policy.rules.length })}
                 </Typography>
                 <Typography
                   variant="caption"
@@ -305,7 +301,9 @@ const PoliciesPage = () => {
                     fontWeight: 400,
                   }}
                 >
-                  Last updated {new Date(policy.updatedAt).toLocaleDateString()}
+                  {t("policies.metadata.lastUpdated", { 
+                    date: new Date(policy.updatedAt).toLocaleDateString() 
+                  })}
                 </Typography>
               </Box>
 
@@ -327,7 +325,7 @@ const PoliciesPage = () => {
                   onClick={() => handleStatusToggle(policy.id, policy.status)}
                   disabled={updatePolicyMutation.isPending}
                 >
-                  {policy.status === "active" ? "Deactivate" : "Activate"}
+                  {t(`policies.actions.${policy.status === "active" ? "deactivate" : "activate"}`)}
                 </Button>
 
                 <IconButton
@@ -381,7 +379,7 @@ const PoliciesPage = () => {
             color="text.secondary"
             sx={{ mb: 1, fontWeight: 500 }}
           >
-            No policies found
+            {t("policies.noPolicy")}
           </Typography>
           <Typography
             variant="body1"
@@ -389,11 +387,11 @@ const PoliciesPage = () => {
             sx={{ mb: 3, maxWidth: 400, mx: "auto" }}
           >
             {selectedType
-              ? `No ${selectedType} policies are currently configured. Try selecting a different filter or create a new ${selectedType} policy.`
-              : "Get started by creating your first security policy to manage access and compliance across your organization."}
+              ? t("policies.noPolicyFiltered", { type: t(`policies.type.${selectedType}`) })
+              : t("policies.noPolicyDescription")}
           </Typography>
           <Button variant="primary" onClick={handleCreatePolicy}>
-            + Create Your First Policy
+            + {t("policies.createFirstPolicy")}
           </Button>
         </Box>
       )}

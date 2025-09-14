@@ -1,0 +1,112 @@
+{
+  "navigation": {
+    "title": "CyberSmart Platform",
+    "home": "Home",
+    "devices": "Devices",
+    "patches": "Patches",
+    "firewall": "Firewall",
+    "policies": "Policies",
+    "settings": "Settings"
+  },
+  "policies": {
+    "title": "Policies Management",
+    "subtitle": "Configure and monitor security policies",
+    "loadError": "Failed to load policies. Please try again later.",
+    "filterByType": "Filter by type",
+    "allTypes": "All types",
+    "createPolicy": "Create Policy",
+    "createFirstPolicy": "Create Your First Policy",
+    "policiesFound": "{{count}} policies found",
+    "policyFound": "{{count}} policy found",
+    "noPolicy": "No policies found",
+    "noPolicyDescription": "Start by creating your first security policy to manage access and compliance across your organization.",
+    "noPolicyFiltered": "Currently no {{type}} policies are configured. Try choosing a different filter or create a new {{type}} policy.",
+    "status": {
+      "active": "Active",
+      "inactive": "Inactive",
+      "draft": "Draft"
+    },
+    "priority": {
+      "low": "Low",
+      "medium": "Medium",
+      "high": "High",
+      "critical": "Critical"
+    },
+    "type": {
+      "security": "Security",
+      "firewall": "Firewall",
+      "access": "Access",
+      "backup": "Backup",
+      "compliance": "Compliance"
+    },
+    "actions": {
+      "activate": "Activate",
+      "deactivate": "Deactivate",
+      "edit": "Edit",
+      "delete": "Delete"
+    },
+    "form": {
+      "createTitle": "Create New Policy",
+      "editTitle": "Edit Policy: {{name}}",
+      "policyName": "Policy Name",
+      "policyNamePlaceholder": "Enter policy name",
+      "type": "Type",
+      "description": "Description",
+      "descriptionPlaceholder": "Describe what this policy does...",
+      "status": "Status",
+      "priority": "Priority",
+      "cancel": "Cancel",
+      "create": "Create Policy",
+      "update": "Update Policy",
+      "validationError": "Please fix the validation errors above.",
+      "createSuccess": "Policy created successfully!",
+      "updateSuccess": "Policy updated successfully!",
+      "createError": "Failed to create policy",
+      "updateError": "Failed to update policy"
+    },
+    "metadata": {
+      "rulesConfigured": "{{count}} Rules Configured",
+      "lastUpdated": "Last updated {{date}}"
+    },
+    "messages": {
+      "activated": "Policy activated successfully",
+      "deactivated": "Policy deactivated successfully",
+      "statusUpdateError": "Failed to update policy status",
+      "deleted": "Policy deleted successfully",
+      "deleteError": "Failed to delete policy",
+      "deleteConfirm": "Are you sure you want to delete this policy?"
+    }
+  },
+  "devices": {
+    "title": "Device Management",
+    "subtitle": "Monitor and manage all your network devices",
+    "connectedDevices": "Connected Devices",
+    "loadError": "Failed to load devices. Please try again.",
+    "status": {
+      "online": "Online",
+      "offline": "Offline",
+      "maintenance": "Maintenance"
+    }
+  },
+  "common": {
+    "loading": "Loading...",
+    "error": "Error",
+    "retry": "Retry",
+    "close": "Close",
+    "save": "Save",
+    "cancel": "Cancel",
+    "delete": "Delete",
+    "edit": "Edit",
+    "add": "Add",
+    "remove": "Remove",
+    "search": "Search",
+    "filter": "Filter",
+    "clear": "Clear",
+    "apply": "Apply",
+    "reset": "Reset"
+  },
+  "language": {
+    "title": "Language",
+    "select": "Select Language"
+  }
+}
