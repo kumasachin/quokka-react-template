@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Header } from "../design-system/components";
+import { Header, Select } from "../design-system/components";
 import {
   Box,
   Card,
@@ -7,10 +7,6 @@ import {
   Typography,
   Chip,
   Button,
-  Select,
-  MenuItem,
-  FormControl,
-  InputLabel,
   CircularProgress,
   Alert,
 } from "@mui/material";
@@ -111,21 +107,19 @@ const PoliciesPage = () => {
       />
 
       <Box sx={{ mb: 3 }}>
-        <FormControl sx={{ minWidth: 200 }}>
-          <InputLabel>Filter by Type</InputLabel>
-          <Select
-            value={selectedType}
-            label="Filter by Type"
-            onChange={(e) => setSelectedType(e.target.value)}
-          >
-            <MenuItem value="">All Types</MenuItem>
-            {policyTypes.map((type) => (
-              <MenuItem key={type} value={type}>
-                {type.charAt(0).toUpperCase() + type.slice(1)}
-              </MenuItem>
-            ))}
-          </Select>
-        </FormControl>
+        <Select
+          fieldLabel="Filter by Type"
+          value={selectedType}
+          onChange={(e) => setSelectedType(e.target.value as string)}
+          options={[
+            { value: "", label: "All Types" },
+            ...policyTypes.map((type) => ({
+              value: type,
+              label: type.charAt(0).toUpperCase() + type.slice(1),
+            })),
+          ]}
+          sx={{ minWidth: 200 }}
+        />
       </Box>
 
       <OptimisticUpdateDemo />

@@ -4,7 +4,7 @@ import { Box } from "@mui/material";
 import { Security, Settings, Dashboard, BugReport } from "@mui/icons-material";
 
 const headerMeta: Meta<typeof Header> = {
-  title: "Molecules/Header",
+  title: "Design System/Molecules/Header",
   component: Header,
   parameters: {
     layout: "padded",

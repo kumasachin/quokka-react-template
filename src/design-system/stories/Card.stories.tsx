@@ -4,7 +4,7 @@ import { Typography } from "../components/atoms/Typography";
 import { CardContent } from "@mui/material";
 
 const meta: Meta<typeof Card> = {
-  title: "Card",
+  title: "Design System/Atoms/Card",
   component: Card,
   parameters: {
     layout: "centered",

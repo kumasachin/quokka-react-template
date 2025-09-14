@@ -1,18 +1,12 @@
 import React, { useState } from "react";
 import {
   Box,
-  TextField,
-  Button,
   Typography,
   Alert,
-  FormControl,
-  InputLabel,
-  Select,
-  MenuItem,
-  Switch,
-  FormControlLabel,
   CircularProgress,
+  Button,
 } from "@mui/material";
+import { TextField, Select, Switch } from "../design-system/components";
 import { policyFormSchema, PolicyFormData } from "../forms/schemas/policy";
 import { useUpdatePolicy } from "../hooks/usePolicies";
 import { useToast } from "../hooks/useToast";
@@ -101,21 +95,21 @@ const PolicySchemaDemo = () => {
         sx={{ mb: 2 }}
       />
 
-      <FormControl fullWidth sx={{ mb: 2 }}>
-        <InputLabel>Type</InputLabel>
-        <Select
-          value={formData.type || "security"}
-          onChange={(e) =>
-            setFormData((prev) => ({ ...prev, type: e.target.value as any }))
-          }
-        >
-          <MenuItem value="security">Security</MenuItem>
-          <MenuItem value="firewall">Firewall</MenuItem>
-          <MenuItem value="access">Access</MenuItem>
-          <MenuItem value="backup">Backup</MenuItem>
-          <MenuItem value="compliance">Compliance</MenuItem>
-        </Select>
-      </FormControl>
+      <Select
+        fieldLabel="Type"
+        value={formData.type || "security"}
+        onChange={(e) =>
+          setFormData((prev) => ({ ...prev, type: e.target.value as any }))
+        }
+        options={[
+          { value: "security", label: "Security" },
+          { value: "firewall", label: "Firewall" },
+          { value: "access", label: "Access" },
+          { value: "backup", label: "Backup" },
+          { value: "compliance", label: "Compliance" },
+        ]}
+        sx={{ mb: 2 }}
+      />
 
       <TextField
         fullWidth
@@ -131,34 +125,30 @@ const PolicySchemaDemo = () => {
         sx={{ mb: 2 }}
       />
 
-      <FormControl fullWidth sx={{ mb: 2 }}>
-        <InputLabel>Priority</InputLabel>
-        <Select
-          value={formData.priority || "medium"}
-          onChange={(e) =>
-            setFormData((prev) => ({
-              ...prev,
-              priority: e.target.value as any,
-            }))
-          }
-        >
-          <MenuItem value="low">Low</MenuItem>
-          <MenuItem value="medium">Medium</MenuItem>
-          <MenuItem value="high">High</MenuItem>
-          <MenuItem value="critical">Critical</MenuItem>
-        </Select>
-      </FormControl>
-
-      <FormControlLabel
-        control={
-          <Switch
-            checked={formData.enabled || false}
-            onChange={(e) =>
-              setFormData((prev) => ({ ...prev, enabled: e.target.checked }))
-            }
-          />
+      <Select
+        fieldLabel="Priority"
+        value={formData.priority || "medium"}
+        onChange={(e) =>
+          setFormData((prev) => ({
+            ...prev,
+            priority: e.target.value as any,
+          }))
         }
-        label="Enabled"
+        options={[
+          { value: "low", label: "Low" },
+          { value: "medium", label: "Medium" },
+          { value: "high", label: "High" },
+          { value: "critical", label: "Critical" },
+        ]}
+        sx={{ mb: 2 }}
+      />
+
+      <Switch
+        switchLabel="Enabled"
+        checked={formData.enabled || false}
+        onChange={(e) =>
+          setFormData((prev) => ({ ...prev, enabled: e.target.checked }))
+        }
         sx={{ mb: 2 }}
       />
 
