@@ -2,7 +2,7 @@ import { useQuery } from "@tanstack/react-query";
 import { systemApi, type SystemStats, type Device } from "../api";
 
 const mockStats = async (): Promise<SystemStats> => {
-  await new Promise(resolve => setTimeout(resolve, 500));
+  await new Promise((resolve) => setTimeout(resolve, 500));
   return {
     devices: Math.floor(Math.random() * 50) + 20,
     patches: Math.floor(Math.random() * 10) + 5,
@@ -12,12 +12,27 @@ const mockStats = async (): Promise<SystemStats> => {
 };
 
 const mockDevices = async (): Promise<Device[]> => {
-  await new Promise(resolve => setTimeout(resolve, 800));
+  await new Promise((resolve) => setTimeout(resolve, 800));
   return [
     { id: "1", name: "Server-01", status: "online", lastSeen: "2 min ago" },
-    { id: "2", name: "Workstation-05", status: "online", lastSeen: "5 min ago" },
-    { id: "3", name: "Router-Main", status: "maintenance", lastSeen: "1 hour ago" },
-    { id: "4", name: "Firewall-Primary", status: "online", lastSeen: "1 min ago" },
+    {
+      id: "2",
+      name: "Workstation-05",
+      status: "online",
+      lastSeen: "5 min ago",
+    },
+    {
+      id: "3",
+      name: "Router-Main",
+      status: "maintenance",
+      lastSeen: "1 hour ago",
+    },
+    {
+      id: "4",
+      name: "Firewall-Primary",
+      status: "online",
+      lastSeen: "1 min ago",
+    },
   ];
 };
 

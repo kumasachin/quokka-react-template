@@ -22,15 +22,16 @@ const PatchPage = () => {
             Security Patches
           </Typography>
           <Typography variant="body1" sx={{ mb: 2 }}>
-            {isLoading 
-              ? "Loading patches..." 
-              : "This demonstrates the centralized API client with axios interceptors."
-            }
+            {isLoading
+              ? "Loading patches..."
+              : "This demonstrates the centralized API client with axios interceptors."}
           </Typography>
-          <Button 
-            variant="primary" 
+          <Button
+            variant="primary"
             onClick={() => {
-              console.log("API client will attempt to fetch patches with error handling");
+              console.log(
+                "API client will attempt to fetch patches with error handling"
+              );
             }}
           >
             Refresh Patches
