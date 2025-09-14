@@ -7,31 +7,13 @@ import App from "./App.tsx";
 import { theme } from "./design-system/theme";
 import "./index.css";
 
-const renderApp = () => {
-  createRoot(document.getElementById("root")!).render(
-    <StrictMode>
-      <MuiThemeProvider theme={theme}>
-        <StyledThemeProvider theme={theme}>
-          <CssBaseline />
-          <App />
-        </StyledThemeProvider>
-      </MuiThemeProvider>
-    </StrictMode>
-  );
-};
-
-// Start MSW conditionally
-async function startApp() {
-  if (import.meta.env.DEV || import.meta.env.MODE === "test") {
-    try {
-      const { startMocking } = await import("./mocks");
-      await startMocking();
-    } catch (err) {
-      // Continue without mocks if they fail to load
-    }
-  }
-
-  renderApp();
-}
-
-startApp();
+createRoot(document.getElementById("root")!).render(
+  <StrictMode>
+    <MuiThemeProvider theme={theme}>
+      <StyledThemeProvider theme={theme}>
+        <CssBaseline />
+        <App />
+      </StyledThemeProvider>
+    </MuiThemeProvider>
+  </StrictMode>
+);

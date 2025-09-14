@@ -1,20 +1,28 @@
 import { useState } from "react";
-import { Header, Select } from "../design-system/components";
+import { Header, Select, Button } from "../design-system/components";
 import {
   Box,
   Card,
   CardContent,
   Typography,
   Chip,
-  Button,
   CircularProgress,
   Alert,
+  IconButton,
 } from "@mui/material";
-import { Policy, Error } from "@mui/icons-material";
-import { usePolicies, useUpdatePolicy } from "../queries/policies";
+import {
+  Policy,
+  Error,
+  Add,
+  MoreVert,
+  Edit,
+  Delete,
+} from "@mui/icons-material";
+import { usePolicies, useUpdatePolicy } from "../hooks/usePolicies";
+import { useDeletePolicy } from "../hooks/usePolicies";
 import { useToast } from "../hooks";
-import OptimisticUpdateDemo from "../components/OptimisticUpdateDemo";
-import PolicySchemaDemo from "../components/PolicySchemaDemo";
+import PolicyFormModal from "../components/PolicyFormModal";
+import { Policy as PolicyType } from "../api/policies";
 
 const statusColors = {
   active: "success" as const,
@@ -31,12 +39,16 @@ const priorityColors = {
 
 const PoliciesPage = () => {
   const [selectedType, setSelectedType] = useState<string>("");
+  const [formModalOpen, setFormModalOpen] = useState(false);
+  const [editingPolicy, setEditingPolicy] = useState<PolicyType | null>(null);
+
   const {
     data: policiesData,
     isLoading,
     error,
   } = usePolicies(selectedType || undefined);
   const updatePolicyMutation = useUpdatePolicy();
+  const deletePolicy = useDeletePolicy();
   const toast = useToast();
 
   const handleStatusToggle = async (
@@ -58,6 +70,32 @@ const PoliciesPage = () => {
     } catch (error) {
       toast.error("Failed to update policy status");
     }
+  };
+
+  const handleCreatePolicy = () => {
+    setEditingPolicy(null);
+    setFormModalOpen(true);
+  };
+
+  const handleEditPolicy = (policy: PolicyType) => {
+    setEditingPolicy(policy);
+    setFormModalOpen(true);
+  };
+
+  const handleDeletePolicy = async (policyId: string) => {
+    if (confirm("Are you sure you want to delete this policy?")) {
+      try {
+        await deletePolicy.mutateAsync(policyId);
+        toast.success("Policy deleted successfully");
+      } catch (error) {
+        toast.error("Failed to delete policy");
+      }
+    }
+  };
+
+  const handleCloseModal = () => {
+    setFormModalOpen(false);
+    setEditingPolicy(null);
   };
 
   const policyTypes = [
@@ -106,7 +144,14 @@ const PoliciesPage = () => {
         prefix={<Policy sx={{ color: "info.main" }} />}
       />
 
-      <Box sx={{ mb: 3 }}>
+      <Box
+        sx={{
+          display: "flex",
+          justifyContent: "space-between",
+          alignItems: "center",
+          mb: 3,
+        }}
+      >
         <Select
           fieldLabel="Filter by Type"
           value={selectedType}
@@ -118,13 +163,13 @@ const PoliciesPage = () => {
               label: type.charAt(0).toUpperCase() + type.slice(1),
             })),
           ]}
-          sx={{ minWidth: 200 }}
+          sx={{ minWidth: 110 }}
         />
+
+        <Button variant="primary" onClick={handleCreatePolicy}>
+          Create Policy
+        </Button>
       </Box>
-
-      <OptimisticUpdateDemo />
-
-      <PolicySchemaDemo />
 
       <Typography variant="body1" sx={{ mb: 2 }}>
         Showing {policies.length} {selectedType ? `${selectedType} ` : ""}
@@ -195,16 +240,32 @@ const PoliciesPage = () => {
                 Updated: {new Date(policy.updatedAt).toLocaleDateString()}
               </Typography>
 
-              <Button
-                variant="outlined"
-                size="small"
-                onClick={() => handleStatusToggle(policy.id, policy.status)}
-                disabled={updatePolicyMutation.isPending}
-                color={policy.status === "active" ? "error" : "success"}
-                fullWidth
-              >
-                {policy.status === "active" ? "Deactivate" : "Activate"}
-              </Button>
+              <Box sx={{ display: "flex", gap: 1, mb: 2 }}>
+                <Button
+                  variant="secondary"
+                  size="sm"
+                  onClick={() => handleStatusToggle(policy.id, policy.status)}
+                  disabled={updatePolicyMutation.isPending}
+                >
+                  {policy.status === "active" ? "Deactivate" : "Activate"}
+                </Button>
+
+                <IconButton
+                  size="small"
+                  onClick={() => handleEditPolicy(policy)}
+                  sx={{ ml: 1 }}
+                >
+                  <Edit fontSize="small" />
+                </IconButton>
+
+                <IconButton
+                  size="small"
+                  onClick={() => handleDeletePolicy(policy.id)}
+                  color="error"
+                >
+                  <Delete fontSize="small" />
+                </IconButton>
+              </Box>
             </CardContent>
           </Card>
         ))}
@@ -222,6 +283,13 @@ const PoliciesPage = () => {
           </Typography>
         </Box>
       )}
+
+      {/* Policy Form Modal */}
+      <PolicyFormModal
+        open={formModalOpen}
+        onClose={handleCloseModal}
+        policy={editingPolicy}
+      />
     </Box>
   );
 };

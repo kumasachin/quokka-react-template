@@ -3,13 +3,24 @@ import { defineConfig } from "vite";
 import react from "@vitejs/plugin-react";
 import { resolve } from "path";
 
-// https://vitejs.dev/config/
 export default defineConfig({
   plugins: [react()],
   resolve: {
     alias: {
       "@app": resolve("./src"),
       "@assets": resolve("./src/assets"),
+    },
+  },
+  server: {
+    proxy: {
+      "/api": {
+        target: "http://localhost:3001",
+        changeOrigin: true,
+      },
+      "/health": {
+        target: "http://localhost:3001",
+        changeOrigin: true,
+      },
     },
   },
   test: {
@@ -21,7 +32,6 @@ export default defineConfig({
     rollupOptions: {
       output: {
         manualChunks(id) {
-          // Vendor chunks
           if (id.includes("node_modules")) {
             if (
               id.includes("react") ||
@@ -36,21 +46,17 @@ export default defineConfig({
             if (id.includes("@tanstack/react-query")) {
               return "query-vendor";
             }
-            // Other vendor dependencies
             return "vendor";
           }
 
-          // Design system chunk
           if (id.includes("/src/design-system/")) {
             return "design-system";
           }
 
-          // Pages chunk (but these will be split by lazy loading)
           if (id.includes("/src/pages/")) {
             return "pages";
           }
         },
-        // Optimize chunk size
         chunkFileNames: (chunkInfo) => {
           const facadeModuleId = chunkInfo.facadeModuleId
             ? chunkInfo.facadeModuleId
@@ -63,11 +69,8 @@ export default defineConfig({
         },
       },
     },
-    // Increase chunk size warning limit to 1000kb
     chunkSizeWarningLimit: 1000,
-    // Enable minification
     minify: "esbuild",
-    // Optimize dependencies
     target: "es2020",
   },
 });
