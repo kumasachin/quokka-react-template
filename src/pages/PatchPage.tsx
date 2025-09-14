@@ -1,13 +1,15 @@
 import React from "react";
 import { Typography, Card, Header } from "../design-system/components";
 import { Box, CardContent } from "@mui/material";
+import { BugReport } from "@mui/icons-material";
 
 const PatchPage = () => {
   return (
-    <Box sx={{ width: "100%", p: 3 }}>
+    <Box>
       <Header
         title="Patch Management"
-        subtitle="Keep your systems up-to-date with automated patch deployment"
+        subtitle="Keep your systems up-to-date with security patches"
+        prefix={<BugReport sx={{ color: "warning.main" }} />}
       />
 
       <Card>

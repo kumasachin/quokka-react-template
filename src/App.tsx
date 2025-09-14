@@ -1,37 +1,27 @@
 import React from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-import { Box } from "@mui/material";
-import Navigation from "./components/Navigation";
+import WrapperTemplate from "./components/layout/WrapperTemplate";
 import HomePage from "./pages/HomePage";
 import DevicePage from "./pages/DevicePage";
 import PatchPage from "./pages/PatchPage";
 import FirewallPage from "./pages/FirewallPage";
+import SettingsPage from "./pages/SettingsPage";
 import NotFoundPage from "./pages/NotFoundPage";
 import "./App.css";
 
 function App() {
   return (
     <Router>
-      <Box
-        sx={{
-          minHeight: "100vh",
-          width: "100%",
-          backgroundColor: "background.default",
-          display: "flex",
-          flexDirection: "column",
-        }}
-      >
-        <Navigation />
-        <Box sx={{ flexGrow: 1, width: "100%" }}>
-          <Routes>
-            <Route path="/" element={<HomePage />} />
-            <Route path="/device" element={<DevicePage />} />
-            <Route path="/patch" element={<PatchPage />} />
-            <Route path="/firewall" element={<FirewallPage />} />
-            <Route path="*" element={<NotFoundPage />} />
-          </Routes>
-        </Box>
-      </Box>
+      <Routes>
+        <Route path="/" element={<WrapperTemplate />}>
+          <Route index element={<HomePage />} />
+          <Route path="devices" element={<DevicePage />} />
+          <Route path="patches" element={<PatchPage />} />
+          <Route path="firewall" element={<FirewallPage />} />
+          <Route path="settings" element={<SettingsPage />} />
+          <Route path="*" element={<NotFoundPage />} />
+        </Route>
+      </Routes>
     </Router>
   );
 }

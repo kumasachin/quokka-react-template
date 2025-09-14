@@ -1,13 +1,15 @@
 import React from "react";
 import { Typography, Card, Header } from "../design-system/components";
 import { Box, CardContent } from "@mui/material";
+import { Dashboard } from "@mui/icons-material";
 
 const DevicePage = () => {
   return (
-    <Box sx={{ width: "100%", p: 3 }}>
+    <Box>
       <Header
         title="Device Management"
-        subtitle="Monitor and manage all your network devices from one place"
+        subtitle="Monitor and manage all your network devices"
+        prefix={<Dashboard sx={{ color: "primary.main" }} />}
       />
 
       <Card>

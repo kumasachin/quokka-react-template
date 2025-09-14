@@ -1,6 +1,7 @@
 import React from "react";
 import { Box, Typography, Grid, CardContent } from "@mui/material";
 import { Button, Card, Header } from "../design-system/components";
+import { Home } from "@mui/icons-material";
 
 const HomePage = () => {
   const features = [
@@ -8,13 +9,13 @@ const HomePage = () => {
       title: "Device Management",
       description:
         "Monitor and manage all your network devices from one place.",
-      path: "/device",
+      path: "/devices",
     },
     {
       title: "Patch Management",
       description:
         "Keep your systems up-to-date with automated patch deployment.",
-      path: "/patch",
+      path: "/patches",
     },
     {
       title: "Firewall Control",
@@ -25,10 +26,11 @@ const HomePage = () => {
   ];
 
   return (
-    <Box sx={{ width: "100%", p: 3 }}>
+    <Box>
       <Header
         title="Welcome to CyberSmart"
         subtitle="Your comprehensive cybersecurity management platform"
+        prefix={<Home sx={{ color: "primary.main" }} />}
         align="center"
         sx={{ mb: 4 }}
       />

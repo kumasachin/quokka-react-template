@@ -1,13 +1,15 @@
 import React from "react";
 import { Typography, Card, Header } from "../design-system/components";
 import { Box, CardContent } from "@mui/material";
+import { Security } from "@mui/icons-material";
 
 const FirewallPage = () => {
   return (
-    <Box sx={{ width: "100%", p: 3 }}>
+    <Box>
       <Header
-        title="Firewall Configuration"
-        subtitle="Configure and monitor firewall rules and security policies"
+        title="Firewall Control"
+        subtitle="Configure and monitor firewall rules and policies"
+        prefix={<Security sx={{ color: "error.main" }} />}
       />
 
       <Card>
