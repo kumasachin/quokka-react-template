@@ -98,6 +98,9 @@ coverage/
 dist/
 build/
 
+# Turbo cache
+.turbo
+
 # TypeScript cache
 *.tsbuildinfo
 
