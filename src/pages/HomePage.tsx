@@ -1,6 +1,6 @@
 import React from "react";
 import { Box, Typography, Grid, CardContent } from "@mui/material";
-import { Button, Card } from "../design-system/components";
+import { Button, Card, Header } from "../design-system/components";
 
 const HomePage = () => {
   const features = [
@@ -25,15 +25,13 @@ const HomePage = () => {
   ];
 
   return (
-    <Box sx={{ p: 3 }}>
-      <Box sx={{ textAlign: "center", mb: 4 }}>
-        <Typography variant="h3" gutterBottom>
-          Welcome to CyberSmart
-        </Typography>
-        <Typography variant="h6" color="text.secondary" sx={{ mb: 3 }}>
-          Your comprehensive cybersecurity management platform
-        </Typography>
-      </Box>
+    <Box sx={{ width: "100%", p: 3 }}>
+      <Header
+        title="Welcome to CyberSmart"
+        subtitle="Your comprehensive cybersecurity management platform"
+        align="center"
+        sx={{ mb: 4 }}
+      />
 
       <Grid container spacing={3}>
         {features.map((feature) => (

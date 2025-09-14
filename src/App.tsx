@@ -1,60 +1,38 @@
+import React from "react";
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import { Box } from "@mui/material";
+import Navigation from "./components/Navigation";
+import HomePage from "./pages/HomePage";
+import DevicePage from "./pages/DevicePage";
+import PatchPage from "./pages/PatchPage";
+import FirewallPage from "./pages/FirewallPage";
+import NotFoundPage from "./pages/NotFoundPage";
 import "./App.css";
-import { Button } from "./design-system/components/Button";
 
 function App() {
   return (
-    <div className="app">
-      <h1>Welcome to CyberSmart!</h1>
-
-      <section style={{ marginTop: "2rem" }}>
-        <h2>Button Component with Styled Components</h2>
-
-        <div
-          style={{
-            display: "flex",
-            gap: "1rem",
-            marginBottom: "1rem",
-            alignItems: "center",
-          }}
-        >
-          <Button size="sm" variant="primary">
-            Small Primary
-          </Button>
-          <Button size="md" variant="primary">
-            Medium Primary
-          </Button>
-          <Button size="lg" variant="primary">
-            Large Primary
-          </Button>
-        </div>
-
-        <div
-          style={{
-            display: "flex",
-            gap: "1rem",
-            marginBottom: "1rem",
-            alignItems: "center",
-          }}
-        >
-          <Button size="sm" variant="secondary">
-            Small Secondary
-          </Button>
-          <Button size="md" variant="secondary">
-            Medium Secondary
-          </Button>
-          <Button size="lg" variant="secondary">
-            Large Secondary
-          </Button>
-        </div>
-
-        <div style={{ display: "flex", gap: "1rem", alignItems: "center" }}>
-          <Button disabled>Disabled Primary</Button>
-          <Button variant="secondary" disabled>
-            Disabled Secondary
-          </Button>
-        </div>
-      </section>
-    </div>
+    <Router>
+      <Box
+        sx={{
+          minHeight: "100vh",
+          width: "100%",
+          backgroundColor: "background.default",
+          display: "flex",
+          flexDirection: "column",
+        }}
+      >
+        <Navigation />
+        <Box sx={{ flexGrow: 1, width: "100%" }}>
+          <Routes>
+            <Route path="/" element={<HomePage />} />
+            <Route path="/device" element={<DevicePage />} />
+            <Route path="/patch" element={<PatchPage />} />
+            <Route path="/firewall" element={<FirewallPage />} />
+            <Route path="*" element={<NotFoundPage />} />
+          </Routes>
+        </Box>
+      </Box>
+    </Router>
   );
 }
 
