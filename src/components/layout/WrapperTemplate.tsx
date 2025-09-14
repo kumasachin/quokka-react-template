@@ -9,6 +9,7 @@ import {
 import { Typography, ToastPanel } from "../../design-system/components";
 import { useNavigate, useLocation, Outlet } from "react-router-dom";
 import { Security } from "@mui/icons-material";
+import ErrorBoundary from "../ErrorBoundary";
 
 const WrapperTemplate = () => {
   const navigate = useNavigate();
@@ -127,7 +128,9 @@ const WrapperTemplate = () => {
             minHeight: "calc(100vh - 160px)",
           }}
         >
-          <Outlet />
+          <ErrorBoundary>
+            <Outlet />
+          </ErrorBoundary>
         </Container>
       </Box>
 
