@@ -7,6 +7,10 @@ export interface ButtonProps {
   size?: "sm" | "md" | "lg";
   disabled?: boolean;
   onClick?: () => void;
+  type?: "button" | "submit" | "reset";
+  "aria-label"?: string;
+  "aria-describedby"?: string;
+  "data-testid"?: string;
 }
 
 const StyledButton = styled.button<ButtonProps>`
@@ -53,6 +57,11 @@ const StyledButton = styled.button<ButtonProps>`
     transform: translateY(0);
   }
 
+  &:focus:not(:disabled) {
+    outline: 3px solid #1976d2;
+    outline-offset: 2px;
+  }
+
   &:disabled {
     cursor: not-allowed;
   }
@@ -64,6 +73,11 @@ export const Button = ({
   size = "md",
   disabled = false,
   onClick,
+  type = "button",
+  "aria-label": ariaLabel,
+  "aria-describedby": ariaDescribedBy,
+  "data-testid": dataTestId,
+  ...props
 }: ButtonProps) => {
   return (
     <StyledButton
@@ -71,7 +85,11 @@ export const Button = ({
       size={size}
       disabled={disabled}
       onClick={onClick}
-      type="button"
+      type={type}
+      aria-label={ariaLabel}
+      aria-describedby={ariaDescribedBy}
+      data-testid={dataTestId}
+      {...props}
     >
       {children}
     </StyledButton>

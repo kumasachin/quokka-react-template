@@ -11,13 +11,14 @@ const LanguageSwitcher: React.FC = () => {
         <Chip
           label={
             <Box sx={{ display: "flex", alignItems: "center", gap: 0.5 }}>
-              <span>{currentLang.flag}</span>
+              <span aria-hidden="true">{currentLang.flag}</span>
               <span>{currentLang.name}</span>
             </Box>
           }
           variant="outlined"
           size="small"
           sx={{ backgroundColor: "background.paper" }}
+          aria-label={`Current language: ${currentLang.name}`}
         />
       </Box>
     );

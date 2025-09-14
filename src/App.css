@@ -20,7 +20,8 @@ button:focus-visible,
 input:focus-visible,
 select:focus-visible,
 textarea:focus-visible,
-[role="tab"]:focus-visible {
+[role="tab"]:focus-visible,
+a:focus-visible {
   outline: 3px solid #1976d2;
   outline-offset: 2px;
 }
@@ -34,6 +35,33 @@ textarea:focus-visible,
 .MuiButton-root:focus-visible {
   outline: 3px solid #1976d2;
   outline-offset: 2px;
+}
+
+.MuiIconButton-root:focus-visible {
+  outline: 3px solid #1976d2;
+  outline-offset: 2px;
+}
+
+.MuiChip-root:focus-visible {
+  outline: 3px solid #1976d2;
+  outline-offset: 2px;
+}
+
+/* High contrast mode support */
+@media (prefers-contrast: high) {
+  *:focus-visible {
+    outline: 3px solid;
+    outline-offset: 2px;
+  }
+}
+
+/* Reduced motion support */
+@media (prefers-reduced-motion: reduce) {
+  * {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
 }
 
 .app-header {

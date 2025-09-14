@@ -24,7 +24,12 @@ const Navigation = () => {
           {t("navigation.title")}
         </Typography>
         <Box sx={{ display: "flex", gap: 2, alignItems: "center" }}>
-          <Box sx={{ display: "flex", gap: 1 }}>
+          <Box
+            component="nav"
+            role="navigation"
+            aria-label="Main navigation"
+            sx={{ display: "flex", gap: 1 }}
+          >
             {navItems.map((item) => (
               <Button
                 key={item.path}
@@ -32,6 +37,10 @@ const Navigation = () => {
                   location.pathname === item.path ? "primary" : "secondary"
                 }
                 onClick={() => navigate(item.path)}
+                aria-current={
+                  location.pathname === item.path ? "page" : undefined
+                }
+                data-testid={`nav-${item.path.slice(1) || "home"}`}
               >
                 {item.label}
               </Button>

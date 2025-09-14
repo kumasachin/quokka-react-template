@@ -142,8 +142,10 @@ const PolicyFormModal = ({ open, onClose, policy }: PolicyFormModalProps) => {
       maxWidth="sm"
       fullWidth
       data-testid="policy-form-modal"
+      aria-labelledby="policy-form-title"
+      aria-describedby="policy-form-description"
     >
-      <DialogTitle data-testid="policy-form-title">
+      <DialogTitle id="policy-form-title" data-testid="policy-form-title">
         {isEdit ? `Edit Policy: ${policy?.name}` : "Create New Policy"}
       </DialogTitle>
 
@@ -153,6 +155,8 @@ const PolicyFormModal = ({ open, onClose, policy }: PolicyFormModalProps) => {
           onSubmit={handleSubmit}
           sx={{ pt: 1 }}
           data-testid="policy-form"
+          aria-describedby="policy-form-description"
+          noValidate
         >
           <TextField
             fullWidth
@@ -166,6 +170,8 @@ const PolicyFormModal = ({ open, onClose, policy }: PolicyFormModalProps) => {
             sx={{ mb: 2 }}
             placeholder="Enter policy name"
             data-testid="policy-name-input"
+            required
+            aria-describedby={errors.name ? "policy-name-error" : undefined}
           />
 
           <Select
@@ -185,6 +191,8 @@ const PolicyFormModal = ({ open, onClose, policy }: PolicyFormModalProps) => {
             helperText={errors.type}
             sx={{ mb: 2 }}
             data-testid="policy-type-select"
+            required
+            aria-describedby={errors.type ? "policy-type-error" : undefined}
           />
 
           <TextField
@@ -201,6 +209,9 @@ const PolicyFormModal = ({ open, onClose, policy }: PolicyFormModalProps) => {
             sx={{ mb: 2 }}
             placeholder="Describe what this policy does..."
             data-testid="policy-description-input"
+            aria-describedby={
+              errors.description ? "policy-description-error" : undefined
+            }
           />
 
           <Select
@@ -221,6 +232,8 @@ const PolicyFormModal = ({ open, onClose, policy }: PolicyFormModalProps) => {
             helperText={errors.status}
             sx={{ mb: 2 }}
             data-testid="policy-status-select"
+            required
+            aria-describedby={errors.status ? "policy-status-error" : undefined}
           />
 
           <Select
@@ -262,6 +275,7 @@ const PolicyFormModal = ({ open, onClose, policy }: PolicyFormModalProps) => {
           onClick={onClose}
           disabled={isLoading}
           data-testid="cancel-button"
+          aria-label="Cancel and close form without saving"
         >
           Cancel
         </Button>
@@ -270,8 +284,22 @@ const PolicyFormModal = ({ open, onClose, policy }: PolicyFormModalProps) => {
           onClick={handleSubmit}
           disabled={isLoading}
           data-testid="submit-button"
+          aria-label={
+            isEdit ? "Update policy with current changes" : "Create new policy"
+          }
+          aria-describedby={
+            Object.keys(errors).length > 0
+              ? "form-validation-errors"
+              : undefined
+          }
         >
-          {isLoading ? <CircularProgress size={20} sx={{ mr: 1 }} /> : null}
+          {isLoading ? (
+            <CircularProgress
+              size={20}
+              sx={{ mr: 1 }}
+              aria-label="Saving policy"
+            />
+          ) : null}
           {isEdit ? "Update Policy" : "Create Policy"}
         </Button>
       </DialogActions>

@@ -66,6 +66,7 @@ const WrapperTemplate = () => {
             top: 6,
           },
         }}
+        aria-label="Skip to main page content"
       >
         Skip to main content
       </Box>

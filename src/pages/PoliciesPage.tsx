@@ -129,16 +129,20 @@ const PoliciesPage = () => {
 
   return (
     <Box
+      component="main"
       sx={{ px: { xs: 2, sm: 3, md: 4 }, py: 3, maxWidth: 1400, mx: "auto" }}
       data-testid="policies-page"
+      role="main"
+      aria-labelledby="policies-page-title"
     >
       <Header
         title={t("policies.title")}
         subtitle={t("policies.subtitle")}
-        prefix={<Policy sx={{ color: "info.main" }} />}
+        prefix={<Policy sx={{ color: "info.main" }} aria-hidden="true" />}
       />
 
       <Box
+        component="section"
         sx={{
           display: "flex",
           alignItems: "center",
@@ -152,6 +156,7 @@ const PoliciesPage = () => {
           borderColor: "divider",
         }}
         data-testid="policies-controls"
+        aria-label="Policy management controls"
       >
         <Box sx={{ display: "flex", alignItems: "center", gap: 3 }}>
           <Select
@@ -167,12 +172,17 @@ const PoliciesPage = () => {
             ]}
             sx={{ minWidth: 200, flexShrink: 0 }}
             data-testid="policy-type-filter"
+            aria-label="Filter policies by type"
           />
 
           <Typography
             variant="h6"
             color="text.secondary"
             data-testid="policy-count"
+            aria-live="polite"
+            aria-label={`${policies.length} ${
+              policies.length === 1 ? "policy" : "policies"
+            } found`}
           >
             {t(
               policies.length === 1
@@ -187,12 +197,15 @@ const PoliciesPage = () => {
           variant="primary"
           onClick={handleCreatePolicy}
           data-testid="create-policy-button"
+          aria-label="Create new policy"
         >
           + {t("policies.createPolicy")}
         </Button>
       </Box>
 
       <Box
+        component="section"
+        aria-label="Policy list"
         sx={{
           display: "grid",
           gridTemplateColumns: {
@@ -208,6 +221,7 @@ const PoliciesPage = () => {
         {policies.map((policy) => (
           <Card
             key={policy.id}
+            component="article"
             sx={{
               height: "100%",
               display: "flex",
@@ -339,6 +353,9 @@ const PoliciesPage = () => {
                   onClick={() => handleStatusToggle(policy.id, policy.status)}
                   disabled={updatePolicyMutation.isPending}
                   data-testid={`policy-status-toggle-${policy.id}`}
+                  aria-label={`${
+                    policy.status === "active" ? "Deactivate" : "Activate"
+                  } policy ${policy.name}`}
                 >
                   {t(
                     `policies.actions.${
@@ -355,6 +372,7 @@ const PoliciesPage = () => {
                     borderRadius: 1.5,
                   }}
                   data-testid={`policy-edit-${policy.id}`}
+                  aria-label={`Edit policy ${policy.name}`}
                 >
                   <Edit fontSize="small" />
                 </IconButton>
@@ -371,6 +389,7 @@ const PoliciesPage = () => {
                     borderRadius: 1.5,
                   }}
                   data-testid={`policy-delete-${policy.id}`}
+                  aria-label={`Delete policy ${policy.name}`}
                 >
                   <Delete fontSize="small" />
                 </IconButton>

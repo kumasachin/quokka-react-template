@@ -25,6 +25,8 @@ const PageLoadingSpinner = () => (
       flexDirection: "column",
       gap: "16px",
     }}
+    role="status"
+    aria-label="Loading page content"
   >
     <div
       style={{
@@ -35,6 +37,7 @@ const PageLoadingSpinner = () => (
         borderRadius: "50%",
         animation: "spin 1s linear infinite",
       }}
+      aria-hidden="true"
     />
     <Typography variant="body2" color="textSecondary">
       Loading page...

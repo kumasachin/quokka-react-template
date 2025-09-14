@@ -12,6 +12,7 @@ export interface HeaderProps {
   prefix?: React.ReactNode;
   titleProps?: Partial<TypographyProps>;
   subtitleProps?: Partial<TypographyProps>;
+  id?: string;
 }
 
 const getVariant = (level: number): TypographyProps["variant"] => {
@@ -35,12 +36,15 @@ export const Header: React.FC<HeaderProps> = ({
   prefix,
   titleProps,
   subtitleProps,
+  id,
 }) => {
   const titleVariant = getVariant(level);
   const subtitleVariant = level < 6 ? getVariant(level + 1) : "body1";
+  const titleId = id || `header-${title.toLowerCase().replace(/\s+/g, "-")}`;
 
   return (
     <Box
+      component="header"
       sx={{
         textAlign: align,
         mb: gutterBottom ? 3 : 0,
@@ -64,6 +68,7 @@ export const Header: React.FC<HeaderProps> = ({
         )}
 
         <Typography
+          id={titleId}
           variant={titleVariant}
           gutterBottom={Boolean(subtitle)}
           {...titleProps}
@@ -76,6 +81,7 @@ export const Header: React.FC<HeaderProps> = ({
         <Typography
           variant={subtitleVariant}
           color="text.secondary"
+          aria-describedby={titleId}
           {...subtitleProps}
         >
           {subtitle}
