@@ -134,7 +134,63 @@ export const useCreatePolicy = () => {
       const response = await apiClient.post("/policies", policyData);
       return response.data;
     },
-    onSuccess: () => {
+
+    onMutate: async (variables) => {
+      await queryClient.cancelQueries({ queryKey: ["policies"] });
+
+      const previousPolicies = queryClient.getQueriesData({
+        queryKey: ["policies"],
+      });
+
+      const optimisticPolicy: Policy = {
+        ...variables,
+        id: `temp-${Date.now()}`,
+        createdAt: new Date().toISOString(),
+        updatedAt: new Date().toISOString(),
+      };
+
+      queryClient.setQueriesData<PoliciesResponse>(
+        { queryKey: ["policies"] },
+        (old) => {
+          if (!old?.data) return old;
+
+          return {
+            ...old,
+            data: [optimisticPolicy, ...old.data],
+            total: old.total + 1,
+          };
+        }
+      );
+
+      return { previousPolicies, optimisticPolicy };
+    },
+
+    onError: (_err, _variables, context) => {
+      if (context?.previousPolicies) {
+        context.previousPolicies.forEach(([queryKey, data]) => {
+          queryClient.setQueryData(queryKey, data);
+        });
+      }
+    },
+
+    onSuccess: (data, _variables, context) => {
+      if (context?.optimisticPolicy && data?.data) {
+        queryClient.setQueriesData<PoliciesResponse>(
+          { queryKey: ["policies"] },
+          (old) => {
+            if (!old?.data) return old;
+
+            const updatedData = old.data.map((policy) =>
+              policy.id === context.optimisticPolicy.id ? data.data : policy
+            );
+
+            return { ...old, data: updatedData };
+          }
+        );
+      }
+    },
+
+    onSettled: () => {
       queryClient.invalidateQueries({ queryKey: ["policies"] });
     },
   });

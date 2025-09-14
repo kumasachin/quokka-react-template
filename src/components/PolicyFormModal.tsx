@@ -18,7 +18,7 @@ import { Policy } from "../api/policies";
 interface PolicyFormModalProps {
   open: boolean;
   onClose: () => void;
-  policy?: Policy | null; // null for create, Policy object for edit
+  policy?: Policy | null;
 }
 
 const PolicyFormModal = ({ open, onClose, policy }: PolicyFormModalProps) => {
@@ -47,7 +47,6 @@ const PolicyFormModal = ({ open, onClose, policy }: PolicyFormModalProps) => {
   const updatePolicyMutation = useUpdatePolicy();
   const toast = useToast();
 
-  // Set form data when policy changes (for edit mode)
   useEffect(() => {
     if (policy) {
       setFormData({
@@ -59,11 +58,10 @@ const PolicyFormModal = ({ open, onClose, policy }: PolicyFormModalProps) => {
         enabled: policy.status === "active",
         rules: policy.rules.map((rule) => ({
           ...rule,
-          action: rule.action as any, // Type assertion for existing data
+          action: rule.action as any,
         })),
       });
     } else {
-      // Reset form for create mode
       setFormData({
         name: "",
         type: "security",
@@ -109,12 +107,16 @@ const PolicyFormModal = ({ open, onClose, policy }: PolicyFormModalProps) => {
 
     try {
       if (isEdit && policy) {
+        toast.success("Updating policy...", 1000);
+
         await updatePolicyMutation.mutateAsync({
           id: policy.id,
           updates: formData as Partial<PolicyFormData>,
         });
         toast.success("Policy updated successfully!");
       } else {
+        toast.success("Creating policy...", 1000);
+
         await createPolicyMutation.mutateAsync(
           formData as Omit<Policy, "id" | "createdAt" | "updatedAt">
         );
@@ -123,7 +125,9 @@ const PolicyFormModal = ({ open, onClose, policy }: PolicyFormModalProps) => {
       onClose();
     } catch (error) {
       toast.error(
-        isEdit ? "Failed to update policy" : "Failed to create policy"
+        isEdit
+          ? "Failed to update policy. Changes have been reverted."
+          : "Failed to create policy"
       );
     }
   };
@@ -132,13 +136,24 @@ const PolicyFormModal = ({ open, onClose, policy }: PolicyFormModalProps) => {
     createPolicyMutation.isPending || updatePolicyMutation.isPending;
 
   return (
-    <Dialog open={open} onClose={onClose} maxWidth="sm" fullWidth>
-      <DialogTitle>
+    <Dialog
+      open={open}
+      onClose={onClose}
+      maxWidth="sm"
+      fullWidth
+      data-testid="policy-form-modal"
+    >
+      <DialogTitle data-testid="policy-form-title">
         {isEdit ? `Edit Policy: ${policy?.name}` : "Create New Policy"}
       </DialogTitle>
 
       <DialogContent>
-        <Box component="form" onSubmit={handleSubmit} sx={{ pt: 1 }}>
+        <Box
+          component="form"
+          onSubmit={handleSubmit}
+          sx={{ pt: 1 }}
+          data-testid="policy-form"
+        >
           <TextField
             fullWidth
             label="Policy Name"
@@ -150,6 +165,7 @@ const PolicyFormModal = ({ open, onClose, policy }: PolicyFormModalProps) => {
             helperText={errors.name}
             sx={{ mb: 2 }}
             placeholder="Enter policy name"
+            data-testid="policy-name-input"
           />
 
           <Select
@@ -168,6 +184,7 @@ const PolicyFormModal = ({ open, onClose, policy }: PolicyFormModalProps) => {
             error={!!errors.type}
             helperText={errors.type}
             sx={{ mb: 2 }}
+            data-testid="policy-type-select"
           />
 
           <TextField
@@ -183,6 +200,7 @@ const PolicyFormModal = ({ open, onClose, policy }: PolicyFormModalProps) => {
             helperText={errors.description}
             sx={{ mb: 2 }}
             placeholder="Describe what this policy does..."
+            data-testid="policy-description-input"
           />
 
           <Select
@@ -202,6 +220,7 @@ const PolicyFormModal = ({ open, onClose, policy }: PolicyFormModalProps) => {
             error={!!errors.status}
             helperText={errors.status}
             sx={{ mb: 2 }}
+            data-testid="policy-status-select"
           />
 
           <Select
@@ -222,21 +241,36 @@ const PolicyFormModal = ({ open, onClose, policy }: PolicyFormModalProps) => {
             error={!!errors.priority}
             helperText={errors.priority}
             sx={{ mb: 2 }}
+            data-testid="policy-priority-select"
           />
 
           {Object.keys(errors).length > 0 && (
-            <Alert severity="error" sx={{ mb: 2 }}>
+            <Alert
+              severity="error"
+              sx={{ mb: 2 }}
+              data-testid="form-validation-errors"
+            >
               Please fix the validation errors above.
             </Alert>
           )}
         </Box>
       </DialogContent>
 
-      <DialogActions sx={{ p: 3 }}>
-        <Button variant="outlined" onClick={onClose} disabled={isLoading}>
+      <DialogActions sx={{ p: 3 }} data-testid="policy-form-actions">
+        <Button
+          variant="outlined"
+          onClick={onClose}
+          disabled={isLoading}
+          data-testid="cancel-button"
+        >
           Cancel
         </Button>
-        <Button variant="contained" onClick={handleSubmit} disabled={isLoading}>
+        <Button
+          variant="contained"
+          onClick={handleSubmit}
+          disabled={isLoading}
+          data-testid="submit-button"
+        >
           {isLoading ? <CircularProgress size={20} sx={{ mr: 1 }} /> : null}
           {isEdit ? "Update Policy" : "Create Policy"}
         </Button>

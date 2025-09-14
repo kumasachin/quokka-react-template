@@ -130,6 +130,7 @@ const PoliciesPage = () => {
   return (
     <Box
       sx={{ px: { xs: 2, sm: 3, md: 4 }, py: 3, maxWidth: 1400, mx: "auto" }}
+      data-testid="policies-page"
     >
       <Header
         title={t("policies.title")}
@@ -137,7 +138,6 @@ const PoliciesPage = () => {
         prefix={<Policy sx={{ color: "info.main" }} />}
       />
 
-      {/* Controls Section */}
       <Box
         sx={{
           display: "flex",
@@ -151,6 +151,7 @@ const PoliciesPage = () => {
           border: "1px solid",
           borderColor: "divider",
         }}
+        data-testid="policies-controls"
       >
         <Box sx={{ display: "flex", alignItems: "center", gap: 3 }}>
           <Select
@@ -165,9 +166,14 @@ const PoliciesPage = () => {
               })),
             ]}
             sx={{ minWidth: 200, flexShrink: 0 }}
+            data-testid="policy-type-filter"
           />
 
-          <Typography variant="h6" color="text.secondary">
+          <Typography
+            variant="h6"
+            color="text.secondary"
+            data-testid="policy-count"
+          >
             {t(
               policies.length === 1
                 ? "policies.policyFound"
@@ -177,12 +183,15 @@ const PoliciesPage = () => {
           </Typography>
         </Box>
 
-        <Button variant="primary" onClick={handleCreatePolicy}>
+        <Button
+          variant="primary"
+          onClick={handleCreatePolicy}
+          data-testid="create-policy-button"
+        >
           + {t("policies.createPolicy")}
         </Button>
       </Box>
 
-      {/* Policies Grid */}
       <Box
         sx={{
           display: "grid",
@@ -194,6 +203,7 @@ const PoliciesPage = () => {
           gap: { xs: 2, sm: 3, md: 4 },
           mb: 4,
         }}
+        data-testid="policies-grid"
       >
         {policies.map((policy) => (
           <Card
@@ -211,9 +221,9 @@ const PoliciesPage = () => {
               borderColor: "divider",
               borderRadius: 3,
             }}
+            data-testid={`policy-card-${policy.id}`}
           >
             <CardContent sx={{ flexGrow: 1, p: 3 }}>
-              {/* Header Section */}
               <Box
                 sx={{
                   display: "flex",
@@ -232,6 +242,7 @@ const PoliciesPage = () => {
                     flex: 1,
                     mr: 2,
                   }}
+                  data-testid={`policy-name-${policy.id}`}
                 >
                   {policy.name}
                 </Typography>
@@ -244,10 +255,10 @@ const PoliciesPage = () => {
                     textTransform: "capitalize",
                     borderRadius: 2,
                   }}
+                  data-testid={`policy-type-${policy.id}`}
                 />
               </Box>
 
-              {/* Description */}
               <Typography
                 variant="body2"
                 color="text.secondary"
@@ -264,23 +275,23 @@ const PoliciesPage = () => {
                 {policy.description}
               </Typography>
 
-              {/* Status and Priority Chips */}
               <Box sx={{ display: "flex", gap: 1.5, mb: 3, flexWrap: "wrap" }}>
                 <Chip
                   label={t(`policies.status.${policy.status}`)}
                   color={statusColors[policy.status]}
                   size="small"
                   sx={{ fontWeight: 500, borderRadius: 2 }}
+                  data-testid={`policy-status-${policy.id}`}
                 />
                 <Chip
                   label={t(`policies.priority.${policy.priority}`)}
                   color={priorityColors[policy.priority]}
                   size="small"
                   sx={{ fontWeight: 500, borderRadius: 2 }}
+                  data-testid={`policy-priority-${policy.id}`}
                 />
               </Box>
 
-              {/* Metadata */}
               <Box sx={{ mb: 3, space: 1 }}>
                 <Typography
                   variant="caption"
@@ -311,7 +322,6 @@ const PoliciesPage = () => {
                 </Typography>
               </Box>
 
-              {/* Action Buttons */}
               <Box
                 sx={{
                   display: "flex",
@@ -328,6 +338,7 @@ const PoliciesPage = () => {
                   size="sm"
                   onClick={() => handleStatusToggle(policy.id, policy.status)}
                   disabled={updatePolicyMutation.isPending}
+                  data-testid={`policy-status-toggle-${policy.id}`}
                 >
                   {t(
                     `policies.actions.${
@@ -343,6 +354,7 @@ const PoliciesPage = () => {
                     "&:hover": { backgroundColor: "action.hover" },
                     borderRadius: 1.5,
                   }}
+                  data-testid={`policy-edit-${policy.id}`}
                 >
                   <Edit fontSize="small" />
                 </IconButton>
@@ -358,6 +370,7 @@ const PoliciesPage = () => {
                     },
                     borderRadius: 1.5,
                   }}
+                  data-testid={`policy-delete-${policy.id}`}
                 >
                   <Delete fontSize="small" />
                 </IconButton>
@@ -367,7 +380,6 @@ const PoliciesPage = () => {
         ))}
       </Box>
 
-      {/* Empty State */}
       {policies.length === 0 && (
         <Box
           sx={{
@@ -380,6 +392,7 @@ const PoliciesPage = () => {
             borderColor: "divider",
             boxShadow: "0 2px 8px rgba(0,0,0,0.04)",
           }}
+          data-testid="empty-state"
         >
           <Policy sx={{ fontSize: 48, color: "text.disabled", mb: 2 }} />
           <Typography
@@ -400,13 +413,16 @@ const PoliciesPage = () => {
                 })
               : t("policies.noPolicyDescription")}
           </Typography>
-          <Button variant="primary" onClick={handleCreatePolicy}>
+          <Button
+            variant="primary"
+            onClick={handleCreatePolicy}
+            data-testid="create-first-policy-button"
+          >
             + {t("policies.createFirstPolicy")}
           </Button>
         </Box>
       )}
 
-      {/* Policy Form Modal */}
       <PolicyFormModal
         open={formModalOpen}
         onClose={handleCloseModal}

@@ -2,8 +2,10 @@ import { Typography, Card, Header } from "../design-system/components";
 import { Box, CardContent, Chip, Skeleton } from "@mui/material";
 import { Dashboard } from "@mui/icons-material";
 import { useDevices } from "../hooks";
+import { useTranslation } from "react-i18next";
 
 const DevicePage = () => {
+  const { t } = useTranslation();
   const { data: devices, isLoading, error } = useDevices();
 
   const getStatusColor = (status: string) => {
@@ -22,20 +24,20 @@ const DevicePage = () => {
   return (
     <Box>
       <Header
-        title="Device Management"
-        subtitle="Monitor and manage all your network devices"
+        title={t("devices.title")}
+        subtitle={t("devices.subtitle")}
         prefix={<Dashboard sx={{ color: "primary.main" }} />}
       />
 
       <Card>
         <CardContent>
           <Typography variant="h5" gutterBottom>
-            Connected Devices
+            {t("devices.connectedDevices")}
           </Typography>
 
           {error && (
             <Typography color="error" sx={{ mb: 2 }}>
-              Failed to load devices. Please try again.
+              {t("devices.loadError")}
             </Typography>
           )}
 
@@ -74,7 +76,7 @@ const DevicePage = () => {
                         Last seen: {device.lastSeen}
                       </Typography>
                       <Chip
-                        label={device.status}
+                        label={t(`devices.status.${device.status}`)}
                         color={getStatusColor(device.status) as any}
                         size="small"
                       />
