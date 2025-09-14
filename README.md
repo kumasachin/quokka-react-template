@@ -2,6 +2,8 @@
 
 A modern, scalable React-based cybersecurity management dashboard built with enterprise-grade architecture and best practices.
 
+## Run 'pnpm run dev:full or npm run dev:full'
+
 ## 🎯 What I've Built
 
 ### Core Features Completed
