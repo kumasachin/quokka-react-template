@@ -1,52 +1,58 @@
+import { createTheme as createMuiTheme } from "@mui/material/styles";
 import { colors, spacing, typography } from "../tokens";
 
 const createTheme = () => {
-  return {
+  return createMuiTheme({
     palette: {
       primary: {
-        lightest: colors.primary.lightest,
         light: colors.primary.light,
-        medium: colors.primary.medium,
         main: colors.primary.base,
         dark: colors.primary.dark,
-        darkest: colors.primary.darkest,
+        contrastText: colors.white,
       },
       secondary: {
-        lightest: colors.gray.lightest,
         light: colors.gray.light,
-        medium: colors.gray.medium,
         main: colors.gray.base,
         dark: colors.gray.dark,
-        darkest: colors.gray.darkest,
+        contrastText: colors.white,
       },
       text: {
         primary: colors.text.primary,
         secondary: colors.text.secondary,
         disabled: colors.text.muted,
-        hint: colors.text.muted,
       },
       background: {
         default: colors.background.primary,
         paper: colors.background.secondary,
-        surface: colors.background.tertiary,
       },
-      common: {
-        black: colors.black,
-        white: colors.white,
+      success: {
+        main: colors.success,
       },
-      status: {
-        success: colors.success,
-        warning: colors.warning,
-        error: colors.error,
-        info: colors.info,
+      warning: {
+        main: colors.warning,
+      },
+      error: {
+        main: colors.error,
+      },
+      info: {
+        main: colors.info,
       },
     },
     typography: {
       fontFamily: typography.fontFamily,
-      fontSize: typography.fontSize,
+      fontSize: 16,
+      h1: { fontSize: typography.fontSize["3xl"] },
+      h2: { fontSize: typography.fontSize["2xl"] },
+      h3: { fontSize: typography.fontSize.xl },
+      h4: { fontSize: typography.fontSize.lg },
+      h5: { fontSize: typography.fontSize.base },
+      h6: { fontSize: typography.fontSize.sm },
+      body1: { fontSize: typography.fontSize.base },
+      body2: { fontSize: typography.fontSize.sm },
+      caption: { fontSize: typography.fontSize.xs },
     },
-    spacing,
-  };
+    spacing: (factor: number) => `${parseInt(spacing.sm) * factor}px`,
+  });
 };
 
 export const theme = createTheme();

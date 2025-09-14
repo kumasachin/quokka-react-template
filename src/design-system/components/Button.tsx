@@ -1,6 +1,5 @@
 import React from "react";
 import styled from "styled-components";
-import { theme } from "../theme";
 
 interface ButtonProps {
   children: React.ReactNode;
@@ -13,7 +12,7 @@ interface ButtonProps {
 const StyledButton = styled.button<ButtonProps>`
   border: none;
   border-radius: 6px;
-  font-family: ${theme.typography.fontFamily};
+  font-family: ${(props) => props.theme.typography.fontFamily};
   cursor: pointer;
   transition: all 0.2s ease-in-out;
   opacity: ${(props) => (props.disabled ? 0.6 : 1)};
@@ -21,30 +20,30 @@ const StyledButton = styled.button<ButtonProps>`
   /* Variant styles */
   background-color: ${(props) =>
     props.variant === "secondary"
-      ? theme.palette.secondary.main
-      : theme.palette.primary.main};
-  color: ${theme.palette.common.white};
+      ? props.theme.palette.secondary.main
+      : props.theme.palette.primary.main};
+  color: ${(props) => props.theme.palette.common.white};
 
   /* Size styles */
   padding: ${(props) => {
     switch (props.size) {
       case "sm":
-        return `${theme.spacing.xs} ${theme.spacing.sm}`;
+        return `${props.theme.spacing(1)} ${props.theme.spacing(2)}`;
       case "lg":
-        return `${theme.spacing.sm} ${theme.spacing.lg}`;
+        return `${props.theme.spacing(2)} ${props.theme.spacing(4)}`;
       default:
-        return `${theme.spacing.sm} ${theme.spacing.md}`;
+        return `${props.theme.spacing(2)} ${props.theme.spacing(3)}`;
     }
   }};
 
   font-size: ${(props) => {
     switch (props.size) {
       case "sm":
-        return theme.typography.fontSize.sm;
+        return "14px";
       case "lg":
-        return theme.typography.fontSize.lg;
+        return "18px";
       default:
-        return theme.typography.fontSize.base;
+        return "16px";
     }
   }};
 
