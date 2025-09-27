@@ -1,5 +1,6 @@
 {
-  "tasks": {
+  "$schema": "https://turbo.build/schema.json",
+  "pipeline": {
     "build": {},
     "dev": {
       "cache": false
