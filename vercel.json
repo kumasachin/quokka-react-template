@@ -1,9 +1,0 @@
-{
-  "version": 2,
-  "outputDirectory": "apps/frontend/dist",
-  "builds": [{ "src": "apps/backend/api/**/*.js", "use": "@vercel/node" }],
-  "routes": [
-    { "src": "/api/(.*)", "dest": "/apps/backend/api/$1.js" },
-    { "src": "/(.*)", "dest": "/$1" }
-  ]
-}
