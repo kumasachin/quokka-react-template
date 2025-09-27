@@ -1,4 +1,4 @@
-import React, { createContext, useContext, useEffect, useState } from "react";
+import React, { createContext, useContext, useEffect } from "react";
 import { AuthUser, useAuth } from "../hooks/useAuth";
 
 interface AuthContextType {
