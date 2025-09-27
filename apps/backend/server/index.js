@@ -14,9 +14,11 @@ const PORT = process.env.PORT || 3001;
 
 app.use(helmet());
 app.use(compression());
+const allowedOrigin = process.env.CLIENT_URL || "http://localhost:5173";
+console.log("CORS allowed origin:", allowedOrigin);
 app.use(
   cors({
-    origin: process.env.CLIENT_URL || "http://localhost:5173",
+    origin: allowedOrigin,
     credentials: true,
   })
 );
@@ -66,15 +68,15 @@ app.use((err, req, res, next) => {
   });
 });
 
-app.listen(PORT, () => {
-  console.log(`🚀 CyberSmart BFF Server running on port ${PORT}`);
-  console.log(`📊 Health endpoint: http://localhost:${PORT}/health`);
-  console.log(`📋 API endpoints available:`);
-  console.log(`   • Policies: http://localhost:${PORT}/api/policies`);
-  console.log(`   • Devices: http://localhost:${PORT}/api/devices`);
-  console.log(`   • System: http://localhost:${PORT}/api/system`);
-  console.log(`   • Patches: http://localhost:${PORT}/api/patches`);
-  console.log(`   • Firewall: http://localhost:${PORT}/api/firewall`);
-});
+// app.listen(PORT, () => {
+//   console.log(`🚀 CyberSmart BFF Server running on port ${PORT}`);
+//   console.log(`📊 Health endpoint: http://localhost:${PORT}/health`);
+//   console.log(`📋 API endpoints available:`);
+//   console.log(`   • Policies: http://localhost:${PORT}/api/policies`);
+//   console.log(`   • Devices: http://localhost:${PORT}/api/devices`);
+//   console.log(`   • System: http://localhost:${PORT}/api/system`);
+//   console.log(`   • Patches: http://localhost:${PORT}/api/patches`);
+//   console.log(`   • Firewall: http://localhost:${PORT}/api/firewall`);
+// });
 
 export default app;
