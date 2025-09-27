@@ -1,26 +1,17 @@
 {
   "$schema": "https://turbo.build/schema.json",
   "pipeline": {
-    "dev:vite": {
-      "cache": false,
-      "persistent": true
-    },
-    "build:vite": {
+    "build": {
       "outputs": ["dist/**"]
     },
-    "lint:eslint": {
-      "outputs": []
+    "dev": {
+      "cache": false
     },
-    "typecheck:tsc": {
-      "outputs": []
-    },
-    "test:vitest": {
-      "outputs": []
-    },
-    "preview:vite": {
-      "dependsOn": ["build:vite"],
-      "cache": false,
-      "persistent": true
+    "lint": {},
+    "typecheck": {},
+    "test": {},
+    "preview": {
+      "dependsOn": ["build"]
     }
   }
 }
