@@ -1,4 +1,4 @@
-# CyberSmart - Cybersecurity Management Platform
+# CyberSecurity - Cybersecurity Management Platform
 
 A modern, scalable React-based cybersecurity management dashboard built with enterprise-grade architecture and best practices.
 
@@ -198,6 +198,25 @@ Easier to build i18n from start than retrofit later
 - **State Management**: Can migrate between state libraries with minimal changes
 
 **AI-Assisted Development**: This project was developed with AI assistance for documentation and unit tests.
+
+## Deploying the BFF to Vercel
+
+1. Create a Vercel project and connect this repository.
+2. In Vercel Project Settings > Environment Variables, add:
+
+- `DATABASE_URL` — your Postgres connection string (optional; if absent the API uses in-memory data)
+- `NODE_ENV=production`
+
+3. Ensure `vercel.json` is present (this repo includes a basic one routing `/api/*` to `api/*.js`).
+4. Run the SQL from `db/schema.sql` on your Postgres instance. Optionally run `db/seed.sql`.
+5. Deploy — Vercel will detect the Node functions in `api/` and deploy them. The frontend can call the endpoints at `https://<your-deployment>/api/policies`.
+
+Local DB setup
+
+1. Copy `.env.example` to `.env` and set `DATABASE_URL` locally (or leave empty to use the mock).
+2. Install dependencies (you can use `npm install` or `pnpm install`).
+3. Run `npm run db:setup` to apply schema and seed (requires `psql` in PATH).
+4. Run the server locally (`npm run dev:server`) or run the frontend and point `VITE_API_BASE_URL` to your local server.
 
 ### Temporary Solutions (Need Migration)
 

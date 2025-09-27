@@ -34,7 +34,7 @@ const HomePage = () => {
   return (
     <Box>
       <Header
-        title="Welcome to CyberSmart"
+        title="Welcome to CyberSecurity"
         subtitle="Your comprehensive cybersecurity management platform"
         prefix={<Home sx={{ color: "primary.main" }} />}
         align="center"

@@ -101,7 +101,7 @@ const WrapperTemplate = () => {
                 flexGrow: isMobile ? 1 : 0,
               }}
             >
-              CyberSmart Platform
+              CyberSecurity Platform
             </Typography>
           </Box>
         </Container>
@@ -188,7 +188,7 @@ const WrapperTemplate = () => {
       >
         <Container maxWidth="xl">
           <Typography variant="body2" color="text.secondary" align="center">
-            © 2025 CyberSmart Platform. All rights reserved.
+            © 2025 CyberSecurity Platform. All rights reserved.
           </Typography>
         </Container>
       </Box>

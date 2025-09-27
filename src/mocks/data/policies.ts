@@ -26,7 +26,7 @@ export const mockPolicies: Policy[] = [
     priority: "high",
     createdAt: "2025-09-01T10:00:00Z",
     updatedAt: "2025-09-14T15:30:00Z",
-    createdBy: "admin@cybersmart.com",
+    createdBy: "admin@cybersecurity.com",
     rules: [
       {
         id: "rule-001",
@@ -51,7 +51,7 @@ export const mockPolicies: Policy[] = [
     priority: "critical",
     createdAt: "2025-08-15T09:00:00Z",
     updatedAt: "2025-09-10T11:20:00Z",
-    createdBy: "security@cybersmart.com",
+    createdBy: "security@cybersecurity.com",
     rules: [
       {
         id: "rule-003",
@@ -71,7 +71,7 @@ export const mockPolicies: Policy[] = [
     priority: "high",
     createdAt: "2025-09-05T14:00:00Z",
     updatedAt: "2025-09-12T16:45:00Z",
-    createdBy: "network@cybersmart.com",
+    createdBy: "network@cybersecurity.com",
     rules: [
       {
         id: "rule-004",
@@ -96,7 +96,7 @@ export const mockPolicies: Policy[] = [
     priority: "medium",
     createdAt: "2025-08-20T12:30:00Z",
     updatedAt: "2025-09-08T10:15:00Z",
-    createdBy: "network@cybersmart.com",
+    createdBy: "network@cybersecurity.com",
     rules: [
       {
         id: "rule-006",
@@ -116,7 +116,7 @@ export const mockPolicies: Policy[] = [
     priority: "critical",
     createdAt: "2025-09-02T08:00:00Z",
     updatedAt: "2025-09-13T14:20:00Z",
-    createdBy: "dba@cybersmart.com",
+    createdBy: "dba@cybersecurity.com",
     rules: [
       {
         id: "rule-007",
@@ -141,7 +141,7 @@ export const mockPolicies: Policy[] = [
     priority: "medium",
     createdAt: "2025-09-10T16:00:00Z",
     updatedAt: "2025-09-14T12:00:00Z",
-    createdBy: "it@cybersmart.com",
+    createdBy: "it@cybersecurity.com",
     rules: [
       {
         id: "rule-009",
@@ -161,7 +161,7 @@ export const mockPolicies: Policy[] = [
     priority: "high",
     createdAt: "2025-08-25T07:00:00Z",
     updatedAt: "2025-09-11T09:30:00Z",
-    createdBy: "backup@cybersmart.com",
+    createdBy: "backup@cybersecurity.com",
     rules: [
       {
         id: "rule-010",
@@ -187,7 +187,7 @@ export const mockPolicies: Policy[] = [
     priority: "high",
     createdAt: "2025-08-30T13:00:00Z",
     updatedAt: "2025-09-09T11:45:00Z",
-    createdBy: "compliance@cybersmart.com",
+    createdBy: "compliance@cybersecurity.com",
     rules: [
       {
         id: "rule-012",
@@ -212,7 +212,7 @@ export const mockPolicies: Policy[] = [
     priority: "medium",
     createdAt: "2025-09-03T11:00:00Z",
     updatedAt: "2025-09-14T08:15:00Z",
-    createdBy: "audit@cybersmart.com",
+    createdBy: "audit@cybersecurity.com",
     rules: [
       {
         id: "rule-014",
