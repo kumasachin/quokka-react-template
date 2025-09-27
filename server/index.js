@@ -8,6 +8,9 @@ import { devicesRouter } from "./routes/devices.js";
 import { systemRouter } from "./routes/system.js";
 import { patchesRouter } from "./routes/patches.js";
 import { firewallRouter } from "./routes/firewall.js";
+import { authRouter } from "./routes/auth.js";
+import { registerRouter } from "./routes/register.js";
+import { resetPasswordRouter } from "./routes/reset-password.js";
 
 const app = express();
 const PORT = process.env.PORT || 3001;
@@ -37,6 +40,7 @@ app.use("/api/devices", devicesRouter);
 app.use("/api/system", systemRouter);
 app.use("/api/patches", patchesRouter);
 app.use("/api/firewall", firewallRouter);
+app.use("/api/auth", authRouter);
 
 app.get("/", (req, res) => {
   res.json({
@@ -75,6 +79,9 @@ app.listen(PORT, () => {
   console.log(`   • System: http://localhost:${PORT}/api/system`);
   console.log(`   • Patches: http://localhost:${PORT}/api/patches`);
   console.log(`   • Firewall: http://localhost:${PORT}/api/firewall`);
+  console.log(`   • Auth (login): http://localhost:${PORT}/api/auth/login`);
+  console.log(`   • Auth (signup): http://localhost:${PORT}/api/auth/signup`);
+  console.log(`   • Auth (reset): http://localhost:${PORT}/api/auth/reset`);
 });
 
 export default app;

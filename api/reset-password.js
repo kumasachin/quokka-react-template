@@ -28,8 +28,20 @@ export default async function handler(req, res) {
     return res.status(400).json({ error: "Username and newPassword required" });
   }
   const pool = getPool();
+  // If no DB configured, support an in-memory reset for local development
   if (!pool) {
-    return res.status(500).json({ error: "Database not configured" });
+    if (!globalThis.__LOCAL_USERS) globalThis.__LOCAL_USERS = [];
+    const users = globalThis.__LOCAL_USERS;
+    const user = users.find((u) => u.username === username);
+    if (!user) {
+      return res.status(404).json({ error: "User not found" });
+    }
+    const hash = await bcrypt.hash(newPassword, SALT_ROUNDS);
+    // update in-memory user password
+    user.password_hash = hash;
+    return res
+      .status(200)
+      .json({ success: true, message: "Password updated (local)" });
   }
   // Check if user exists
   const userRes = await pool.query("SELECT id FROM users WHERE username = $1", [

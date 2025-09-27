@@ -28,8 +28,22 @@ export default async function handler(req, res) {
     return res.status(400).json({ error: "Username and password required" });
   }
   const pool = getPool();
+  // If no DB configured, use an in-memory users store for local development
   if (!pool) {
-    return res.status(500).json({ error: "Database not configured" });
+    // initialize in-memory store on globalThis
+    if (!globalThis.__LOCAL_USERS) globalThis.__LOCAL_USERS = [];
+    const users = globalThis.__LOCAL_USERS;
+    const exists = users.find((u) => u.username === username);
+    if (exists) {
+      return res.status(409).json({ error: "Username already exists" });
+    }
+    const hash = await bcrypt.hash(password, SALT_ROUNDS);
+    const id = (users.length + 1).toString();
+    const now = new Date().toISOString();
+    users.push({ id, username, password_hash: hash, role, created_at: now });
+    return res
+      .status(201)
+      .json({ success: true, message: "User registered (local)" });
   }
   // Check if user exists
   const existing = await pool.query(

@@ -4,6 +4,7 @@ import { Home } from "@mui/icons-material";
 import { useSystemStats } from "../hooks";
 import { useFeatureFlagsStore } from "../state";
 import { useNavigate } from "react-router-dom";
+import AuthForm from "../components/AuthForm";
 
 const HomePage = () => {
   const navigate = useNavigate();
@@ -40,6 +41,11 @@ const HomePage = () => {
         align="center"
         sx={{ mb: 4 }}
       />
+
+      {/* Show login/register UI for quick access on home */}
+      <Box sx={{ display: "flex", justifyContent: "center", mb: 4 }}>
+        <AuthForm />
+      </Box>
 
       <Box
         sx={{

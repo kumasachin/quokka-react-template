@@ -27,10 +27,14 @@ export function useAuth() {
     }
   }
 
-  async function handleRegister(username: string, password: string) {
+  async function handleRegister(
+    username: string,
+    password: string,
+    role: string = "user"
+  ) {
     setError(null);
     try {
-      await register(username, password);
+      await register(username, password, role);
       return true;
     } catch (e: any) {
       setError(e?.response?.data?.error || "Registration failed");

@@ -6,16 +6,42 @@ export default function AuthForm() {
   const [mode, setMode] = useState<"login" | "register" | "reset">("login");
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
+  const [role, setRole] = useState<"user" | "admin">("user");
   const [newPassword, setNewPassword] = useState("");
   const [loading, setLoading] = useState(false);
+  const [successMsg, setSuccessMsg] = useState<string | null>(null);
+  const [localError, setLocalError] = useState<string | null>(null);
 
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
     setLoading(true);
+    setLocalError(null);
+    setSuccessMsg(null);
     if (mode === "login") {
       await login(username, password);
     } else if (mode === "register") {
-      await register(username, password);
+      // Basic validation
+      if (password.length < 6) {
+        setLocalError("Password must be at least 6 characters");
+        setLoading(false);
+        return;
+      }
+      if (password !== confirmPassword) {
+        setLocalError("Passwords do not match");
+        setLoading(false);
+        return;
+      }
+      const ok = await register(username, password, role);
+      if (ok) {
+        setSuccessMsg("Registration successful. Please log in.");
+        setMode("login");
+        // clear sensitive fields
+        setPassword("");
+        setConfirmPassword("");
+      } else {
+        // use error from hook or local
+      }
     } else if (mode === "reset") {
       await resetPassword(username, newPassword);
     }
@@ -67,6 +93,26 @@ export default function AuthForm() {
             required
           />
         )}
+        {mode === "register" && (
+          <input
+            type="password"
+            placeholder="Confirm Password"
+            value={confirmPassword}
+            onChange={(e) => setConfirmPassword(e.target.value)}
+            style={{ width: "100%", marginBottom: 8, padding: 8 }}
+            required
+          />
+        )}
+        {mode === "register" && (
+          <select
+            value={role}
+            onChange={(e) => setRole(e.target.value as any)}
+            style={{ width: "100%", marginBottom: 8, padding: 8 }}
+          >
+            <option value="user">User</option>
+            <option value="admin">Admin</option>
+          </select>
+        )}
         {mode === "reset" && (
           <input
             type="password"
@@ -90,7 +136,15 @@ export default function AuthForm() {
             ? "Register"
             : "Reset Password"}
         </button>
-        {error && <div style={{ color: "red", marginTop: 8 }}>{error}</div>}
+        {localError && (
+          <div style={{ color: "red", marginTop: 8 }}>{localError}</div>
+        )}
+        {error && !localError && (
+          <div style={{ color: "red", marginTop: 8 }}>{error}</div>
+        )}
+        {successMsg && (
+          <div style={{ color: "green", marginTop: 8 }}>{successMsg}</div>
+        )}
       </form>
       <div style={{ marginTop: 16, textAlign: "center" }}>
         {mode !== "login" && (
