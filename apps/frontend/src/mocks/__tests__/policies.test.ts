@@ -33,12 +33,12 @@ describe("Policies API", () => {
   });
 
   it("should return a specific policy by ID", async () => {
-    const response = await fetch("/api/policies/sec-001");
+    const response = await fetch("/api/policies/sec-0012222");
     const data = await response.json();
 
     expect(response.ok).toBe(true);
     expect(data.success).toBe(true);
-    expect(data.data.id).toBe("sec-001");
+    expect(data.data.id).toBe("sec-0012222");
     expect(data.data.name).toBe("Password Policy");
   });
 
@@ -57,7 +57,7 @@ describe("Policies API", () => {
       status: "inactive" as const,
     };
 
-    const response = await fetch("/api/policies/sec-001", {
+    const response = await fetch("/api/policies/sec-0012222", {
       method: "PUT",
       headers: {
         "Content-Type": "application/json",
