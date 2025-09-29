@@ -7,7 +7,10 @@ const LanguageSwitcher: React.FC = () => {
   if (supportedLanguages.length === 1) {
     const currentLang = supportedLanguages[0];
     return (
-      <Box sx={{ display: "flex", alignItems: "center" }}>
+      <Box
+        sx={{ display: "flex", alignItems: "center" }}
+        data-testid="language-switcher"
+      >
         <Chip
           label={
             <Box sx={{ display: "flex", alignItems: "center", gap: 0.5 }}>
@@ -19,6 +22,7 @@ const LanguageSwitcher: React.FC = () => {
           size="small"
           sx={{ backgroundColor: "background.paper" }}
           aria-label={`Current language: ${currentLang.name}`}
+          data-testid="language-switcher-chip"
         />
       </Box>
     );

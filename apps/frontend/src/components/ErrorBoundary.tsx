@@ -47,30 +47,48 @@ export class ErrorBoundary extends Component<
       }
 
       return (
-        <Container maxWidth="md" sx={{ py: 4 }}>
-          <Card sx={{ p: 4, textAlign: "center" }}>
-            <Box sx={{ mb: 3 }}>
+        <Container
+          maxWidth="md"
+          sx={{ py: 4 }}
+          data-testid="error-boundary-container"
+        >
+          <Card
+            sx={{ p: 4, textAlign: "center" }}
+            data-testid="error-boundary-card"
+          >
+            <Box sx={{ mb: 3 }} data-testid="error-boundary-icon-container">
               <ErrorOutline
                 sx={{
                   fontSize: 64,
                   color: "error.main",
                   mb: 2,
                 }}
+                data-testid="error-boundary-icon"
               />
-              <Typography variant="h4" gutterBottom>
+              <Typography
+                variant="h4"
+                gutterBottom
+                data-testid="error-boundary-title"
+              >
                 Oops! Something went wrong
               </Typography>
-              <Typography variant="body1" color="text.secondary" sx={{ mb: 3 }}>
+              <Typography
+                variant="body1"
+                color="text.secondary"
+                sx={{ mb: 3 }}
+                data-testid="error-boundary-message"
+              >
                 We encountered an unexpected error. Don't worry, your data is
                 safe.
               </Typography>
             </Box>
 
-            <Box sx={{ mb: 3 }}>
+            <Box sx={{ mb: 3 }} data-testid="error-boundary-actions">
               <Button
                 variant="primary"
                 size="lg"
                 onClick={this.resetErrorState}
+                data-testid="error-boundary-retry-button"
               >
                 <Refresh sx={{ mr: 1 }} />
                 Try Again
@@ -87,8 +105,14 @@ export class ErrorBoundary extends Component<
                     borderRadius: 1,
                     textAlign: "left",
                   }}
+                  data-testid="error-boundary-details"
                 >
-                  <Typography variant="caption" color="error" gutterBottom>
+                  <Typography
+                    variant="caption"
+                    color="error"
+                    gutterBottom
+                    data-testid="error-boundary-details-title"
+                  >
                     Error Details (Development Mode):
                   </Typography>
                   <Typography
@@ -101,6 +125,7 @@ export class ErrorBoundary extends Component<
                       display: "block",
                       whiteSpace: "pre-wrap",
                     }}
+                    data-testid="error-boundary-details-content"
                   >
                     {this.state.capturedError.toString()}
                     {this.state.errorDetails?.componentStack}

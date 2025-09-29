@@ -128,6 +128,7 @@ const WrapperTemplate = () => {
             variant={isMobile ? "scrollable" : "standard"}
             scrollButtons={isMobile}
             aria-label="Navigation tabs"
+            data-testid="navigation-tabs"
             sx={{
               minHeight: 48,
               "& .MuiTab-root": {
@@ -143,6 +144,7 @@ const WrapperTemplate = () => {
                 label={tab.label}
                 id={`nav-tab-${index}`}
                 aria-controls={`nav-tabpanel-${index}`}
+                data-testid={`nav-tab-${tab.path.slice(1) || "home"}`}
               />
             ))}
           </Tabs>
@@ -178,6 +180,7 @@ const WrapperTemplate = () => {
 
       <Box
         component="footer"
+        data-testid="app-footer"
         sx={{
           backgroundColor: "background.paper",
           borderTop: 1,
@@ -187,7 +190,12 @@ const WrapperTemplate = () => {
         }}
       >
         <Container maxWidth="xl">
-          <Typography variant="body2" color="text.secondary" align="center">
+          <Typography
+            variant="body2"
+            color="text.secondary"
+            align="center"
+            data-testid="footer-text"
+          >
             © 2025 CyberSmart Platform. All rights reserved.
           </Typography>
         </Container>

@@ -18,17 +18,30 @@ const Navigation = () => {
   ];
 
   return (
-    <AppBar position="static" elevation={0} sx={{ mb: 3 }}>
-      <Toolbar>
-        <Typography variant="h6" sx={{ flexGrow: 1 }}>
+    <AppBar
+      position="static"
+      elevation={0}
+      sx={{ mb: 3 }}
+      data-testid="navigation"
+    >
+      <Toolbar data-testid="navigation-toolbar">
+        <Typography
+          variant="h6"
+          sx={{ flexGrow: 1 }}
+          data-testid="navigation-title"
+        >
           {t("navigation.title")}
         </Typography>
-        <Box sx={{ display: "flex", gap: 2, alignItems: "center" }}>
+        <Box
+          sx={{ display: "flex", gap: 2, alignItems: "center" }}
+          data-testid="navigation-content"
+        >
           <Box
             component="nav"
             role="navigation"
             aria-label="Main navigation"
             sx={{ display: "flex", gap: 1 }}
+            data-testid="navigation-menu"
           >
             {navItems.map((item) => (
               <Button
