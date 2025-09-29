@@ -7,10 +7,14 @@
     "lint": "turbo lint",
     "typecheck": "turbo typecheck",
     "test": "turbo test",
+    "test:e2e": "playwright test",
+    "test:e2e:ui": "playwright test --ui",
     "preview": "turbo preview",
     "prepare": "husky"
   },
   "devDependencies": {
+    "@playwright/test": "^1.55.1",
+    "eslint-plugin-storybook": "^9.1.8",
     "husky": "^9.1.7",
     "turbo": "^1.13.4"
   }
