@@ -2,6 +2,16 @@ import { render, screen } from "@testing-library/react";
 import { describe, it, expect, vi } from "vitest";
 import App from "../App";
 
+// Mock the auth store to simulate authenticated state
+vi.mock("../state", () => ({
+  useAuthStore: () => ({
+    isAuthenticated: true,
+    user: { username: "admin" },
+    login: vi.fn(),
+    logout: vi.fn(),
+  }),
+}));
+
 // Mock all page components
 vi.mock("../pages/HomePage", () => ({
   default: () => <div data-testid="home-page">Home Page</div>,
@@ -29,6 +39,16 @@ vi.mock("../pages/SettingsPage", () => ({
 
 vi.mock("../pages/NotFoundPage", () => ({
   default: () => <div data-testid="not-found-page">Not Found Page</div>,
+}));
+
+// Mock LoginPage as well
+vi.mock("../pages/LoginPage", () => ({
+  default: () => <div data-testid="login-page">Login Page</div>,
+}));
+
+// Mock ProtectedRoute to render children when authenticated
+vi.mock("../components/ProtectedRoute", () => ({
+  default: ({ children }: any) => <div>{children}</div>,
 }));
 
 // Mock MUI icons to avoid file system issues

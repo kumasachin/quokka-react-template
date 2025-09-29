@@ -107,3 +107,7 @@ build/
 # Vite
 dist-ssr
 *.local
+
+# Playwright test results
+playwright-report/
+test-results/
