@@ -1,8 +1,9 @@
 import { test, expect } from "@playwright/test";
+import { loginAsAdmin } from "./auth-helpers";
 
 test.describe("Navigation", () => {
   test("should display all navigation tabs", async ({ page }) => {
-    await page.goto("/");
+    await loginAsAdmin(page);
 
     // Check that all navigation tabs are present
     const tabs = [
@@ -21,7 +22,10 @@ test.describe("Navigation", () => {
   });
 
   test("should navigate to devices page", async ({ page }) => {
-    await page.goto("/");
+    await loginAsAdmin(page);
+
+    // Click on devices tab
+    await page.locator('[data-testid="nav-tab-devices"]').click();
 
     // Click on devices tab
     await page.locator('[data-testid="nav-tab-devices"]').click();
@@ -34,7 +38,7 @@ test.describe("Navigation", () => {
   });
 
   test("should navigate to patches page", async ({ page }) => {
-    await page.goto("/");
+    await loginAsAdmin(page);
 
     // Click on patches tab
     await page.locator('[data-testid="nav-tab-patches"]').click();
@@ -47,7 +51,7 @@ test.describe("Navigation", () => {
   });
 
   test("should navigate to firewall page", async ({ page }) => {
-    await page.goto("/");
+    await loginAsAdmin(page);
 
     // Click on firewall tab
     await page.locator('[data-testid="nav-tab-firewall"]').click();
@@ -60,7 +64,7 @@ test.describe("Navigation", () => {
   });
 
   test("should navigate to policies page", async ({ page }) => {
-    await page.goto("/");
+    await loginAsAdmin(page);
 
     // Click on policies tab
     await page.locator('[data-testid="nav-tab-policies"]').click();
@@ -71,7 +75,7 @@ test.describe("Navigation", () => {
   });
 
   test("should navigate to settings page", async ({ page }) => {
-    await page.goto("/");
+    await loginAsAdmin(page);
 
     // Click on settings tab
     await page.locator('[data-testid="nav-tab-settings"]').click();
@@ -84,8 +88,11 @@ test.describe("Navigation", () => {
   });
 
   test("should navigate back to home from other pages", async ({ page }) => {
-    // Start on devices page
-    await page.goto("/devices");
+    await loginAsAdmin(page);
+
+    // Click on devices tab first
+    await page.locator('[data-testid="nav-tab-devices"]').click();
+    await expect(page).toHaveURL("/devices");
 
     // Click on home/dashboard tab
     await page.locator('[data-testid="nav-tab-home"]').click();
@@ -96,7 +103,11 @@ test.describe("Navigation", () => {
   });
 
   test("should maintain navigation state when refreshing", async ({ page }) => {
-    await page.goto("/policies");
+    await loginAsAdmin(page);
+
+    // Navigate to policies page
+    await page.locator('[data-testid="nav-tab-policies"]').click();
+    await expect(page).toHaveURL("/policies");
 
     // Refresh the page
     await page.reload();

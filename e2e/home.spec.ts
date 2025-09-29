@@ -1,8 +1,9 @@
 import { test, expect } from "@playwright/test";
+import { loginAsAdmin } from "./auth-helpers";
 
 test.describe("Home Page", () => {
   test("should load the home page", async ({ page }) => {
-    await page.goto("/");
+    await loginAsAdmin(page);
 
     // Check if the page loads
     await expect(page).toHaveTitle("CyberSmart");
@@ -12,7 +13,7 @@ test.describe("Home Page", () => {
   });
 
   test("should have navigation", async ({ page }) => {
-    await page.goto("/");
+    await loginAsAdmin(page);
 
     // Check if navigation exists
     const nav = page.locator('[data-testid="navigation-tabs"]');
