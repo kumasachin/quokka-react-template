@@ -1,16 +1,11 @@
 import React from "react";
 import styled from "styled-components";
 
-export interface ButtonProps {
+export interface ButtonProps
+  extends React.ButtonHTMLAttributes<HTMLButtonElement> {
   children: React.ReactNode;
   variant?: "primary" | "secondary";
   size?: "sm" | "md" | "lg";
-  disabled?: boolean;
-  onClick?: () => void;
-  type?: "button" | "submit" | "reset";
-  "aria-label"?: string;
-  "aria-describedby"?: string;
-  "data-testid"?: string;
 }
 
 const StyledButton = styled.button<ButtonProps>`
@@ -71,26 +66,10 @@ export const Button = ({
   children,
   variant = "primary",
   size = "md",
-  disabled = false,
-  onClick,
-  type = "button",
-  "aria-label": ariaLabel,
-  "aria-describedby": ariaDescribedBy,
-  "data-testid": dataTestId,
   ...props
 }: ButtonProps) => {
   return (
-    <StyledButton
-      variant={variant}
-      size={size}
-      disabled={disabled}
-      onClick={onClick}
-      type={type}
-      aria-label={ariaLabel}
-      aria-describedby={ariaDescribedBy}
-      data-testid={dataTestId}
-      {...props}
-    >
+    <StyledButton variant={variant} size={size} {...props}>
       {children}
     </StyledButton>
   );

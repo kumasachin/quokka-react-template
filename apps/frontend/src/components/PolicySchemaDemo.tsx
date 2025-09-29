@@ -73,12 +73,26 @@ const PolicySchemaDemo = () => {
   };
 
   return (
-    <Box component="form" onSubmit={handleSubmit} sx={{ p: 3, maxWidth: 600 }}>
-      <Typography variant="h6" gutterBottom>
+    <Box
+      component="form"
+      onSubmit={handleSubmit}
+      sx={{ p: 3, maxWidth: 600 }}
+      data-testid="policy-schema-demo-form"
+    >
+      <Typography
+        variant="h6"
+        gutterBottom
+        data-testid="policy-schema-demo-title"
+      >
         Policy Update Form with Optimistic Updates
       </Typography>
 
-      <Typography variant="body2" color="text.secondary" sx={{ mb: 3 }}>
+      <Typography
+        variant="body2"
+        color="text.secondary"
+        sx={{ mb: 3 }}
+        data-testid="policy-schema-demo-description"
+      >
         This form demonstrates optimistic updates with automatic rollback on
         error. Changes appear immediately and are reverted if the update fails.
       </Typography>
@@ -93,6 +107,7 @@ const PolicySchemaDemo = () => {
         error={!!errors.name}
         helperText={errors.name}
         sx={{ mb: 2 }}
+        data-testid="policy-name-field"
       />
 
       <Select
@@ -109,6 +124,7 @@ const PolicySchemaDemo = () => {
           { value: "compliance", label: "Compliance" },
         ]}
         sx={{ mb: 2 }}
+        data-testid="policy-type-select"
       />
 
       <TextField
@@ -123,6 +139,7 @@ const PolicySchemaDemo = () => {
         error={!!errors.description}
         helperText={errors.description}
         sx={{ mb: 2 }}
+        data-testid="policy-description-field"
       />
 
       <Select
@@ -141,6 +158,7 @@ const PolicySchemaDemo = () => {
           { value: "critical", label: "Critical" },
         ]}
         sx={{ mb: 2 }}
+        data-testid="policy-priority-select"
       />
 
       <Switch
@@ -150,10 +168,11 @@ const PolicySchemaDemo = () => {
           setFormData((prev) => ({ ...prev, enabled: e.target.checked }))
         }
         sx={{ mb: 2 }}
+        data-testid="policy-enabled-switch"
       />
 
       {errors.rules && (
-        <Alert severity="error" sx={{ mb: 2 }}>
+        <Alert severity="error" sx={{ mb: 2 }} data-testid="policy-rules-error">
           Rules: {errors.rules}
         </Alert>
       )}
@@ -168,6 +187,7 @@ const PolicySchemaDemo = () => {
           ) : undefined
         }
         sx={{ mr: 2 }}
+        data-testid="policy-update-button"
       >
         {updatePolicyMutation.isPending ? "Updating..." : "Update Policy"}
       </Button>
@@ -177,25 +197,38 @@ const PolicySchemaDemo = () => {
         onClick={validateForm}
         disabled={updatePolicyMutation.isPending}
         sx={{ mr: 2 }}
+        data-testid="policy-validate-button"
       >
         Validate Schema
       </Button>
 
       {updatePolicyMutation.isPending && (
-        <Alert severity="info" sx={{ mt: 2 }}>
+        <Alert
+          severity="info"
+          sx={{ mt: 2 }}
+          data-testid="policy-updating-alert"
+        >
           Updating policy... Changes will be visible immediately and rolled back
           if there's an error.
         </Alert>
       )}
 
       {isValid && !updatePolicyMutation.isPending && (
-        <Alert severity="success" sx={{ mt: 2 }}>
+        <Alert
+          severity="success"
+          sx={{ mt: 2 }}
+          data-testid="policy-validation-success"
+        >
           Schema validation passed! All fields are valid.
         </Alert>
       )}
 
       {Object.keys(errors).length > 0 && (
-        <Alert severity="error" sx={{ mt: 2 }}>
+        <Alert
+          severity="error"
+          sx={{ mt: 2 }}
+          data-testid="policy-validation-error"
+        >
           Please fix the validation errors above.
         </Alert>
       )}
