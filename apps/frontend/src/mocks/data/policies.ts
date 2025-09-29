@@ -18,7 +18,7 @@ export interface Policy {
 
 export const mockPolicies: Policy[] = [
   {
-    id: "sec-001",
+    id: "sec-0012222",
     name: "Password Policy",
     type: "security",
     description: "Enforces strong password requirements across all systems",
