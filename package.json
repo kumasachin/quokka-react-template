@@ -7,9 +7,11 @@
     "lint": "turbo lint",
     "typecheck": "turbo typecheck",
     "test": "turbo test",
-    "preview": "turbo preview"
+    "preview": "turbo preview",
+    "prepare": "husky"
   },
   "devDependencies": {
+    "husky": "^9.1.7",
     "turbo": "^1.13.4"
   }
 }
