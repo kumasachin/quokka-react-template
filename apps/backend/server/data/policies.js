@@ -3,7 +3,7 @@ export const mockPolicies = [
     id: "sec-001",
     name: "Password Policy",
     type: "security",
-    description: "Enforces strong password requirements across all systems",
+    description: "Enforces strong password requirements across all systems api",
     status: "active",
     priority: "high",
     createdAt: "2025-09-01T10:00:00Z",
@@ -47,7 +47,8 @@ export const mockPolicies = [
     id: "fw-001",
     name: "Web Traffic Filter",
     type: "firewall",
-    description: "Controls incoming web traffic and blocks suspicious requests",
+    description:
+      "2222Controls incoming web traffic and blocks suspicious requests",
     status: "active",
     priority: "high",
     createdAt: "2025-09-05T14:00:00Z",

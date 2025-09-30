@@ -21,7 +21,8 @@ export const mockPolicies: Policy[] = [
     id: "sec-001",
     name: "Password Policy",
     type: "security",
-    description: "Enforces strong password requirements across all systems",
+    description:
+      "Enforces strong password requirements across all systems mock",
     status: "active",
     priority: "high",
     createdAt: "2025-09-01T10:00:00Z",

@@ -168,6 +168,7 @@ const PoliciesPage = () => {
             aria-label={`${policies.length} ${
               policies.length === 1 ? "policy" : "policies"
             } found`}
+            sx={{ whiteSpace: "nowrap", flexShrink: 0 }}
           >
             {t(
               policies.length === 1

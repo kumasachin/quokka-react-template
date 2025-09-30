@@ -17,7 +17,7 @@ apiClient.interceptors.request.use(
     return config;
   },
   (error) => {
-    console.error("❌ Request error:", error);
+    console.error("Request error:", error);
     return Promise.reject(error);
   }
 );
@@ -36,9 +36,9 @@ apiClient.interceptors.response.use(
 
     if (response) {
       console.error(
-        `❌ ${response.config?.method?.toUpperCase()} ${
-          response.config?.url
-        } - ${response.status}:`,
+        `${response.config?.method?.toUpperCase()} ${response.config?.url} - ${
+          response.status
+        }:`,
         {
           status: response.status,
           data: response.data,
