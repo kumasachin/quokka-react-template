@@ -1,5 +1,5 @@
 import { Navigate, useLocation } from "react-router-dom";
-import { useAuthStore } from "../state";
+import { useAuthStore } from "state";
 
 interface ProtectedRouteProps {
   children: React.ReactNode;

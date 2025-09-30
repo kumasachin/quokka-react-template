@@ -9,7 +9,7 @@ import React, {
 import { PolicyForm, PolicyFormData } from "./PolicyForm";
 import { useCreatePolicy, useUpdatePolicy } from "../../hooks/usePolicies";
 import { useToast } from "../../hooks/useToast";
-import { Policy } from "../../api/policies";
+import { Policy } from "../../data/api/policies";
 
 export interface PolicyFormContainerProps {
   initialData?: Policy | null;

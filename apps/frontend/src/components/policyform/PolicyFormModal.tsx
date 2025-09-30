@@ -10,7 +10,7 @@ import {
   PolicyFormContainer,
   PolicyFormContainerRef,
 } from "./PolicyFormContainer";
-import { Policy } from "../../api/policies";
+import { Policy } from "../../data/api/policies";
 
 interface PolicyFormModalProps {
   open: boolean;

@@ -8,7 +8,7 @@ import {
 } from "@mui/material";
 import { TextField, Select, Switch } from "../design-system/components";
 import { policyFormSchema, PolicyFormData } from "../forms/schemas/policy";
-import { Policy } from "../api/policies";
+import { Policy } from "../data/api/policies";
 import { useUpdatePolicy } from "../hooks/usePolicies";
 import { useToast } from "../hooks/useToast";
 

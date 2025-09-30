@@ -10,7 +10,7 @@ import {
   Alert,
 } from "@mui/material";
 import { Security } from "@mui/icons-material";
-import { useAuthStore } from "../state";
+import { useAuthStore } from "state";
 
 const LoginPage = () => {
   const [username, setUsername] = useState("");

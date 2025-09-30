@@ -2,6 +2,7 @@
   "title": "Device Management",
   "subtitle": "Monitor and manage all your network devices",
   "connectedDevices": "Connected Devices",
+  "loadError": "Failed to load devices. Please try again later.",
   "status": {
     "online": "Online",
     "offline": "Offline",

@@ -1,6 +1,6 @@
 import { describe, it, expect, beforeAll, afterEach, afterAll } from "vitest";
 import { server } from "../server";
-import { Policy } from "../../api/policies";
+import { Policy } from "../../data/api/policies";
 
 beforeAll(() => server.listen());
 afterEach(() => server.resetHandlers());

@@ -63,6 +63,9 @@
     "statusUpdateError": "Failed to update policy status",
     "deleted": "Policy deleted successfully",
     "deleteError": "Failed to delete policy",
-    "deleteConfirm": "Are you sure you want to delete this policy?"
+    "deleteConfirm": "Are you sure you want to delete this policy? This action cannot be undone.",
+    "deleteTitle": "Delete Policy",
+    "delete": "Delete",
+    "cancel": "Cancel"
   }
 }

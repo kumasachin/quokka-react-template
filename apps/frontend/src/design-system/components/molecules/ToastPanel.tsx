@@ -1,6 +1,6 @@
 import { Box, Portal, styled } from "@mui/material";
 import { Toast } from "../atoms/Toast";
-import { useToastStore } from "../../../state";
+import { useToastStore } from "../../../data/state";
 
 const ToastContainer = styled(Box)(({ theme }) => ({
   position: "fixed",

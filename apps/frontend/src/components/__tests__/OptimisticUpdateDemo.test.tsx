@@ -43,7 +43,7 @@ vi.mock("@mui/material", () => ({
 const mockUsePolicies = vi.fn();
 const mockUseUpdatePolicy = vi.fn();
 
-vi.mock("../../queries/policies", () => ({
+vi.mock("../../data/queries/policies", () => ({
   usePolicies: () => mockUsePolicies(),
   useUpdatePolicy: () => mockUseUpdatePolicy(),
 }));

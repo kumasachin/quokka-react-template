@@ -1,5 +1,5 @@
 import { Box, Button, Typography, Paper } from "@mui/material";
-import { usePolicies, useUpdatePolicy } from "../queries/policies";
+import { usePolicies, useUpdatePolicy } from "../data/queries/policies";
 
 const OptimisticUpdateDemo = () => {
   const { data: policiesData } = usePolicies();

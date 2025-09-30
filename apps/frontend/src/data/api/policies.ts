@@ -1,4 +1,4 @@
-import { apiClient } from "../lib";
+import { apiClient } from "../../lib";
 
 export interface Policy {
   id: string;

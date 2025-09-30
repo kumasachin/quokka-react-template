@@ -1,5 +1,5 @@
 import { useQuery } from "@tanstack/react-query";
-import { systemApi, type SystemStats, type Device } from "../api";
+import { systemApi, type SystemStats, type Device } from "api";
 
 const mockStats = async (): Promise<SystemStats> => {
   await new Promise((resolve) => setTimeout(resolve, 500));

@@ -7,7 +7,11 @@ import {
   Button,
 } from "@mui/material";
 import { Security } from "@mui/icons-material";
-import { Header, ExpandableCard } from "../design-system/components";
+import {
+  Header,
+  ExpandableCard,
+  EmptyState,
+} from "../design-system/components";
 import { usePolicies } from "../hooks/usePolicies";
 import {
   PolicyFormContainer,
@@ -91,15 +95,11 @@ const DevicePolicy = () => {
       />
 
       {policies.length === 0 ? (
-        <Box sx={{ textAlign: "center", py: 8 }}>
-          <Security sx={{ fontSize: 64, color: "text.secondary", mb: 2 }} />
-          <Typography variant="h6" color="text.secondary" gutterBottom>
-            No Device Policies Found
-          </Typography>
-          <Typography variant="body2" color="text.secondary">
-            Create your first device security policy to get started
-          </Typography>
-        </Box>
+        <EmptyState
+          icon={<Security sx={{ fontSize: 64, color: "text.secondary" }} />}
+          title="No Device Policies Found"
+          description="Create your first device security policy to get started"
+        />
       ) : (
         <Box sx={{ mt: 3 }}>
           {policies.map((policy) => (
