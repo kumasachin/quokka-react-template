@@ -5,17 +5,25 @@ import {
   Tabs,
   useTheme,
   useMediaQuery,
+  Button as MuiButton,
 } from "@mui/material";
 import { Typography, ToastPanel } from "../../design-system/components";
 import { useNavigate, useLocation, Outlet } from "react-router-dom";
-import { Security } from "@mui/icons-material";
+import { Security, Logout } from "@mui/icons-material";
 import ErrorBoundary from "../ErrorBoundary";
+import { useAuthStore } from "../../data/state";
 
 const WrapperTemplate = () => {
   const navigate = useNavigate();
   const location = useLocation();
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down("md"));
+  const logout = useAuthStore((state) => state.logout);
+
+  const handleLogout = () => {
+    logout();
+    navigate("/login");
+  };
 
   const tabs = [
     { path: "/", label: "Dashboard" },
@@ -88,6 +96,7 @@ const WrapperTemplate = () => {
               alignItems: "center",
               py: 2,
               gap: 2,
+              width: "100%",
             }}
           >
             <Security sx={{ fontSize: 32 }} aria-hidden="true" />
@@ -98,11 +107,27 @@ const WrapperTemplate = () => {
               sx={{
                 fontWeight: 600,
                 color: "inherit",
-                flexGrow: isMobile ? 1 : 0,
+                flexGrow: 1,
               }}
             >
               CyberSmart Platform
             </Typography>
+            <MuiButton
+              variant="outlined"
+              startIcon={<Logout />}
+              onClick={handleLogout}
+              data-testid="logout-button"
+              sx={{
+                borderColor: "rgba(255, 255, 255, 0.5)",
+                color: "inherit",
+                "&:hover": {
+                  borderColor: "rgba(255, 255, 255, 0.8)",
+                  backgroundColor: "rgba(255, 255, 255, 0.1)",
+                },
+              }}
+            >
+              Logout
+            </MuiButton>
           </Box>
         </Container>
       </Box>
