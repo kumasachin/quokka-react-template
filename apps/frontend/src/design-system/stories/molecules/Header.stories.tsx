@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from "@storybook/react-vite";
-import { Header } from "../../components/molecules/Header";
+import { Header } from "../../components";
 import { Box } from "@mui/material";
 import { Security, Settings, Dashboard, BugReport } from "@mui/icons-material";
 

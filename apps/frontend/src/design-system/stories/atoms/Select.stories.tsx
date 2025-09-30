@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from "@storybook/react-vite";
-import { Select } from "../../components/atoms/Select";
+import { Select } from "../../components";
 
 const meta: Meta<typeof Select> = {
   title: "Design System/Atoms/Select",

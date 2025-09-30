@@ -1,6 +1,5 @@
 import type { Meta, StoryObj } from "@storybook/react-vite";
-import { Card } from "../../components/atoms/Card";
-import { Typography } from "../../components/atoms/Typography";
+import { Card, Typography } from "../../components";
 import { CardContent } from "@mui/material";
 
 const meta: Meta<typeof Card> = {
