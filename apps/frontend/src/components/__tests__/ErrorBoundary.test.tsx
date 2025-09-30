@@ -1,11 +1,33 @@
 import { describe, it, expect, vi } from "vitest";
 import { render, screen, fireEvent } from "@testing-library/react";
+import { ReactNode } from "react";
 
 // Mock MUI components to avoid file table overflow
 vi.mock("@mui/material", () => ({
-  Box: ({ children, ...props }: any) => <div {...props}>{children}</div>,
-  Container: ({ children, ...props }: any) => <div {...props}>{children}</div>,
-  Card: ({ children, ...props }: any) => <div {...props}>{children}</div>,
+  Box: ({
+    children,
+    ...props
+  }: {
+    children?: ReactNode;
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    [key: string]: any;
+  }) => <div {...props}>{children}</div>,
+  Container: ({
+    children,
+    ...props
+  }: {
+    children?: ReactNode;
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    [key: string]: any;
+  }) => <div {...props}>{children}</div>,
+  Card: ({
+    children,
+    ...props
+  }: {
+    children?: ReactNode;
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    [key: string]: any;
+  }) => <div {...props}>{children}</div>,
 }));
 
 vi.mock("@mui/icons-material", () => ({
@@ -15,13 +37,36 @@ vi.mock("@mui/icons-material", () => ({
 
 // Mock design system components
 vi.mock("../../design-system/components", () => ({
-  Typography: ({ children, ...props }: any) => <div {...props}>{children}</div>,
-  Button: ({ children, onClick, ...props }: any) => (
+  Typography: ({
+    children,
+    ...props
+  }: {
+    children?: ReactNode;
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    [key: string]: any;
+  }) => <div {...props}>{children}</div>,
+  Button: ({
+    children,
+    onClick,
+    ...props
+  }: {
+    children?: ReactNode;
+    onClick?: () => void;
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    [key: string]: any;
+  }) => (
     <button onClick={onClick} {...props}>
       {children}
     </button>
   ),
-  Card: ({ children, ...props }: any) => <div {...props}>{children}</div>,
+  Card: ({
+    children,
+    ...props
+  }: {
+    children?: ReactNode;
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    [key: string]: any;
+  }) => <div {...props}>{children}</div>,
 }));
 
 import { ErrorBoundary } from "../ErrorBoundary";

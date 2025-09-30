@@ -2,17 +2,53 @@ import React from "react";
 import { describe, it, expect, vi } from "vitest";
 import { render, screen, fireEvent } from "@testing-library/react";
 import { MemoryRouter } from "react-router-dom";
+import { ReactNode } from "react";
 
 // Mock all MUI components to avoid file table overflow
 vi.mock("@mui/material", () => ({
-  Box: ({ children, ...props }: any) => <div {...props}>{children}</div>,
-  Container: ({ children, ...props }: any) => <div {...props}>{children}</div>,
-  Tab: ({ children, label, ...props }: any) => (
+  Box: ({
+    children,
+    ...props
+  }: {
+    children?: ReactNode;
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    [key: string]: any;
+  }) => <div {...props}>{children}</div>,
+  Container: ({
+    children,
+    ...props
+  }: {
+    children?: ReactNode;
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    [key: string]: any;
+  }) => <div {...props}>{children}</div>,
+  Tab: ({
+    children,
+    label,
+    ...props
+  }: {
+    children?: ReactNode;
+    label?: string;
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    [key: string]: any;
+  }) => (
     <button role="tab" {...props}>
       {label || children}
     </button>
   ),
-  Tabs: ({ children, onChange, value, ...props }: any) => {
+  Tabs: ({
+    children,
+    value,
+    onChange,
+    ...props
+  }: {
+    children?: ReactNode;
+    value?: number;
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    onChange?: (event: any, value: number) => void;
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    [key: string]: any;
+  }) => {
     const handleTabClick = (index: number) => {
       if (onChange) {
         onChange({}, index);
@@ -21,12 +57,16 @@ vi.mock("@mui/material", () => ({
 
     return (
       <div role="tablist" {...props}>
-        {React.Children.map(children, (child, index) =>
-          React.cloneElement(child, {
-            onClick: () => handleTabClick(index),
-            "aria-selected": value === index,
-          })
-        )}
+        {React.Children.map(children, (child, index) => {
+          if (React.isValidElement(child)) {
+            return React.cloneElement(child, {
+              onClick: () => handleTabClick(index),
+              "aria-selected": value === index ? "true" : "false",
+              // eslint-disable-next-line @typescript-eslint/no-explicit-any
+            } as any);
+          }
+          return child;
+        })}
       </div>
     );
   },
@@ -48,13 +88,20 @@ vi.mock("@mui/icons-material", () => ({
 
 // Mock design system components
 vi.mock("../../design-system/components", () => ({
-  Typography: ({ children, ...props }: any) => <div {...props}>{children}</div>,
+  Typography: ({
+    children,
+    ...props
+  }: {
+    children?: ReactNode;
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    [key: string]: any;
+  }) => <div {...props}>{children}</div>,
   ToastPanel: () => <div>ToastPanel</div>,
 }));
 
 // Mock ErrorBoundary
 vi.mock("../ErrorBoundary", () => ({
-  default: ({ children }: any) => <div>{children}</div>,
+  default: ({ children }: { children?: ReactNode }) => <div>{children}</div>,
 }));
 
 import WrapperTemplate from "../layout/WrapperTemplate";

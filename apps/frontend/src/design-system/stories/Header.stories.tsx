@@ -1,4 +1,4 @@
-import type { Meta, StoryObj } from "@storybook/react";
+import type { Meta, StoryObj } from "@storybook/react-vite";
 import { Header } from "../components/molecules/Header";
 import { Box } from "@mui/material";
 import { Security, Settings, Dashboard, BugReport } from "@mui/icons-material";

@@ -1,7 +1,7 @@
 import { http, HttpResponse } from "msw";
 import { mockPolicies, Policy } from "../data/policies";
 
-let policies: Policy[] = [...mockPolicies];
+const policies: Policy[] = [...mockPolicies];
 
 export const policyHandlers = [
   http.get("/api/policies", ({ request }) => {

@@ -1,4 +1,4 @@
-import type { Meta, StoryObj } from "@storybook/react";
+import type { Meta, StoryObj } from "@storybook/react-vite";
 import { Card } from "../components/atoms/Card";
 import { Typography } from "../components/atoms/Typography";
 import { CardContent } from "@mui/material";

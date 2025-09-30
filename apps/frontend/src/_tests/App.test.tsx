@@ -1,5 +1,6 @@
 import { render, screen } from "@testing-library/react";
 import { describe, it, expect, vi } from "vitest";
+import { ReactNode } from "react";
 import App from "../App";
 
 // Mock the auth store to simulate authenticated state
@@ -48,7 +49,7 @@ vi.mock("../pages/LoginPage", () => ({
 
 // Mock ProtectedRoute to render children when authenticated
 vi.mock("../components/ProtectedRoute", () => ({
-  default: ({ children }: any) => <div>{children}</div>,
+  default: ({ children }: { children: ReactNode }) => <div>{children}</div>,
 }));
 
 // Mock MUI icons to avoid file system issues
@@ -58,17 +59,19 @@ vi.mock("@mui/icons-material", () => ({
 
 // Mock the design system components
 vi.mock("../design-system", () => ({
-  Typography: ({ children, ...props }: any) => <div {...props}>{children}</div>,
+  Typography: ({ children }: { children?: ReactNode }) => <div>{children}</div>,
 }));
 
 // Mock providers
 vi.mock("../providers", () => ({
-  QueryProvider: ({ children }: any) => <div>{children}</div>,
+  QueryProvider: ({ children }: { children: ReactNode }) => (
+    <div>{children}</div>
+  ),
 }));
 
 // Mock layout components
 vi.mock("../components/layout/WrapperTemplate", () => ({
-  default: ({ children }: any) => (
+  default: () => (
     <div data-testid="wrapper-template">
       <header role="banner" data-testid="app-header">
         <h1 data-testid="app-title">CyberSmart Platform</h1>
@@ -89,7 +92,7 @@ vi.mock("../components/layout/WrapperTemplate", () => ({
         <a href="#main-content" data-testid="skip-link">
           Skip to main content
         </a>
-        {children}
+        <div data-testid="outlet-content">Outlet Content</div>
       </main>
     </div>
   ),

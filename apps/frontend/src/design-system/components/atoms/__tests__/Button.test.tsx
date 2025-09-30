@@ -4,7 +4,12 @@ import { render, screen, fireEvent } from "@testing-library/react";
 
 // Mock the Button component directly to avoid styled-components issues
 vi.mock("../Button", () => ({
-  Button: React.forwardRef<HTMLButtonElement, any>((props, ref) => (
+  Button: React.forwardRef<
+    HTMLButtonElement,
+    React.ButtonHTMLAttributes<HTMLButtonElement> & {
+      children?: React.ReactNode;
+    }
+  >((props, ref) => (
     <button {...props} type={props.type || "button"} ref={ref} />
   )),
 }));

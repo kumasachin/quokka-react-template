@@ -1,5 +1,10 @@
-import { Typography, Card, Header } from "../design-system/components";
-import { Box, CardContent, Chip, Skeleton } from "@mui/material";
+import {
+  Typography,
+  Card,
+  Header,
+  StatusChip,
+} from "../design-system/components";
+import { Box, CardContent, Skeleton } from "@mui/material";
 import { Dashboard } from "@mui/icons-material";
 import { useDevices } from "../hooks";
 import { useTranslation } from "react-i18next";
@@ -7,19 +12,6 @@ import { useTranslation } from "react-i18next";
 const DevicePage = () => {
   const { t } = useTranslation();
   const { data: devices, isLoading, error } = useDevices();
-
-  const getStatusColor = (status: string) => {
-    switch (status) {
-      case "online":
-        return "success";
-      case "offline":
-        return "error";
-      case "maintenance":
-        return "warning";
-      default:
-        return "default";
-    }
-  };
 
   return (
     <Box>
@@ -75,10 +67,9 @@ const DevicePage = () => {
                       >
                         Last seen: {device.lastSeen}
                       </Typography>
-                      <Chip
-                        label={t(`devices.status.${device.status}`)}
-                        color={getStatusColor(device.status) as any}
-                        size="small"
+                      <StatusChip
+                        status={device.status}
+                        data-testid={`device-status-${device.id}`}
                       />
                     </CardContent>
                   </Card>

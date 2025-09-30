@@ -1,13 +1,42 @@
 import { describe, it, expect, vi } from "vitest";
 import { render, screen, fireEvent } from "@testing-library/react";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import { ReactNode } from "react";
 
 // Mock all MUI components to avoid file table overflow
 vi.mock("@mui/material", () => ({
-  Box: ({ children, ...props }: any) => <div {...props}>{children}</div>,
-  Button: ({ children, ...props }: any) => <button {...props}>{children}</button>,
-  Typography: ({ children, ...props }: any) => <div {...props}>{children}</div>,
-  Paper: ({ children, ...props }: any) => <div {...props}>{children}</div>,
+  Box: ({
+    children,
+    ...props
+  }: {
+    children?: ReactNode;
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    [key: string]: any;
+  }) => <div {...props}>{children}</div>,
+  Button: ({
+    children,
+    ...props
+  }: {
+    children?: ReactNode;
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    [key: string]: any;
+  }) => <button {...props}>{children}</button>,
+  Typography: ({
+    children,
+    ...props
+  }: {
+    children?: ReactNode;
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    [key: string]: any;
+  }) => <div {...props}>{children}</div>,
+  Paper: ({
+    children,
+    ...props
+  }: {
+    children?: ReactNode;
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    [key: string]: any;
+  }) => <div {...props}>{children}</div>,
 }));
 
 // Mock the queries
@@ -82,7 +111,9 @@ describe("OptimisticUpdateDemo", () => {
     expect(screen.getByText("Current Status:")).toBeInTheDocument();
     expect(screen.getByText("active")).toBeInTheDocument();
     expect(screen.getByText(/Last Updated:/)).toBeInTheDocument();
-    expect(screen.getByRole("button", { name: "Toggle Status" })).toBeInTheDocument();
+    expect(
+      screen.getByRole("button", { name: "Toggle Status" })
+    ).toBeInTheDocument();
   });
 
   it("shows updating state when mutation is pending", () => {
@@ -192,7 +223,9 @@ describe("OptimisticUpdateDemo", () => {
 
     renderWithProviders(<OptimisticUpdateDemo />);
 
-    expect(screen.getByText("Update failed - changes rolled back")).toBeInTheDocument();
+    expect(
+      screen.getByText("Update failed - changes rolled back")
+    ).toBeInTheDocument();
   });
 
   it("does not render when no policies available", () => {

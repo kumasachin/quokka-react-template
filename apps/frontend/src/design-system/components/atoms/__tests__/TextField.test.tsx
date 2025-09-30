@@ -1,12 +1,13 @@
 import React from "react";
 import { describe, it, expect, vi } from "vitest";
 import { render, screen, fireEvent } from "@testing-library/react";
+import { TextFieldProps as MuiTextFieldProps } from "@mui/material";
 import { TextField } from "../TextField";
 
 // Mock MUI components
 let idCounter = 0;
 vi.mock("@mui/material", () => ({
-  TextField: React.forwardRef((props: any, ref) => {
+  TextField: React.forwardRef((props: MuiTextFieldProps, ref) => {
     const {
       multiline,
       rows,
@@ -69,7 +70,16 @@ vi.mock("@mui/material", () => ({
         )
     );
   }),
-  FormHelperText: ({ children, error, ...props }: any) =>
+  FormHelperText: ({
+    children,
+    error,
+    ...props
+  }: {
+    children?: React.ReactNode;
+    error?: boolean;
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    [key: string]: any;
+  }) =>
     React.createElement(
       "div",
       { ...props, role: error ? "alert" : undefined },

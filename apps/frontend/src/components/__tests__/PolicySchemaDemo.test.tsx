@@ -1,6 +1,7 @@
 import { describe, it, expect, vi } from "vitest";
 import { render, screen, fireEvent, waitFor } from "@testing-library/react";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import { ReactNode } from "react";
 
 // Mock the schema before importing the component
 vi.mock("../../forms/schemas/policy", () => ({
@@ -14,22 +15,64 @@ import { policyFormSchema } from "../../forms/schemas/policy";
 
 // Mock all MUI components to avoid file table overflow
 vi.mock("@mui/material", () => ({
-  Box: ({ children, ...props }: any) => <div {...props}>{children}</div>,
-  Typography: ({ children, ...props }: any) => <div {...props}>{children}</div>,
-  Alert: ({ children, ...props }: any) => (
+  Box: ({
+    children,
+    ...props
+  }: {
+    children?: ReactNode;
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    [key: string]: any;
+  }) => <div {...props}>{children}</div>,
+  Typography: ({
+    children,
+    ...props
+  }: {
+    children?: ReactNode;
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    [key: string]: any;
+  }) => <div {...props}>{children}</div>,
+  Alert: ({
+    children,
+    ...props
+  }: {
+    children?: ReactNode;
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    [key: string]: any;
+  }) => (
     <div role="alert" {...props}>
       {children}
     </div>
   ),
   CircularProgress: () => <div>CircularProgress</div>,
-  Button: ({ children, ...props }: any) => (
-    <button {...props}>{children}</button>
-  ),
+  Button: ({
+    children,
+    ...props
+  }: {
+    children?: ReactNode;
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    [key: string]: any;
+  }) => <button {...props}>{children}</button>,
 }));
 
 // Mock design system components
 vi.mock("../../design-system/components", () => ({
-  TextField: ({ value, onChange, error, helperText, label, ...props }: any) => (
+  TextField: ({
+    value,
+    onChange,
+    error,
+    helperText,
+    label,
+    ...props
+  }: {
+    value?: string;
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    onChange?: (e: any) => void;
+    error?: boolean;
+    helperText?: string;
+    label?: string;
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    [key: string]: any;
+  }) => (
     <div>
       <label>{label}</label>
       <input
@@ -41,7 +84,21 @@ vi.mock("../../design-system/components", () => ({
       {error && <div className="error">{helperText}</div>}
     </div>
   ),
-  Select: ({ fieldLabel, value, onChange, options, ...props }: any) => (
+  Select: ({
+    fieldLabel,
+    value,
+    onChange,
+    options,
+    ...props
+  }: {
+    fieldLabel?: string;
+    value?: string;
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    onChange?: (e: any) => void;
+    options?: Array<{ value: string; label: string }>;
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    [key: string]: any;
+  }) => (
     <div>
       <label>{fieldLabel}</label>
       <select
@@ -50,7 +107,7 @@ vi.mock("../../design-system/components", () => ({
         data-testid={`select-${fieldLabel?.toLowerCase().replace(/\s+/g, "-")}`}
         {...props}
       >
-        {options?.map((option: any) => (
+        {options?.map((option: { value: string; label: string }) => (
           <option key={option.value} value={option.value}>
             {option.label}
           </option>
@@ -58,7 +115,19 @@ vi.mock("../../design-system/components", () => ({
       </select>
     </div>
   ),
-  Switch: ({ switchLabel, checked, onChange, ...props }: any) => (
+  Switch: ({
+    switchLabel,
+    checked,
+    onChange,
+    ...props
+  }: {
+    switchLabel?: string;
+    checked?: boolean;
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    onChange?: (e: any) => void;
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    [key: string]: any;
+  }) => (
     <div>
       <label>{switchLabel}</label>
       <input

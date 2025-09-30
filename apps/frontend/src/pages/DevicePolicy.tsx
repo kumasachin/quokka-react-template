@@ -1,23 +1,25 @@
-import React, { useState } from "react";
+import React, { useState, useRef } from "react";
 import {
   Box,
   Typography,
-  Card,
-  CardContent,
   CircularProgress,
   Alert,
-  Accordion,
-  AccordionSummary,
-  AccordionDetails,
-  Chip,
+  Button,
 } from "@mui/material";
-import { ExpandMore, Security } from "@mui/icons-material";
-import { Header } from "../design-system/components";
+import { Security } from "@mui/icons-material";
+import { Header, ExpandableCard } from "../design-system/components";
 import { usePolicies } from "../hooks/usePolicies";
-import PolicySchemaDemo from "../components/PolicySchemaDemo";
+import {
+  PolicyFormContainer,
+  PolicyFormContainerRef,
+} from "../components/policyform/PolicyFormContainer";
 
 const DevicePolicy = () => {
   const [expandedPolicy, setExpandedPolicy] = useState<string | false>(false);
+  const [formValidity, setFormValidity] = useState<Record<string, boolean>>({});
+  const [formChanges, setFormChanges] = useState<Record<string, boolean>>({});
+  const formRefs = useRef<Record<string, PolicyFormContainerRef | null>>({});
+
   const { data: policiesData, isLoading, error } = usePolicies("security");
 
   const handleAccordionChange =
@@ -25,32 +27,16 @@ const DevicePolicy = () => {
       setExpandedPolicy(isExpanded ? policyId : false);
     };
 
-  const getStatusColor = (status: string) => {
-    switch (status) {
-      case "active":
-        return "success";
-      case "inactive":
-        return "error";
-      case "draft":
-        return "warning";
-      default:
-        return "default";
-    }
+  const handleValidityChange = (policyId: string) => (isValid: boolean) => {
+    setFormValidity((prev) => ({ ...prev, [policyId]: isValid }));
   };
 
-  const getPriorityColor = (priority: string) => {
-    switch (priority) {
-      case "low":
-        return "default";
-      case "medium":
-        return "info";
-      case "high":
-        return "warning";
-      case "critical":
-        return "error";
-      default:
-        return "default";
-    }
+  const handleChangesChange = (policyId: string) => (hasChanges: boolean) => {
+    setFormChanges((prev) => ({ ...prev, [policyId]: hasChanges }));
+  };
+
+  const handleSubmit = (policyId: string) => () => {
+    formRefs.current[policyId]?.submit();
   };
 
   if (isLoading) {
@@ -112,71 +98,59 @@ const DevicePolicy = () => {
         <Box sx={{ mt: 3 }}>
           {policies.map((policy) => (
             <Box key={policy.id} sx={{ mb: 2 }}>
-              <Accordion
+              <ExpandableCard
+                title={policy.name}
+                status={policy.status}
+                priority={policy.priority}
                 expanded={expandedPolicy === policy.id}
                 onChange={handleAccordionChange(policy.id)}
               >
-                <AccordionSummary expandIcon={<ExpandMore />}>
-                  <Box
-                    sx={{
-                      display: "flex",
-                      alignItems: "center",
-                      gap: 2,
-                      width: "100%",
-                    }}
-                  >
-                    <Typography variant="h6" sx={{ flexGrow: 1 }}>
-                      {policy.name}
-                    </Typography>
-                    <Chip
-                      label={policy.status}
-                      color={getStatusColor(policy.status) as any}
-                      size="small"
-                    />
-                    <Chip
-                      label={policy.priority}
-                      color={getPriorityColor(policy.priority) as any}
-                      size="small"
-                      variant="outlined"
-                    />
-                  </Box>
-                </AccordionSummary>
-                <AccordionDetails>
-                  <Box sx={{ mb: 3 }}>
-                    <Typography
-                      variant="body2"
-                      color="text.secondary"
-                      paragraph
-                    >
-                      {policy.description}
-                    </Typography>
-                    <Typography variant="caption" color="text.secondary">
-                      Last updated:{" "}
-                      {new Date(policy.updatedAt).toLocaleDateString()}
-                    </Typography>
-                  </Box>
+                <Box sx={{ mb: 3 }}>
+                  <Typography variant="body2" color="text.secondary" paragraph>
+                    {policy.description}
+                  </Typography>
+                  <Typography variant="caption" color="text.secondary">
+                    Last updated:{" "}
+                    {new Date(policy.updatedAt).toLocaleDateString()}
+                  </Typography>
+                </Box>
 
-                  <PolicyForm initialData={policy} />
-                </AccordionDetails>
-              </Accordion>
+                <PolicyFormContainer
+                  ref={(ref) => (formRefs.current[policy.id] = ref)}
+                  initialData={policy}
+                  onValidityChange={handleValidityChange(policy.id)}
+                  onChangesChange={handleChangesChange(policy.id)}
+                  showSubmitButton={false}
+                />
+
+                <Box
+                  sx={{
+                    display: "flex",
+                    gap: 2,
+                    justifyContent: "flex-end",
+                    mt: 3,
+                    pt: 2,
+                    borderTop: 1,
+                    borderColor: "divider",
+                  }}
+                >
+                  <Button
+                    variant="contained"
+                    onClick={handleSubmit(policy.id)}
+                    disabled={
+                      !formValidity[policy.id] || !formChanges[policy.id]
+                    }
+                    data-testid={`submit-button-${policy.id}`}
+                  >
+                    Update Policy
+                  </Button>
+                </Box>
+              </ExpandableCard>
             </Box>
           ))}
         </Box>
       )}
     </Box>
-  );
-};
-
-const PolicyForm = ({ initialData }: { initialData: any }) => {
-  return (
-    <Card variant="outlined">
-      <CardContent>
-        <Typography variant="h6" gutterBottom>
-          Edit Policy: {initialData.name}
-        </Typography>
-        <PolicySchemaDemo />
-      </CardContent>
-    </Card>
   );
 };
 

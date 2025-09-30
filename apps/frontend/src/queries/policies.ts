@@ -4,6 +4,7 @@ import {
   updatePolicy,
   Policy,
   UpdatePolicyPayload,
+  PoliciesResponse,
 } from "../api/policies";
 
 export const usePolicies = (type?: string) => {
@@ -25,21 +26,24 @@ export const useUpdatePolicy = () => {
         queryKey: ["policies"],
       });
 
-      queryClient.setQueriesData({ queryKey: ["policies"] }, (old: any) => {
-        if (!old?.data) return old;
+      queryClient.setQueriesData(
+        { queryKey: ["policies"] },
+        (old: PoliciesResponse | undefined) => {
+          if (!old?.data) return old;
 
-        const updatedPolicies = old.data.map((policy: Policy) =>
-          policy.id === payload.id
-            ? {
-                ...policy,
-                ...payload.updates,
-                updatedAt: new Date().toISOString(),
-              }
-            : policy
-        );
+          const updatedPolicies = old.data.map((policy: Policy) =>
+            policy.id === payload.id
+              ? {
+                  ...policy,
+                  ...payload.updates,
+                  updatedAt: new Date().toISOString(),
+                }
+              : policy
+          );
 
-        return { ...old, data: updatedPolicies };
-      });
+          return { ...old, data: updatedPolicies };
+        }
+      );
 
       return { previousPolicies };
     },

@@ -8,6 +8,7 @@ import {
 } from "@mui/material";
 import { TextField, Select, Switch } from "../design-system/components";
 import { policyFormSchema, PolicyFormData } from "../forms/schemas/policy";
+import { Policy } from "../api/policies";
 import { useUpdatePolicy } from "../hooks/usePolicies";
 import { useToast } from "../hooks/useToast";
 
@@ -42,11 +43,15 @@ const PolicySchemaDemo = () => {
       setErrors({});
       setIsValid(true);
       return true;
-    } catch (error: any) {
+    } catch (error) {
       const fieldErrors: Record<string, string> = {};
-      error.errors?.forEach((err: any) => {
-        fieldErrors[err.path.join(".")] = err.message;
-      });
+      if (error && typeof error === "object" && "errors" in error) {
+        (error.errors as Array<{ path: string[]; message: string }>)?.forEach(
+          (err) => {
+            fieldErrors[err.path.join(".")] = err.message;
+          }
+        );
+      }
       setErrors(fieldErrors);
       setIsValid(false);
       return false;
@@ -114,7 +119,10 @@ const PolicySchemaDemo = () => {
         fieldLabel="Type"
         value={formData.type || "security"}
         onChange={(e) =>
-          setFormData((prev) => ({ ...prev, type: e.target.value as any }))
+          setFormData((prev) => ({
+            ...prev,
+            type: e.target.value as Policy["type"],
+          }))
         }
         options={[
           { value: "security", label: "Security" },
@@ -148,7 +156,7 @@ const PolicySchemaDemo = () => {
         onChange={(e) =>
           setFormData((prev) => ({
             ...prev,
-            priority: e.target.value as any,
+            priority: e.target.value as Policy["priority"],
           }))
         }
         options={[

@@ -1,35 +1,20 @@
 import { useState } from "react";
-import { Header, Select, Button } from "../design-system/components";
 import {
-  Box,
-  Card,
-  CardContent,
-  Typography,
-  Chip,
-  CircularProgress,
-  Alert,
-  IconButton,
-} from "@mui/material";
-import { Policy, Error, Edit, Delete } from "@mui/icons-material";
+  Header,
+  Select,
+  Button,
+  PolicyCard,
+  StatusType,
+  PriorityType,
+} from "../design-system/components";
+import { Box, Typography, CircularProgress, Alert } from "@mui/material";
+import { Policy, Error } from "@mui/icons-material";
 import { usePolicies, useUpdatePolicy } from "../hooks/usePolicies";
 import { useDeletePolicy } from "../hooks/usePolicies";
 import { useToast } from "../hooks";
-import PolicyFormModal from "../components/PolicyFormModal";
+import PolicyFormModal from "../components/policyform/PolicyFormModal";
 import { Policy as PolicyType } from "../api/policies";
 import { useTranslation } from "react-i18next";
-
-const statusColors = {
-  active: "success" as const,
-  inactive: "error" as const,
-  draft: "warning" as const,
-};
-
-const priorityColors = {
-  low: "default" as const,
-  medium: "info" as const,
-  high: "warning" as const,
-  critical: "error" as const,
-};
 
 const PoliciesPage = () => {
   const { t } = useTranslation();
@@ -129,8 +114,6 @@ const PoliciesPage = () => {
 
   return (
     <Box
-      component="main"
-      sx={{ px: { xs: 2, sm: 3, md: 4 }, py: 3, maxWidth: 1400, mx: "auto" }}
       data-testid="policies-page"
       role="main"
       aria-labelledby="policies-page-title"
@@ -219,183 +202,21 @@ const PoliciesPage = () => {
         data-testid="policies-grid"
       >
         {policies.map((policy) => (
-          <Card
+          <PolicyCard
             key={policy.id}
-            component="article"
-            sx={{
-              height: "100%",
-              display: "flex",
-              flexDirection: "column",
-              transition: "all 0.2s ease-in-out",
-              "&:hover": {
-                transform: "translateY(-2px)",
-                boxShadow: "0 8px 24px rgba(0,0,0,0.12)",
-              },
-              border: "1px solid",
-              borderColor: "divider",
-              borderRadius: 3,
-            }}
-            data-testid={`policy-card-${policy.id}`}
-          >
-            <CardContent sx={{ flexGrow: 1, p: 3 }}>
-              <Box
-                sx={{
-                  display: "flex",
-                  justifyContent: "space-between",
-                  alignItems: "flex-start",
-                  mb: 3,
-                }}
-              >
-                <Typography
-                  variant="h6"
-                  component="h3"
-                  sx={{
-                    fontWeight: 600,
-                    lineHeight: 1.3,
-                    color: "text.primary",
-                    flex: 1,
-                    mr: 2,
-                  }}
-                  data-testid={`policy-name-${policy.id}`}
-                >
-                  {policy.name}
-                </Typography>
-                <Chip
-                  label={policy.type}
-                  size="small"
-                  variant="outlined"
-                  sx={{
-                    fontWeight: 500,
-                    textTransform: "capitalize",
-                    borderRadius: 2,
-                  }}
-                  data-testid={`policy-type-${policy.id}`}
-                />
-              </Box>
-
-              <Typography
-                variant="body2"
-                color="text.secondary"
-                sx={{
-                  mb: 3,
-                  lineHeight: 1.5,
-                  minHeight: "3em",
-                  display: "-webkit-box",
-                  WebkitLineClamp: 2,
-                  WebkitBoxOrient: "vertical",
-                  overflow: "hidden",
-                }}
-              >
-                {policy.description}
-              </Typography>
-
-              <Box sx={{ display: "flex", gap: 1.5, mb: 3, flexWrap: "wrap" }}>
-                <Chip
-                  label={t(`policies.status.${policy.status}`)}
-                  color={statusColors[policy.status]}
-                  size="small"
-                  sx={{ fontWeight: 500, borderRadius: 2 }}
-                  data-testid={`policy-status-${policy.id}`}
-                />
-                <Chip
-                  label={t(`policies.priority.${policy.priority}`)}
-                  color={priorityColors[policy.priority]}
-                  size="small"
-                  sx={{ fontWeight: 500, borderRadius: 2 }}
-                  data-testid={`policy-priority-${policy.id}`}
-                />
-              </Box>
-
-              <Box sx={{ mb: 3, space: 1 }}>
-                <Typography
-                  variant="caption"
-                  color="text.secondary"
-                  sx={{
-                    display: "block",
-                    mb: 0.5,
-                    fontWeight: 500,
-                    textTransform: "uppercase",
-                    letterSpacing: 0.5,
-                  }}
-                >
-                  {t("policies.metadata.rulesConfigured", {
-                    count: policy.rules.length,
-                  })}
-                </Typography>
-                <Typography
-                  variant="caption"
-                  color="text.secondary"
-                  sx={{
-                    display: "block",
-                    fontWeight: 400,
-                  }}
-                >
-                  {t("policies.metadata.lastUpdated", {
-                    date: new Date(policy.updatedAt).toLocaleDateString(),
-                  })}
-                </Typography>
-              </Box>
-
-              <Box
-                sx={{
-                  display: "flex",
-                  gap: 1,
-                  alignItems: "center",
-                  pt: 2,
-                  borderTop: "1px solid",
-                  borderColor: "divider",
-                  mt: "auto",
-                }}
-              >
-                <Button
-                  variant="secondary"
-                  size="sm"
-                  onClick={() => handleStatusToggle(policy.id, policy.status)}
-                  disabled={updatePolicyMutation.isPending}
-                  data-testid={`policy-status-toggle-${policy.id}`}
-                  aria-label={`${
-                    policy.status === "active" ? "Deactivate" : "Activate"
-                  } policy ${policy.name}`}
-                >
-                  {t(
-                    `policies.actions.${
-                      policy.status === "active" ? "deactivate" : "activate"
-                    }`
-                  )}
-                </Button>
-
-                <IconButton
-                  size="small"
-                  onClick={() => handleEditPolicy(policy)}
-                  sx={{
-                    "&:hover": { backgroundColor: "action.hover" },
-                    borderRadius: 1.5,
-                  }}
-                  data-testid={`policy-edit-${policy.id}`}
-                  aria-label={`Edit policy ${policy.name}`}
-                >
-                  <Edit fontSize="small" />
-                </IconButton>
-
-                <IconButton
-                  size="small"
-                  onClick={() => handleDeletePolicy(policy.id)}
-                  color="error"
-                  sx={{
-                    "&:hover": {
-                      backgroundColor: "error.main",
-                      color: "white",
-                    },
-                    borderRadius: 1.5,
-                  }}
-                  data-testid={`policy-delete-${policy.id}`}
-                  aria-label={`Delete policy ${policy.name}`}
-                >
-                  <Delete fontSize="small" />
-                </IconButton>
-              </Box>
-            </CardContent>
-          </Card>
+            id={policy.id}
+            name={policy.name}
+            description={policy.description}
+            type={policy.type}
+            status={policy.status as StatusType}
+            priority={policy.priority as PriorityType}
+            rulesCount={policy.rules?.length || 0}
+            updatedAt={policy.updatedAt}
+            onEdit={() => handleEditPolicy(policy)}
+            onDelete={() => handleDeletePolicy(policy.id)}
+            onStatusToggle={() => handleStatusToggle(policy.id, policy.status)}
+            isUpdating={updatePolicyMutation.isPending}
+          />
         ))}
       </Box>
 

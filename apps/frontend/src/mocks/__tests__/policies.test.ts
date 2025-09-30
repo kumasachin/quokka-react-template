@@ -1,5 +1,6 @@
 import { describe, it, expect, beforeAll, afterEach, afterAll } from "vitest";
 import { server } from "../server";
+import { Policy } from "../../api/policies";
 
 beforeAll(() => server.listen());
 afterEach(() => server.resetHandlers());
@@ -27,7 +28,7 @@ describe("Policies API", () => {
     expect(data.filters).toEqual({ type: "security" });
 
     // All returned policies should be of type 'security'
-    data.data.forEach((policy: any) => {
+    data.data.forEach((policy: Policy) => {
       expect(policy.type).toBe("security");
     });
   });

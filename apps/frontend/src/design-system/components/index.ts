@@ -11,7 +11,14 @@ export {
   Checkbox,
   TextArea,
 } from "./atoms";
-export { Header, ToastPanel } from "./molecules";
+export {
+  Header,
+  ToastPanel,
+  StatusChip,
+  PriorityChip,
+  ExpandableCard,
+  PolicyCard,
+} from "./molecules";
 export type {
   ButtonProps,
   TypographyProps,
@@ -24,5 +31,14 @@ export type {
   CheckboxProps,
   TextAreaProps,
 } from "./atoms";
+export type {
+  HeaderProps,
+  StatusChipProps,
+  StatusType,
+  PriorityChipProps,
+  PriorityType,
+  ExpandableCardProps,
+  PolicyCardProps,
+} from "./molecules";
 
 export {} from "./organisms";

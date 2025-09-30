@@ -7,6 +7,9 @@ import App from "./App.tsx";
 import { theme } from "./design-system/theme";
 import "./index.css";
 import "./i18n/config";
+import { startMocking } from "./mocks";
+
+startMocking();
 
 createRoot(document.getElementById("root")!).render(
   <StrictMode>
