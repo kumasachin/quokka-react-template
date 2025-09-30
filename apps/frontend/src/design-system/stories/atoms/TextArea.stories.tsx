@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from "@storybook/react-vite";
-import { TextArea } from "../components/atoms/TextArea";
+import { TextArea } from "../../components/atoms/TextArea";
 
 const meta: Meta<typeof TextArea> = {
   title: "Design System/Atoms/TextArea",
