@@ -228,7 +228,7 @@ describe("WrapperTemplate", () => {
 
     expect(screen.getByTestId("app-header")).toBeInTheDocument();
     expect(screen.getByTestId("app-title")).toHaveTextContent(
-      "CyberSmart Platform"
+      "Cybero Platform"
     );
   });
 
@@ -237,7 +237,7 @@ describe("WrapperTemplate", () => {
 
     expect(screen.getByTestId("app-footer")).toBeInTheDocument();
     expect(screen.getByTestId("footer-text")).toHaveTextContent(
-      "© 2025 CyberSmart Platform. All rights reserved."
+      "© 2025 Cybero Platform. All rights reserved."
     );
   });
 

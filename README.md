@@ -1,4 +1,4 @@
-# CyberSmart - Cybersecurity Management Platform
+# Cybero - Cybersecurity Management Platform
 
 A modern, scalable React-based cybersecurity management dashboard built with enterprise-grade architecture and best practices.
 
@@ -142,7 +142,7 @@ Traditional state management treats server and client state the same way, causin
 
 - Material-UI covers 70% of needs; our atoms cover the custom 30%
 - Prevents vendor lock-in; can swap Material-UI without touching business logic
-- Our atoms encode domain knowledge (CyberSmart-specific behaviors)
+- Our atoms encode domain knowledge (Cybero-specific behaviors)
 
 ### Why Vite Over Create React App
 

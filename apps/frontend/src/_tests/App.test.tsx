@@ -74,7 +74,7 @@ vi.mock("../components/layout/WrapperTemplate", () => ({
   default: () => (
     <div data-testid="wrapper-template">
       <header role="banner" data-testid="app-header">
-        <h1 data-testid="app-title">CyberSmart Platform</h1>
+        <h1 data-testid="app-title">Cybero Platform</h1>
       </header>
       <nav
         role="navigation"

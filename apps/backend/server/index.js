@@ -47,7 +47,7 @@ app.use("/api/firewall", firewallRouter);
 
 app.get("/", (req, res) => {
   res.json({
-    message: "CyberSmart BFF Server",
+    message: "Cybero BFF Server",
     version: "1.0.0",
     status: "running",
   });
@@ -74,7 +74,7 @@ app.use((err, req, res, next) => {
 });
 
 app.listen(PORT, () => {
-  console.log(`🚀 CyberSmart BFF Server running on port ${PORT}`);
+  console.log(`🚀 Cybero BFF Server running on port ${PORT}`);
   console.log(`📊 Health endpoint: http://localhost:${PORT}/health`);
   console.log(`📋 API endpoints available:`);
   console.log(`   • Policies: http://localhost:${PORT}/api/policies`);

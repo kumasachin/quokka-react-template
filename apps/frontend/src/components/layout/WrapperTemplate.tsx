@@ -110,7 +110,7 @@ const WrapperTemplate = () => {
                 flexGrow: 1,
               }}
             >
-              CyberSmart Platform
+              Cybero Platform
             </Typography>
             <MuiButton
               variant="outlined"
@@ -221,7 +221,7 @@ const WrapperTemplate = () => {
             align="center"
             data-testid="footer-text"
           >
-            © 2025 CyberSmart Platform. All rights reserved.
+            © 2025 Cybero Platform. All rights reserved.
           </Typography>
         </Container>
       </Box>

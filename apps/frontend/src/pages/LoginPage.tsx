@@ -59,7 +59,7 @@ const LoginPage = () => {
           <Box sx={{ display: "flex", alignItems: "center", gap: 1 }}>
             <Security sx={{ fontSize: 40, color: "primary.main" }} />
             <Typography variant="h4" component="h1">
-              CyberSmart Login
+              Cybero Login
             </Typography>
           </Box>
 
