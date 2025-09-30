@@ -24,7 +24,9 @@ export const PolicyForm: React.FC<PolicyFormProps> = ({
   const validateField = (fieldName: string, value: string) => {
     try {
       // Create a partial schema for the specific field
-      const fieldSchema = policyFormSchema.pick({ [fieldName]: true } as any);
+      const fieldSchema = policyFormSchema.pick({
+        [fieldName]: true,
+      } as Record<string, true>);
       fieldSchema.parse({ [fieldName]: value });
       return "";
     } catch (error) {
