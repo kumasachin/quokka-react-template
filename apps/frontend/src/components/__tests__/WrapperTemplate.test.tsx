@@ -1,5 +1,5 @@
 import React from "react";
-import { describe, it, expect, vi } from "vitest";
+import { describe, it, expect, vi, beforeEach } from "vitest";
 import { render, screen, fireEvent } from "@testing-library/react";
 import { MemoryRouter } from "react-router-dom";
 import { ReactNode } from "react";
@@ -14,6 +14,21 @@ vi.mock("@mui/material", () => ({
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     [key: string]: any;
   }) => <div {...props}>{children}</div>,
+  Button: ({
+    children,
+    startIcon,
+    ...props
+  }: {
+    children?: ReactNode;
+    startIcon?: ReactNode;
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    [key: string]: any;
+  }) => (
+    <button {...props}>
+      {startIcon}
+      {children}
+    </button>
+  ),
   Container: ({
     children,
     ...props
@@ -84,6 +99,7 @@ vi.mock("@mui/material", () => ({
 // Mock MUI icons
 vi.mock("@mui/icons-material", () => ({
   Security: () => <div>Security</div>,
+  Logout: () => <div>Logout</div>,
 }));
 
 // Mock design system components
