@@ -69,7 +69,7 @@ const PolicySchemaDemo = () => {
     try {
       await updatePolicyMutation.mutateAsync({
         id: policyId,
-        updates: formData as Partial<PolicyFormData>,
+        updates: formData as Partial<Policy>,
       });
       toast.success("Policy updated successfully!");
     } catch (error) {

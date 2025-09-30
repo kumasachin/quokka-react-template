@@ -60,11 +60,14 @@ export const updatePolicySchema = policyFormSchema.partial().extend({
   id: z.string().min(1),
 });
 
-export type PolicyFormData = z.infer<typeof policyFormSchema>;
-export type CreatePolicyData = z.infer<typeof createPolicySchema>;
-export type UpdatePolicyData = z.infer<typeof updatePolicySchema>;
-export type PolicyRule = z.infer<typeof policyRuleSchema>;
-export type PolicyType = z.infer<typeof policyTypeSchema>;
-export type PolicyStatus = z.infer<typeof policyStatusSchema>;
-export type PolicyPriority = z.infer<typeof policyPrioritySchema>;
-export type PolicyRuleAction = z.infer<typeof policyRuleActionSchema>;
+// Re-export types from the centralized types file
+export type {
+  PolicyFormData,
+  CreatePolicyData,
+  UpdatePolicyData,
+  PolicyRule,
+  PolicyType,
+  PolicyStatus,
+  PolicyPriority,
+  PolicyRuleAction,
+} from "../../types/policy";

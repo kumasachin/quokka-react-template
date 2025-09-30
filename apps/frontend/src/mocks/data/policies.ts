@@ -1,20 +1,6 @@
-export interface Policy {
-  id: string;
-  name: string;
-  type: "security" | "firewall" | "access" | "backup" | "compliance";
-  description: string;
-  status: "active" | "inactive" | "draft";
-  priority: "low" | "medium" | "high" | "critical";
-  createdAt: string;
-  updatedAt: string;
-  createdBy: string;
-  rules: Array<{
-    id: string;
-    condition: string;
-    action: string;
-    enabled: boolean;
-  }>;
-}
+import type { Policy } from "../../types";
+
+export { type Policy };
 
 export const mockPolicies: Policy[] = [
   {
@@ -122,13 +108,13 @@ export const mockPolicies: Policy[] = [
       {
         id: "rule-007",
         condition: 'user.department === "engineering"',
-        action: "allow_read",
+        action: "allow",
         enabled: true,
       },
       {
         id: "rule-008",
         condition: 'user.role === "dba"',
-        action: "allow_write",
+        action: "allow",
         enabled: true,
       },
     ],

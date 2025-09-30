@@ -1,40 +1,13 @@
 import { apiClient } from "../../lib";
+import type {
+  Policy,
+  PoliciesResponse,
+  PolicyResponse,
+  UpdatePolicyPayload,
+} from "../../types";
 
-export interface Policy {
-  id: string;
-  name: string;
-  type: "security" | "firewall" | "access" | "backup" | "compliance";
-  description: string;
-  status: "active" | "inactive" | "draft";
-  priority: "low" | "medium" | "high" | "critical";
-  createdAt: string;
-  updatedAt: string;
-  createdBy: string;
-  rules: Array<{
-    id: string;
-    condition: string;
-    action: string;
-    enabled: boolean;
-  }>;
-}
-
-export interface PoliciesResponse {
-  success: boolean;
-  data: Policy[];
-  total: number;
-  filters?: { type?: string } | null;
-}
-
-export interface PolicyResponse {
-  success: boolean;
-  data: Policy;
-  message?: string;
-}
-
-export interface UpdatePolicyPayload {
-  id: string;
-  updates: Partial<Omit<Policy, "id" | "createdAt" | "updatedAt">>;
-}
+// Re-export types for backward compatibility
+export type { Policy, PoliciesResponse, PolicyResponse, UpdatePolicyPayload };
 
 export const fetchPolicies = async (
   type?: string

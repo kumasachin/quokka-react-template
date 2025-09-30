@@ -1,18 +1,8 @@
 import { apiClient } from "../../lib/apiClient";
+import type { SystemStats, Device } from "../../types";
 
-export interface SystemStats {
-  devices: number;
-  patches: number;
-  threats: number;
-  uptime: string;
-}
-
-export interface Device {
-  id: string;
-  name: string;
-  status: "online" | "offline" | "maintenance";
-  lastSeen: string;
-}
+// Re-export types for backward compatibility
+export type { SystemStats, Device };
 
 export const systemApi = {
   getStats: async (): Promise<SystemStats> => {

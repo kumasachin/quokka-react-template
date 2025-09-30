@@ -59,7 +59,7 @@ const HomePage = () => {
               {t("stats.activeDevices")}
             </Typography>
             <Typography variant="h3">
-              {statsLoading ? <Skeleton width={60} /> : stats?.devices}
+              {statsLoading ? <Skeleton width={60} /> : stats?.onlineDevices}
             </Typography>
           </CardContent>
         </Card>
@@ -69,7 +69,7 @@ const HomePage = () => {
               {t("stats.pendingPatches")}
             </Typography>
             <Typography variant="h3">
-              {statsLoading ? <Skeleton width={40} /> : stats?.patches}
+              {statsLoading ? <Skeleton width={40} /> : stats?.pendingPatches}
             </Typography>
           </CardContent>
         </Card>
@@ -79,7 +79,7 @@ const HomePage = () => {
               {t("stats.threatsDetected")}
             </Typography>
             <Typography variant="h3">
-              {statsLoading ? <Skeleton width={30} /> : stats?.threats}
+              {statsLoading ? <Skeleton width={30} /> : stats?.activeThreats}
             </Typography>
           </CardContent>
         </Card>
@@ -89,7 +89,7 @@ const HomePage = () => {
               {t("stats.systemUptime")}
             </Typography>
             <Typography variant="h3">
-              {statsLoading ? <Skeleton width={80} /> : stats?.uptime}
+              {statsLoading ? <Skeleton width={80} /> : stats?.systemUptime}
             </Typography>
           </CardContent>
         </Card>

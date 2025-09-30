@@ -4,10 +4,11 @@ import { systemApi, type SystemStats, type Device } from "api";
 const mockStats = async (): Promise<SystemStats> => {
   await new Promise((resolve) => setTimeout(resolve, 500));
   return {
-    devices: Math.floor(Math.random() * 50) + 20,
-    patches: Math.floor(Math.random() * 10) + 5,
-    threats: Math.floor(Math.random() * 3),
-    uptime: `${Math.floor(Math.random() * 30) + 1} days`,
+    totalDevices: Math.floor(Math.random() * 50) + 20,
+    onlineDevices: Math.floor(Math.random() * 40) + 15,
+    pendingPatches: Math.floor(Math.random() * 10) + 5,
+    activeThreats: Math.floor(Math.random() * 3),
+    systemUptime: `${Math.floor(Math.random() * 30) + 1} days`,
   };
 };
 

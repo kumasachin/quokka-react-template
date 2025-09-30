@@ -6,25 +6,18 @@ import React, {
   useRef,
   useCallback,
 } from "react";
-import { PolicyForm, PolicyFormData } from "./PolicyForm";
+import { PolicyForm } from "./PolicyForm";
 import { useCreatePolicy, useUpdatePolicy } from "../../hooks/usePolicies";
 import { useToast } from "../../hooks/useToast";
 import { Policy } from "../../data/api/policies";
+import { policyFormSchema } from "../../forms/schemas/policy";
+import type {
+  PolicyFormData,
+  PolicyFormContainerProps,
+  PolicyFormContainerRef,
+} from "../../types";
 
-export interface PolicyFormContainerProps {
-  initialData?: Policy | null;
-  onSuccess?: () => void;
-  submitButtonText?: string;
-  showSubmitButton?: boolean;
-  onValidityChange?: (isValid: boolean) => void;
-  onChangesChange?: (hasChanges: boolean) => void;
-}
-
-export interface PolicyFormContainerRef {
-  submit: () => void;
-  isFormValid: boolean;
-  hasChanges: boolean;
-}
+export type { PolicyFormContainerRef };
 
 export const PolicyFormContainer = forwardRef<
   PolicyFormContainerRef,
@@ -133,26 +126,32 @@ export const PolicyFormContainer = forwardRef<
     }, [formData, initialFormData, objectsEqual]);
 
     const validateForm = () => {
-      const newErrors: Record<string, string> = {};
-
-      if (!formData.name?.trim()) {
-        newErrors.name = "Policy name is required";
+      try {
+        // Use a partial schema for validation since formData may be incomplete
+        const partialSchema = policyFormSchema.partial();
+        partialSchema.parse(formData);
+        setErrors({});
+        return true;
+      } catch (error) {
+        const fieldErrors: Record<string, string> = {};
+        if (error && typeof error === "object" && "errors" in error) {
+          (error.errors as Array<{ path: string[]; message: string }>)?.forEach(
+            (err) => {
+              const field = err.path.join(".");
+              if (
+                field in formData ||
+                ["name", "type", "description", "status", "priority"].includes(
+                  field
+                )
+              ) {
+                fieldErrors[field] = err.message;
+              }
+            }
+          );
+        }
+        setErrors(fieldErrors);
+        return false;
       }
-
-      if (!formData.type) {
-        newErrors.type = "Policy type is required";
-      }
-
-      if (!formData.description?.trim()) {
-        newErrors.description = "Description is required";
-      }
-
-      if (!formData.status) {
-        newErrors.status = "Status is required";
-      }
-
-      setErrors(newErrors);
-      return Object.keys(newErrors).length === 0;
     };
 
     const handleChange = (field: keyof PolicyFormData, value: string) => {
