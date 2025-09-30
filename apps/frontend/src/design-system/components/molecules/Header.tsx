@@ -13,6 +13,7 @@ export interface HeaderProps {
   titleProps?: Partial<TypographyProps>;
   subtitleProps?: Partial<TypographyProps>;
   id?: string;
+  "data-testid"?: string;
 }
 
 const getVariant = (level: number): TypographyProps["variant"] => {
@@ -44,6 +45,7 @@ export const Header: React.FC<HeaderProps> = ({
   titleProps,
   subtitleProps,
   id,
+  "data-testid": dataTestId,
 }) => {
   const titleVariant = getVariant(level);
   const subtitleVariant = level < 6 ? getVariant(level + 1) : "body1";
@@ -78,6 +80,7 @@ export const Header: React.FC<HeaderProps> = ({
           id={titleId}
           variant={titleVariant}
           gutterBottom={Boolean(subtitle)}
+          data-testid={dataTestId}
           {...titleProps}
         >
           {title}

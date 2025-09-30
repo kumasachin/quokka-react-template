@@ -1,7 +1,12 @@
 import { IconButton, styled } from "@mui/material";
 import { Close, CheckCircle, Error, Warning, Info } from "@mui/icons-material";
 import { Alert } from "./Alert";
-import { Toast as ToastType } from "../../../state";
+
+interface ToastType {
+  id: string;
+  message: string;
+  type: "success" | "error" | "warning" | "info";
+}
 
 const StyledAlert = styled(Alert)(({ theme }) => ({
   width: "100%",

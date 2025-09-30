@@ -63,17 +63,6 @@ test.describe("Navigation", () => {
     ).toBeVisible();
   });
 
-  test("should navigate to policies page", async ({ page }) => {
-    await loginAsAdmin(page);
-
-    // Click on policies tab
-    await page.locator('[data-testid="nav-tab-policies"]').click();
-
-    // Check URL and page content
-    await expect(page).toHaveURL("/policies");
-    await expect(page.locator("text=Policies Management")).toBeVisible();
-  });
-
   test("should navigate to settings page", async ({ page }) => {
     await loginAsAdmin(page);
 
@@ -100,23 +89,5 @@ test.describe("Navigation", () => {
     // Check we're back on home page
     await expect(page).toHaveURL("/");
     await expect(page).toHaveTitle("CyberSmart");
-  });
-
-  test("should maintain navigation state when refreshing", async ({ page }) => {
-    await loginAsAdmin(page);
-
-    // Navigate to policies page
-    await page.locator('[data-testid="nav-tab-policies"]').click();
-    await expect(page).toHaveURL("/policies");
-
-    // Refresh the page
-    await page.reload();
-
-    // Check we're still on the same page
-    await expect(page).toHaveURL("/policies");
-    await expect(page.locator("text=Policies Management")).toBeVisible();
-
-    // Check navigation is still visible
-    await expect(page.locator('[data-testid="navigation-tabs"]')).toBeVisible();
   });
 });

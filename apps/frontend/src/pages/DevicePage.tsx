@@ -10,26 +10,27 @@ import { useDevices } from "../hooks";
 import { useTranslation } from "react-i18next";
 
 const DevicePage = () => {
-  const { t } = useTranslation();
+  const { t } = useTranslation("devices");
   const { data: devices, isLoading, error } = useDevices();
 
   return (
     <Box>
       <Header
-        title={t("devices.title")}
-        subtitle={t("devices.subtitle")}
+        title={t("title")}
+        subtitle={t("subtitle")}
         prefix={<Dashboard sx={{ color: "primary.main" }} />}
+        data-testid="devices-page-title"
       />
 
       <Card>
         <CardContent>
           <Typography variant="h5" gutterBottom>
-            {t("devices.connectedDevices")}
+            {t("connectedDevices")}
           </Typography>
 
           {error && (
             <Typography color="error" sx={{ mb: 2 }}>
-              {t("devices.loadError")}
+              {t("loadError")}
             </Typography>
           )}
 

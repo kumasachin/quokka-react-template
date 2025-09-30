@@ -7,7 +7,11 @@ import {
   Button,
 } from "@mui/material";
 import { Update } from "@mui/icons-material";
-import { Header, ExpandableCard } from "../design-system/components";
+import {
+  Header,
+  ExpandableCard,
+  EmptyState,
+} from "../design-system/components";
 import { usePolicies } from "../hooks/usePolicies";
 import {
   PolicyFormContainer,
@@ -88,18 +92,15 @@ const PatchPage = () => {
         title="Patch Policies"
         subtitle="Manage security patch deployment policies"
         prefix={<Update sx={{ color: "primary.main" }} />}
+        data-testid="patches-page-title"
       />
 
       {policies.length === 0 ? (
-        <Box sx={{ textAlign: "center", py: 8 }}>
-          <Update sx={{ fontSize: 64, color: "text.secondary", mb: 2 }} />
-          <Typography variant="h6" color="text.secondary" gutterBottom>
-            No Patch Policies Found
-          </Typography>
-          <Typography variant="body2" color="text.secondary">
-            Create your first patch deployment policy to get started
-          </Typography>
-        </Box>
+        <EmptyState
+          icon={<Update sx={{ fontSize: 64, color: "text.secondary" }} />}
+          title="No Patch Policies Found"
+          description="Create your first patch deployment policy to get started"
+        />
       ) : (
         <Box sx={{ mt: 3 }}>
           {policies.map((policy) => (

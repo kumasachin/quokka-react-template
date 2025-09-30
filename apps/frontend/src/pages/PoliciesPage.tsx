@@ -17,7 +17,8 @@ import { usePolicies, useUpdatePolicy } from "../hooks/usePolicies";
 import { useDeletePolicy } from "../hooks/usePolicies";
 import { useToast } from "../hooks";
 import PolicyFormModal from "../components/policyform/PolicyFormModal";
-import { Policy as PolicyType } from "../api/policies";
+import ConfirmDialog from "../components/ConfirmDialog";
+import { Policy as PolicyType } from "../data/api/policies";
 import { useTranslation } from "react-i18next";
 
 const PoliciesPage = () => {
@@ -25,6 +26,8 @@ const PoliciesPage = () => {
   const [selectedType, setSelectedType] = useState<string>("");
   const [formModalOpen, setFormModalOpen] = useState(false);
   const [editingPolicy, setEditingPolicy] = useState<PolicyType | null>(null);
+  const [deleteConfirmOpen, setDeleteConfirmOpen] = useState(false);
+  const [policyToDelete, setPolicyToDelete] = useState<string | null>(null);
 
   const {
     data: policiesData,
@@ -46,9 +49,9 @@ const PoliciesPage = () => {
         id: policyId,
         updates: { status: newStatus },
       });
-      toast.success(t(`policies.messages.${newStatus}`));
+      toast.success(t(`messages.${newStatus}`));
     } catch (error) {
-      toast.error(t("policies.messages.statusUpdateError"));
+      toast.error(t("messages.statusUpdateError"));
     }
   };
 
@@ -62,15 +65,25 @@ const PoliciesPage = () => {
     setFormModalOpen(true);
   };
 
-  const handleDeletePolicy = async (policyId: string) => {
-    if (confirm(t("policies.messages.deleteConfirm"))) {
-      try {
-        await deletePolicy.mutateAsync(policyId);
-        toast.success(t("policies.messages.deleted"));
-      } catch (error) {
-        toast.error(t("policies.messages.deleteError"));
-      }
+  const handleDeletePolicy = (policyId: string) => {
+    setPolicyToDelete(policyId);
+    setDeleteConfirmOpen(true);
+  };
+
+  const handleConfirmDelete = async () => {
+    if (!policyToDelete) return;
+
+    try {
+      await deletePolicy.mutateAsync(policyToDelete);
+      toast.success(t("messages.deleted"));
+    } catch (error) {
+      toast.error(t("messages.deleteError"));
     }
+  };
+
+  const handleCancelDelete = () => {
+    setDeleteConfirmOpen(false);
+    setPolicyToDelete(null);
   };
 
   const handleCloseModal = () => {
@@ -103,12 +116,12 @@ const PoliciesPage = () => {
     return (
       <Box>
         <Header
-          title={t("policies.title")}
-          subtitle={t("policies.subtitle")}
+          title={t("title")}
+          subtitle={t("subtitle")}
           prefix={<Error sx={{ color: "error.main" }} />}
         />
         <Alert severity="error" sx={{ mt: 2 }}>
-          {t("policies.loadError")}
+          {t("loadError")}
         </Alert>
       </Box>
     );
@@ -123,9 +136,10 @@ const PoliciesPage = () => {
       aria-labelledby="policies-page-title"
     >
       <Header
-        title={t("policies.title")}
-        subtitle={t("policies.subtitle")}
+        title={t("title")}
+        subtitle={t("subtitle")}
         prefix={<Policy sx={{ color: "info.main" }} aria-hidden="true" />}
+        data-testid="policies-page-title"
       />
 
       <PageSection
@@ -142,14 +156,14 @@ const PoliciesPage = () => {
       >
         <Box sx={{ display: "flex", alignItems: "center", gap: 3 }}>
           <Select
-            fieldLabel={t("policies.filterByType")}
+            fieldLabel={t("filterByType")}
             value={selectedType}
             onChange={(e) => setSelectedType(e.target.value as string)}
             options={[
-              { value: "", label: t("policies.allTypes") },
+              { value: "", label: t("allTypes") },
               ...policyTypes.map((type) => ({
                 value: type,
-                label: t(`policies.type.${type}`),
+                label: t(`type.${type}`),
               })),
             ]}
             sx={{ minWidth: 200, flexShrink: 0 }}
@@ -167,12 +181,9 @@ const PoliciesPage = () => {
             } found`}
             sx={{ whiteSpace: "nowrap", flexShrink: 0 }}
           >
-            {t(
-              policies.length === 1
-                ? "policies.policyFound"
-                : "policies.policiesFound",
-              { count: policies.length }
-            )}
+            {t(policies.length === 1 ? "policyFound" : "policiesFound", {
+              count: policies.length,
+            })}
           </Typography>
         </Box>
 
@@ -182,7 +193,7 @@ const PoliciesPage = () => {
           data-testid="create-policy-button"
           aria-label="Create new policy"
         >
-          + {t("policies.createPolicy")}
+          + {t("createPolicy")}
         </Button>
       </PageSection>
 
@@ -223,16 +234,16 @@ const PoliciesPage = () => {
       {policies.length === 0 && (
         <EmptyState
           icon={<Policy sx={{ fontSize: 48, color: "text.disabled" }} />}
-          title={t("policies.noPolicy")}
+          title={t("noPolicy")}
           description={
             selectedType
-              ? t("policies.noPolicyFiltered", {
-                  type: t(`policies.type.${selectedType}`),
+              ? t("noPolicyFiltered", {
+                  type: t(`type.${selectedType}`),
                 })
-              : t("policies.noPolicyDescription")
+              : t("noPolicyDescription")
           }
           action={{
-            label: `+ ${t("policies.createFirstPolicy")}`,
+            label: `+ ${t("createFirstPolicy")}`,
             onClick: handleCreatePolicy,
           }}
           data-testid="empty-state"
@@ -243,6 +254,17 @@ const PoliciesPage = () => {
         open={formModalOpen}
         onClose={handleCloseModal}
         policy={editingPolicy}
+      />
+
+      <ConfirmDialog
+        open={deleteConfirmOpen}
+        onClose={handleCancelDelete}
+        onConfirm={handleConfirmDelete}
+        title={t("messages.deleteTitle")}
+        message={t("messages.deleteConfirm")}
+        confirmText={t("messages.delete")}
+        cancelText={t("messages.cancel")}
+        confirmColor="error"
       />
     </Box>
   );

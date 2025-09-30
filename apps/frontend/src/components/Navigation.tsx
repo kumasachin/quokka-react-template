@@ -7,14 +7,15 @@ import LanguageSwitcher from "./LanguageSwitcher";
 const Navigation = () => {
   const navigate = useNavigate();
   const location = useLocation();
-  const { t } = useTranslation();
+  const { t } = useTranslation("navigation");
 
   const navItems = [
-    { path: "/", label: t("navigation.home") },
-    { path: "/devices", label: t("navigation.devices") },
-    { path: "/patches", label: t("navigation.patches") },
-    { path: "/firewall", label: t("navigation.firewall") },
-    { path: "/policies", label: t("navigation.policies") },
+    { path: "/", label: t("home") },
+    { path: "/devices", label: t("devices") },
+    { path: "/patches", label: t("patches") },
+    { path: "/firewall", label: t("firewall") },
+    { path: "/policies", label: t("policies") },
+    { path: "/settings", label: t("settings") },
   ];
 
   return (
@@ -30,7 +31,7 @@ const Navigation = () => {
           sx={{ flexGrow: 1 }}
           data-testid="navigation-title"
         >
-          {t("navigation.title")}
+          {t("title")}
         </Typography>
         <Box
           sx={{ display: "flex", gap: 2, alignItems: "center" }}
@@ -53,7 +54,7 @@ const Navigation = () => {
                 aria-current={
                   location.pathname === item.path ? "page" : undefined
                 }
-                data-testid={`nav-${item.path.slice(1) || "home"}`}
+                data-testid={`nav-tab-${item.path.slice(1) || "home"}`}
               >
                 {item.label}
               </Button>

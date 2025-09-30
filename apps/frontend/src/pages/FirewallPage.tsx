@@ -8,6 +8,7 @@ import {
   Button,
   Header,
   ExpandableCard,
+  EmptyState,
 } from "../design-system/components";
 import { usePolicies } from "../hooks/usePolicies";
 import {
@@ -89,18 +90,15 @@ const FirewallPage = () => {
         title="Firewall Policies"
         subtitle="Configure and monitor firewall security policies"
         prefix={<Security sx={{ color: "primary.main" }} />}
+        data-testid="firewall-page-title"
       />
 
       {policies.length === 0 ? (
-        <Box sx={{ textAlign: "center", py: 8 }}>
-          <Security sx={{ fontSize: 64, color: "text.secondary", mb: 2 }} />
-          <Typography variant="h6" color="text.secondary" gutterBottom>
-            No Firewall Policies Found
-          </Typography>
-          <Typography variant="body2" color="text.secondary">
-            Create your first firewall security policy to get started
-          </Typography>
-        </Box>
+        <EmptyState
+          icon={<Security sx={{ fontSize: 64, color: "text.secondary" }} />}
+          title="No Firewall Policies Found"
+          description="Create your first firewall security policy to get started"
+        />
       ) : (
         <Box sx={{ mt: 3 }}>
           {policies.map((policy) => (

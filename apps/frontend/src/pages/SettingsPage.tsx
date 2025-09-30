@@ -8,7 +8,7 @@ import {
 } from "@mui/material";
 import { Typography } from "../design-system/components";
 import { Settings } from "@mui/icons-material";
-import { useFeatureFlagsStore } from "../state";
+import { useFeatureFlagsStore } from "../data/state";
 import { useToast } from "../hooks";
 
 const SettingsPage = () => {
@@ -20,6 +20,7 @@ const SettingsPage = () => {
         title="System Settings"
         subtitle="Configure platform preferences"
         prefix={<Settings sx={{ color: "info.main" }} />}
+        data-testid="settings-page-title"
       />
 
       <Box sx={{ display: "flex", flexDirection: "column", gap: 3 }}>

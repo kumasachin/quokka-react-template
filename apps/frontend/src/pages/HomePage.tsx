@@ -2,7 +2,7 @@ import { Box, Typography, CardContent, Skeleton } from "@mui/material";
 import { Button, Card, Header } from "../design-system/components";
 import { Home } from "@mui/icons-material";
 import { useSystemStats } from "../hooks";
-import { useFeatureFlagsStore } from "../state";
+import { useFeatureFlagsStore } from "state";
 import { useNavigate } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 
@@ -14,18 +14,18 @@ const HomePage = () => {
 
   const features = [
     {
-      title: t("home.features.deviceManagement.title"),
-      description: t("home.features.deviceManagement.description"),
+      title: t("features.deviceManagement.title"),
+      description: t("features.deviceManagement.description"),
       path: "/devices",
     },
     {
-      title: t("home.features.patchManagement.title"),
-      description: t("home.features.patchManagement.description"),
+      title: t("features.patchManagement.title"),
+      description: t("features.patchManagement.description"),
       path: "/patches",
     },
     {
-      title: t("home.features.firewallControl.title"),
-      description: t("home.features.firewallControl.description"),
+      title: t("features.firewallControl.title"),
+      description: t("features.firewallControl.description"),
       path: "/firewall",
     },
   ];
@@ -33,11 +33,12 @@ const HomePage = () => {
   return (
     <Box>
       <Header
-        title={t("home.welcomeTitle")}
-        subtitle={t("home.welcomeSubtitle")}
+        title={t("welcomeTitle")}
+        subtitle={t("welcomeSubtitle")}
         prefix={<Home sx={{ color: "primary.main" }} />}
         align="center"
         sx={{ mb: 4 }}
+        data-testid="home-page-title"
       />
 
       <Box
@@ -55,7 +56,7 @@ const HomePage = () => {
         <Card>
           <CardContent>
             <Typography variant="h6" color="primary" gutterBottom>
-              {t("home.stats.activeDevices")}
+              {t("stats.activeDevices")}
             </Typography>
             <Typography variant="h3">
               {statsLoading ? <Skeleton width={60} /> : stats?.devices}
@@ -65,7 +66,7 @@ const HomePage = () => {
         <Card>
           <CardContent>
             <Typography variant="h6" color="warning.main" gutterBottom>
-              Pending Patches
+              {t("stats.pendingPatches")}
             </Typography>
             <Typography variant="h3">
               {statsLoading ? <Skeleton width={40} /> : stats?.patches}
@@ -75,7 +76,7 @@ const HomePage = () => {
         <Card>
           <CardContent>
             <Typography variant="h6" color="error.main" gutterBottom>
-              Threats Detected
+              {t("stats.threatsDetected")}
             </Typography>
             <Typography variant="h3">
               {statsLoading ? <Skeleton width={30} /> : stats?.threats}
@@ -85,7 +86,7 @@ const HomePage = () => {
         <Card>
           <CardContent>
             <Typography variant="h6" color="success.main" gutterBottom>
-              System Uptime
+              {t("stats.systemUptime")}
             </Typography>
             <Typography variant="h3">
               {statsLoading ? <Skeleton width={80} /> : stats?.uptime}
@@ -118,7 +119,7 @@ const HomePage = () => {
                 {feature.description}
               </Typography>
               <Button variant="primary" onClick={() => navigate(feature.path)}>
-                Get Started
+                {t("getStarted")}
               </Button>
             </CardContent>
           </Card>
