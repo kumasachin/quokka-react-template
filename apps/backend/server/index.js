@@ -2,6 +2,11 @@ import express from "express";
 import cors from "cors";
 import helmet from "helmet";
 import compression from "compression";
+import dotenv from "dotenv";
+
+// Load environment variables
+dotenv.config({ path: "../../.env.development" });
+
 import { policiesRouter } from "./routes/policies.js";
 import { healthRouter } from "./routes/health.js";
 import { devicesRouter } from "./routes/devices.js";
