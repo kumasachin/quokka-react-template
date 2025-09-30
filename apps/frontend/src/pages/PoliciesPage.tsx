@@ -8,6 +8,8 @@ import {
   PriorityType,
   CircularProgress,
   Alert,
+  PageSection,
+  EmptyState,
 } from "../design-system/components";
 import { Box, Typography } from "@mui/material";
 import { Policy, Error } from "@mui/icons-material";
@@ -126,19 +128,14 @@ const PoliciesPage = () => {
         prefix={<Policy sx={{ color: "info.main" }} aria-hidden="true" />}
       />
 
-      <Box
+      <PageSection
         component="section"
+        variant="elevated"
         sx={{
           display: "flex",
           alignItems: "center",
           justifyContent: "space-between",
           mb: 4,
-          p: 3,
-          backgroundColor: "background.paper",
-          borderRadius: 2,
-          boxShadow: "0 2px 8px rgba(0,0,0,0.08)",
-          border: "1px solid",
-          borderColor: "divider",
         }}
         data-testid="policies-controls"
         aria-label="Policy management controls"
@@ -187,7 +184,7 @@ const PoliciesPage = () => {
         >
           + {t("policies.createPolicy")}
         </Button>
-      </Box>
+      </PageSection>
 
       <Box
         component="section"
@@ -224,46 +221,22 @@ const PoliciesPage = () => {
       </Box>
 
       {policies.length === 0 && (
-        <Box
-          sx={{
-            textAlign: "center",
-            py: 8,
-            px: 4,
-            backgroundColor: "background.paper",
-            borderRadius: 3,
-            border: "1px solid",
-            borderColor: "divider",
-            boxShadow: "0 2px 8px rgba(0,0,0,0.04)",
-          }}
-          data-testid="empty-state"
-        >
-          <Policy sx={{ fontSize: 48, color: "text.disabled", mb: 2 }} />
-          <Typography
-            variant="h5"
-            color="text.secondary"
-            sx={{ mb: 1, fontWeight: 500 }}
-          >
-            {t("policies.noPolicy")}
-          </Typography>
-          <Typography
-            variant="body1"
-            color="text.secondary"
-            sx={{ mb: 3, maxWidth: 400, mx: "auto" }}
-          >
-            {selectedType
+        <EmptyState
+          icon={<Policy sx={{ fontSize: 48, color: "text.disabled" }} />}
+          title={t("policies.noPolicy")}
+          description={
+            selectedType
               ? t("policies.noPolicyFiltered", {
                   type: t(`policies.type.${selectedType}`),
                 })
-              : t("policies.noPolicyDescription")}
-          </Typography>
-          <Button
-            variant="primary"
-            onClick={handleCreatePolicy}
-            data-testid="create-first-policy-button"
-          >
-            + {t("policies.createFirstPolicy")}
-          </Button>
-        </Box>
+              : t("policies.noPolicyDescription")
+          }
+          action={{
+            label: `+ ${t("policies.createFirstPolicy")}`,
+            onClick: handleCreatePolicy,
+          }}
+          data-testid="empty-state"
+        />
       )}
 
       <PolicyFormModal
