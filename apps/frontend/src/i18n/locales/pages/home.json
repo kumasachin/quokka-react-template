@@ -1,0 +1,26 @@
+{
+  "welcomeTitle": "Welcome to CyberSmart",
+  "welcomeSubtitle": "Your comprehensive cybersecurity management platform",
+  "features": {
+    "deviceManagement": {
+      "title": "Device Management",
+      "description": "Monitor and manage all your network devices from one place."
+    },
+    "patchManagement": {
+      "title": "Patch Management",
+      "description": "Keep your systems up-to-date with automated patch deployment."
+    },
+    "firewallControl": {
+      "title": "Firewall Control",
+      "description": "Configure and monitor your firewall rules and security policies."
+    }
+  },
+  "stats": {
+    "activeDevices": "Active Devices",
+    "pendingPatches": "Pending Patches",
+    "threatsDetected": "Threats Detected",
+    "systemUptime": "System Uptime"
+  },
+  "quickActions": "Quick Actions",
+  "getStarted": "Get Started"
+}

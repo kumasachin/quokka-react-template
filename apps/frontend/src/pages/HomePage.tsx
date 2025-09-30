@@ -4,29 +4,28 @@ import { Home } from "@mui/icons-material";
 import { useSystemStats } from "../hooks";
 import { useFeatureFlagsStore } from "../state";
 import { useNavigate } from "react-router-dom";
+import { useTranslation } from "react-i18next";
 
 const HomePage = () => {
   const navigate = useNavigate();
   const { data: stats, isLoading: statsLoading } = useSystemStats();
   const { isEnabled } = useFeatureFlagsStore();
+  const { t } = useTranslation("home");
 
   const features = [
     {
-      title: "Device Management",
-      description:
-        "Monitor and manage all your network devices from one place.",
+      title: t("home.features.deviceManagement.title"),
+      description: t("home.features.deviceManagement.description"),
       path: "/devices",
     },
     {
-      title: "Patch Management",
-      description:
-        "Keep your systems up-to-date with automated patch deployment.",
+      title: t("home.features.patchManagement.title"),
+      description: t("home.features.patchManagement.description"),
       path: "/patches",
     },
     {
-      title: "Firewall Control",
-      description:
-        "Configure and monitor your firewall rules and security policies.",
+      title: t("home.features.firewallControl.title"),
+      description: t("home.features.firewallControl.description"),
       path: "/firewall",
     },
   ];
@@ -34,8 +33,8 @@ const HomePage = () => {
   return (
     <Box>
       <Header
-        title="Welcome to CyberSmart"
-        subtitle="Your comprehensive cybersecurity management platform"
+        title={t("home.welcomeTitle")}
+        subtitle={t("home.welcomeSubtitle")}
         prefix={<Home sx={{ color: "primary.main" }} />}
         align="center"
         sx={{ mb: 4 }}
@@ -56,7 +55,7 @@ const HomePage = () => {
         <Card>
           <CardContent>
             <Typography variant="h6" color="primary" gutterBottom>
-              Active Devices
+              {t("home.stats.activeDevices")}
             </Typography>
             <Typography variant="h3">
               {statsLoading ? <Skeleton width={60} /> : stats?.devices}

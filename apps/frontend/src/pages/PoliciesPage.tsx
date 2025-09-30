@@ -21,7 +21,7 @@ import { Policy as PolicyType } from "../api/policies";
 import { useTranslation } from "react-i18next";
 
 const PoliciesPage = () => {
-  const { t } = useTranslation();
+  const { t } = useTranslation("policies");
   const [selectedType, setSelectedType] = useState<string>("");
   const [formModalOpen, setFormModalOpen] = useState(false);
   const [editingPolicy, setEditingPolicy] = useState<PolicyType | null>(null);

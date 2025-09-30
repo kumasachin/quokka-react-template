@@ -1,0 +1,68 @@
+{
+  "title": "Policies Management",
+  "subtitle": "Configure and monitor security policies",
+  "filterByType": "Filter by type",
+  "allTypes": "All types",
+  "createPolicy": "Create Policy",
+  "createFirstPolicy": "Create Your First Policy",
+  "policiesFound": "{{count}} policies found",
+  "policyFound": "{{count}} policy found",
+  "noPolicy": "No policies found",
+  "noPolicyDescription": "Start by creating your first security policy to manage access and compliance across your organization.",
+  "noPolicyFiltered": "Currently no {{type}} policies are configured. Try choosing a different filter or create a new {{type}} policy.",
+  "status": {
+    "active": "Active",
+    "inactive": "Inactive",
+    "draft": "Draft"
+  },
+  "priority": {
+    "low": "Low",
+    "medium": "Medium",
+    "high": "High",
+    "critical": "Critical"
+  },
+  "type": {
+    "security": "Security",
+    "firewall": "Firewall",
+    "access": "Access",
+    "backup": "Backup",
+    "compliance": "Compliance"
+  },
+  "actions": {
+    "activate": "Activate",
+    "deactivate": "Deactivate",
+    "edit": "Edit",
+    "delete": "Delete"
+  },
+  "form": {
+    "createTitle": "Create New Policy",
+    "editTitle": "Edit Policy: {{name}}",
+    "policyName": "Policy Name",
+    "policyNamePlaceholder": "Enter policy name",
+    "type": "Type",
+    "description": "Description",
+    "descriptionPlaceholder": "Describe what this policy does...",
+    "status": "Status",
+    "priority": "Priority",
+    "cancel": "Cancel",
+    "create": "Create Policy",
+    "update": "Update Policy",
+    "validationError": "Please fix the validation errors above.",
+    "createSuccess": "Policy created successfully!",
+    "updateSuccess": "Policy updated successfully!",
+    "createError": "Failed to create policy",
+    "updateError": "Failed to update policy"
+  },
+  "metadata": {
+    "rulesConfigured": "{{count}} Rules Configured",
+    "lastUpdated": "Last updated {{date}}"
+  },
+  "messages": {
+    "activated": "Policy activated successfully",
+    "deactivated": "Policy deactivated successfully",
+    "statusUpdateError": "Failed to update policy status",
+    "deleted": "Policy deleted successfully",
+    "deleteError": "Failed to delete policy",
+    "deleteConfirm": "Are you sure you want to delete this policy?"
+  }
+}

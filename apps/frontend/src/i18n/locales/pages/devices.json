@@ -1,0 +1,10 @@
+{
+  "title": "Device Management",
+  "subtitle": "Monitor and manage all your network devices",
+  "connectedDevices": "Connected Devices",
+  "status": {
+    "online": "Online",
+    "offline": "Offline",
+    "maintenance": "Maintenance"
+  }
+}

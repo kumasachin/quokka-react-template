@@ -4,7 +4,12 @@ import LanguageDetector from "i18next-browser-languagedetector";
 import Backend from "i18next-http-backend";
 
 // Import translation files
-import enTranslations from "./locales/en.json";
+import commonTranslations from "./locales/common.json";
+import navigationTranslations from "./locales/components/navigation.json";
+import languageTranslations from "./locales/components/language.json";
+import homeTranslations from "./locales/pages/home.json";
+import policiesTranslations from "./locales/pages/policies.json";
+import devicesTranslations from "./locales/pages/devices.json";
 
 export interface SupportedLanguage {
   code: string;
@@ -18,7 +23,12 @@ export const supportedLanguages: SupportedLanguage[] = [
 
 const resources = {
   en: {
-    translation: enTranslations,
+    common: commonTranslations,
+    navigation: navigationTranslations,
+    language: languageTranslations,
+    home: homeTranslations,
+    policies: policiesTranslations,
+    devices: devicesTranslations,
   },
 };
 
@@ -31,6 +41,9 @@ i18n
     fallbackLng: "en",
     debug: import.meta.env.DEV,
 
+    ns: ["common", "navigation", "language", "home", "policies", "devices"],
+    defaultNS: "common",
+
     interpolation: {
       escapeValue: false, // React already does escaping
     },
@@ -41,7 +54,7 @@ i18n
     },
 
     backend: {
-      loadPath: "/locales/{{lng}}.json",
+      loadPath: "/locales/{{ns}}.json",
     },
 
     react: {
