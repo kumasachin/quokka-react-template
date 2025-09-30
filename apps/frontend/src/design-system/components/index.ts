@@ -10,6 +10,11 @@ export {
   FormControlLabel,
   Checkbox,
   TextArea,
+  CircularProgress,
+  Alert,
+  Accordion,
+  AccordionSummary,
+  AccordionDetails,
 } from "./atoms";
 export {
   Header,
@@ -30,6 +35,11 @@ export type {
   FormControlLabelProps,
   CheckboxProps,
   TextAreaProps,
+  CircularProgressProps,
+  AlertProps,
+  AccordionProps,
+  AccordionSummaryProps,
+  AccordionDetailsProps,
 } from "./atoms";
 export type {
   HeaderProps,

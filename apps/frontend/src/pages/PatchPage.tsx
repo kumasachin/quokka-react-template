@@ -1,4 +1,4 @@
-import React, { useState, useRef } from "react";
+import React, { useState, useRef, useCallback } from "react";
 import {
   Box,
   Typography,
@@ -27,13 +27,19 @@ const PatchPage = () => {
       setExpandedPolicy(isExpanded ? policyId : false);
     };
 
-  const handleValidityChange = (policyId: string) => (isValid: boolean) => {
-    setFormValidity((prev) => ({ ...prev, [policyId]: isValid }));
-  };
+  const handleValidityChange = useCallback(
+    (policyId: string) => (isValid: boolean) => {
+      setFormValidity((prev) => ({ ...prev, [policyId]: isValid }));
+    },
+    []
+  );
 
-  const handleChangesChange = (policyId: string) => (hasChanges: boolean) => {
-    setFormChanges((prev) => ({ ...prev, [policyId]: hasChanges }));
-  };
+  const handleChangesChange = useCallback(
+    (policyId: string) => (hasChanges: boolean) => {
+      setFormChanges((prev) => ({ ...prev, [policyId]: hasChanges }));
+    },
+    []
+  );
 
   const handleSubmit = (policyId: string) => () => {
     formRefs.current[policyId]?.submit();

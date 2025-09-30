@@ -1,5 +1,6 @@
-import { Alert, IconButton, styled } from "@mui/material";
+import { IconButton, styled } from "@mui/material";
 import { Close, CheckCircle, Error, Warning, Info } from "@mui/icons-material";
+import { Alert } from "./Alert";
 import { Toast as ToastType } from "../../../state";
 
 const StyledAlert = styled(Alert)(({ theme }) => ({

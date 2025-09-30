@@ -3,6 +3,8 @@ import React, {
   useEffect,
   forwardRef,
   useImperativeHandle,
+  useRef,
+  useCallback,
 } from "react";
 import { PolicyForm, PolicyFormData } from "./PolicyForm";
 import { useCreatePolicy, useUpdatePolicy } from "../../hooks/usePolicies";
@@ -84,6 +86,36 @@ export const PolicyFormContainer = forwardRef<
       setErrors({});
     }, [initialData]);
 
+    const onChangesChangeRef = useRef(onChangesChange);
+    onChangesChangeRef.current = onChangesChange;
+
+    const onValidityChangeRef = useRef(onValidityChange);
+    onValidityChangeRef.current = onValidityChange;
+
+    // Helper function to check if objects are equal
+    const objectsEqual = useCallback(
+      (
+        obj1: Record<string, unknown>,
+        obj2: Record<string, unknown>
+      ): boolean => {
+        const keys1 = Object.keys(obj1);
+        const keys2 = Object.keys(obj2);
+
+        if (keys1.length !== keys2.length) {
+          return false;
+        }
+
+        for (const key of keys1) {
+          if (obj1[key] !== obj2[key]) {
+            return false;
+          }
+        }
+
+        return true;
+      },
+      []
+    );
+
     // Notify parent component when form validity changes
     useEffect(() => {
       const isValid = !!(
@@ -91,15 +123,14 @@ export const PolicyFormContainer = forwardRef<
         formData.type &&
         formData.description
       );
-      onValidityChange?.(isValid);
-    }, [formData.name, formData.type, formData.description, onValidityChange]);
+      onValidityChangeRef.current?.(isValid);
+    }, [formData.name, formData.type, formData.description]);
 
     // Notify parent component when form changes
     useEffect(() => {
-      const hasChanges =
-        JSON.stringify(formData) !== JSON.stringify(initialFormData);
-      onChangesChange?.(hasChanges);
-    }, [formData, initialFormData, onChangesChange]);
+      const hasChanges = !objectsEqual(formData, initialFormData);
+      onChangesChangeRef.current?.(hasChanges);
+    }, [formData, initialFormData, objectsEqual]);
 
     const validateForm = () => {
       const newErrors: Record<string, string> = {};

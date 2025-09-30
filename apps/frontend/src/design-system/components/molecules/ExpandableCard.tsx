@@ -1,4 +1,6 @@
 import React from "react";
+import { Box, Typography } from "@mui/material";
+import { ExpandMore } from "@mui/icons-material";
 import {
   Accordion,
   AccordionSummary,
@@ -6,10 +8,7 @@ import {
   AccordionProps,
   AccordionSummaryProps,
   AccordionDetailsProps,
-  Box,
-  Typography,
-} from "@mui/material";
-import { ExpandMore } from "@mui/icons-material";
+} from "../atoms";
 import { StatusChip, StatusType } from "./StatusChip";
 import { PriorityChip, PriorityType } from "./PriorityChip";
 

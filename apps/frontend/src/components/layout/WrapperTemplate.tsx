@@ -173,7 +173,7 @@ const WrapperTemplate = () => {
           }}
         >
           <ErrorBoundary>
-            <Outlet />
+            <Outlet key={location.pathname} />
           </ErrorBoundary>
         </Container>
       </Box>

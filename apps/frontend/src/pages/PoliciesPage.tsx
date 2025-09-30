@@ -6,8 +6,10 @@ import {
   PolicyCard,
   StatusType,
   PriorityType,
+  CircularProgress,
+  Alert,
 } from "../design-system/components";
-import { Box, Typography, CircularProgress, Alert } from "@mui/material";
+import { Box, Typography } from "@mui/material";
 import { Policy, Error } from "@mui/icons-material";
 import { usePolicies, useUpdatePolicy } from "../hooks/usePolicies";
 import { useDeletePolicy } from "../hooks/usePolicies";

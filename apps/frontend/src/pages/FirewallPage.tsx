@@ -1,13 +1,14 @@
-import React, { useState, useRef } from "react";
+import React, { useState, useRef, useCallback } from "react";
+import { Box } from "@mui/material";
+import { Security } from "@mui/icons-material";
 import {
-  Box,
   Typography,
   CircularProgress,
   Alert,
   Button,
-} from "@mui/material";
-import { Security } from "@mui/icons-material";
-import { Header, ExpandableCard } from "../design-system/components";
+  Header,
+  ExpandableCard,
+} from "../design-system/components";
 import { usePolicies } from "../hooks/usePolicies";
 import {
   PolicyFormContainer,
@@ -27,13 +28,19 @@ const FirewallPage = () => {
       setExpandedPolicy(isExpanded ? policyId : false);
     };
 
-  const handleValidityChange = (policyId: string) => (isValid: boolean) => {
-    setFormValidity((prev) => ({ ...prev, [policyId]: isValid }));
-  };
+  const handleValidityChange = useCallback(
+    (policyId: string) => (isValid: boolean) => {
+      setFormValidity((prev) => ({ ...prev, [policyId]: isValid }));
+    },
+    []
+  );
 
-  const handleChangesChange = (policyId: string) => (hasChanges: boolean) => {
-    setFormChanges((prev) => ({ ...prev, [policyId]: hasChanges }));
-  };
+  const handleChangesChange = useCallback(
+    (policyId: string) => (hasChanges: boolean) => {
+      setFormChanges((prev) => ({ ...prev, [policyId]: hasChanges }));
+    },
+    []
+  );
 
   const handleSubmit = (policyId: string) => () => {
     formRefs.current[policyId]?.submit();
@@ -135,7 +142,7 @@ const FirewallPage = () => {
                   }}
                 >
                   <Button
-                    variant="contained"
+                    variant="primary"
                     onClick={handleSubmit(policy.id)}
                     disabled={
                       !formValidity[policy.id] || !formChanges[policy.id]
