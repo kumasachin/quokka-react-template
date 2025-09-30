@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from "@storybook/react-vite";
-import { Alert } from "../../components";
+import { Alert } from "components";
 
 const meta: Meta<typeof Alert> = {
   title: "Design System/Atoms/Alert",
