@@ -1,5 +1,5 @@
 {
-  "name": "cyber-smart-monorepo",
+  "name": "cybero-monorepo",
   "private": true,
   "scripts": {
     "dev": "turbo dev",
