@@ -6,7 +6,7 @@ test.describe("Home Page", () => {
     await loginAsAdmin(page);
 
     // Check if the page loads
-    await expect(page).toHaveTitle("CyberSmart");
+    await expect(page).toHaveTitle("cybero");
 
     // Check for main content
     await expect(page.locator("h1, h2, h3").first()).toBeVisible();

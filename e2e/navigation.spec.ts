@@ -88,6 +88,6 @@ test.describe("Navigation", () => {
 
     // Check we're back on home page
     await expect(page).toHaveURL("/");
-    await expect(page).toHaveTitle("CyberSmart");
+    await expect(page).toHaveTitle("cybero");
   });
 });

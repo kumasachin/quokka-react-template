@@ -1,6 +1,6 @@
 {
   "navigation": {
-    "title": "CyberSmart Platform",
+    "title": "cybero Platform",
     "home": "Home",
     "devices": "Devices",
     "patches": "Patches",
@@ -110,7 +110,7 @@
     "select": "Select Language"
   },
   "home": {
-    "welcomeTitle": "Welcome to CyberSmart",
+    "welcomeTitle": "Welcome to cybero",
     "welcomeSubtitle": "Your comprehensive cybersecurity management platform",
     "features": {
       "deviceManagement": {

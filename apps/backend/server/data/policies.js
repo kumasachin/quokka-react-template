@@ -8,7 +8,7 @@ export const mockPolicies = [
     priority: "high",
     createdAt: "2025-09-01T10:00:00Z",
     updatedAt: "2025-09-14T15:30:00Z",
-    createdBy: "admin@cybersmart.com",
+    createdBy: "admin@cybero.com",
     rules: [
       {
         id: "rule-001",
@@ -33,7 +33,7 @@ export const mockPolicies = [
     priority: "critical",
     createdAt: "2025-08-15T09:00:00Z",
     updatedAt: "2025-09-10T11:20:00Z",
-    createdBy: "security@cybersmart.com",
+    createdBy: "security@cybero.com",
     rules: [
       {
         id: "rule-003",
@@ -53,7 +53,7 @@ export const mockPolicies = [
     priority: "high",
     createdAt: "2025-09-05T14:00:00Z",
     updatedAt: "2025-09-12T16:45:00Z",
-    createdBy: "network@cybersmart.com",
+    createdBy: "network@cybero.com",
     rules: [
       {
         id: "rule-004",
@@ -78,7 +78,7 @@ export const mockPolicies = [
     priority: "critical",
     createdAt: "2025-09-02T08:00:00Z",
     updatedAt: "2025-09-13T14:20:00Z",
-    createdBy: "dba@cybersmart.com",
+    createdBy: "dba@cybero.com",
     rules: [
       {
         id: "rule-007",
@@ -103,7 +103,7 @@ export const mockPolicies = [
     priority: "high",
     createdAt: "2025-08-25T07:00:00Z",
     updatedAt: "2025-09-11T09:30:00Z",
-    createdBy: "backup@cybersmart.com",
+    createdBy: "backup@cybero.com",
     rules: [
       {
         id: "rule-010",
@@ -122,7 +122,7 @@ export const mockPolicies = [
     priority: "high",
     createdAt: "2025-08-30T13:00:00Z",
     updatedAt: "2025-09-09T11:45:00Z",
-    createdBy: "compliance@cybersmart.com",
+    createdBy: "compliance@cybero.com",
     rules: [
       {
         id: "rule-012",

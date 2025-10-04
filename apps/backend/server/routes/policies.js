@@ -77,7 +77,7 @@ router.post("/", (req, res) => {
       id: uuidv4(),
       createdAt: new Date().toISOString(),
       updatedAt: new Date().toISOString(),
-      createdBy: newPolicyData.createdBy || "user@cybersmart.com",
+      createdBy: newPolicyData.createdBy || "user@cybero.com",
     };
 
     policies.push(newPolicy);
