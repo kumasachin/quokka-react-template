@@ -1,0 +1,48 @@
+{
+  "version": 2,
+  "buildCommand": "cd ../.. && pnpm turbo build --filter=frontend",
+  "outputDirectory": "apps/frontend/dist",
+  "installCommand": "pnpm install",
+  "framework": "vite",
+  "rootDirectory": "apps/frontend",
+  "build": {
+    "env": {
+      "NODE_ENV": "production",
+      "VITE_ENABLE_MOCKING": "false"
+    }
+  },
+  "headers": [
+    {
+      "source": "/assets/(.*)",
+      "headers": [
+        {
+          "key": "Cache-Control",
+          "value": "public, max-age=31536000, immutable"
+        }
+      ]
+    },
+    {
+      "source": "/(.*)",
+      "headers": [
+        {
+          "key": "X-Content-Type-Options",
+          "value": "nosniff"
+        },
+        {
+          "key": "X-Frame-Options",
+          "value": "DENY"
+        },
+        {
+          "key": "X-XSS-Protection",
+          "value": "1; mode=block"
+        }
+      ]
+    }
+  ],
+  "rewrites": [
+    {
+      "source": "/api/(.*)",
+      "destination": "https://your-backend-url/api/$1"
+    }
+  ]
+}

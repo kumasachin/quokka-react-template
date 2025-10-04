@@ -1,0 +1,11 @@
+{
+  "typescript.preferences.workspaceSymbols": "all",
+  "eslint.workingDirectories": ["apps/frontend", "apps/backend"],
+  "typescript.preferences.includePackageJsonAutoImports": "auto",
+  "search.exclude": {
+    "**/node_modules": true,
+    "**/dist": true,
+    "**/build": true,
+    "**/.turbo": true
+  }
+}
