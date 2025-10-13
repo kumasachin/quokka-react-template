@@ -19,11 +19,36 @@ const PORT = process.env.PORT || 3002;
 
 app.use(helmet());
 app.use(compression());
-const allowedOrigin = process.env.CLIENT_URL || "http://localhost:5173";
-console.log("CORS allowed origin:", allowedOrigin);
+
+// Configure CORS for both local development and production
+const allowedOrigins = [
+  process.env.CLIENT_URL || "http://localhost:5173",
+  "http://localhost:5174", // Vite dev server backup port
+  process.env.VERCEL_URL ? `https://${process.env.VERCEL_URL}` : null,
+  // Add your production frontend URL here
+  "https://your-frontend-app.vercel.app",
+].filter(Boolean);
+
+console.log("CORS allowed origins:", allowedOrigins);
 app.use(
   cors({
-    origin: allowedOrigin,
+    origin: function (origin, callback) {
+      // Allow requests with no origin (mobile apps, curl, etc.)
+      if (!origin) return callback(null, true);
+
+      if (
+        allowedOrigins.some(
+          (allowedOrigin) =>
+            origin.startsWith(allowedOrigin) || allowedOrigin.includes(origin)
+        )
+      ) {
+        return callback(null, true);
+      }
+
+      const msg =
+        "The CORS policy for this site does not allow access from the specified Origin.";
+      return callback(new Error(msg), false);
+    },
     credentials: true,
   })
 );
@@ -73,15 +98,22 @@ app.use((err, req, res, next) => {
   });
 });
 
-app.listen(PORT, () => {
-  console.log(`🚀 Cybero BFF Server running on port ${PORT}`);
-  console.log(`📊 Health endpoint: http://localhost:${PORT}/health`);
-  console.log(`📋 API endpoints available:`);
-  console.log(`   • Policies: http://localhost:${PORT}/api/policies`);
-  console.log(`   • Devices: http://localhost:${PORT}/api/devices`);
-  console.log(`   • System: http://localhost:${PORT}/api/system`);
-  console.log(`   • Patches: http://localhost:${PORT}/api/patches`);
-  console.log(`   • Firewall: http://localhost:${PORT}/api/firewall`);
-});
+// Only start server if not in serverless environment (Vercel, Netlify, etc.)
+if (
+  !process.env.VERCEL &&
+  !process.env.NETLIFY &&
+  !process.env.AWS_LAMBDA_FUNCTION_NAME
+) {
+  app.listen(PORT, () => {
+    console.log(`🚀 Cybero BFF Server running on port ${PORT}`);
+    console.log(`📊 Health endpoint: http://localhost:${PORT}/health`);
+    console.log(`📋 API endpoints available:`);
+    console.log(`   • Policies: http://localhost:${PORT}/api/policies`);
+    console.log(`   • Devices: http://localhost:${PORT}/api/devices`);
+    console.log(`   • System: http://localhost:${PORT}/api/system`);
+    console.log(`   • Patches: http://localhost:${PORT}/api/patches`);
+    console.log(`   • Firewall: http://localhost:${PORT}/api/firewall`);
+  });
+}
 
 export default app;

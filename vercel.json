@@ -42,7 +42,7 @@
   "rewrites": [
     {
       "source": "/api/(.*)",
-      "destination": "https://your-backend-url/api/$1"
+      "destination": "https://your-backend-app.vercel.app/api/$1"
     }
   ]
 }
